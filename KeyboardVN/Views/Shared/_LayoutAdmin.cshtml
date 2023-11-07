@@ -1,46 +1,217 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+
+<html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <title>@ViewData["Title"] - KeyboardVN</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/KeyboardVN.styles.css" asp-append-version="true" />
+
+    @* Necessary Start *@
+    <link rel="stylesheet" href="~/admin/global/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/admin/global/css/bootstrap-extend.min.css">
+    <link rel="stylesheet" href="~/admin/mmenu/assets/css/site.min.css">
+
+    <link rel="stylesheet" href="~/admin/global/vendor/animsition/animsition.css">
+    <link rel="stylesheet" href="~/admin/global/vendor/asscrollable/asScrollable.css">
+    <link rel="stylesheet" href="~/admin/global/vendor/switchery/switchery.css">
+    <link rel="stylesheet" href="~/admin/global/vendor/slidepanel/slidePanel.css">
+    <link rel="stylesheet" href="~/admin/global/vendor/flag-icon-css/flag-icon.css">
+
+    <link rel="stylesheet" href="~/admin/global/fonts/web-icons/web-icons.min.css">
+    <link rel="stylesheet" href="~/admin/global/fonts/brand-icons/brand-icons.min.css">
+
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
+    <link rel="stylesheet" href="~/admin/global/fonts/font-awesome/font-awesome.css">
+    <link rel="stylesheet" href="~/admin/global/fonts/web-icons/web-icons.min.css">
+    <link rel="stylesheet" href="~/admin/global/fonts/brand-icons/brand-icons.min.css">
+    @* Necessary End *@
+
+    @* Addition Start *@
+    <link rel="stylesheet" href="~/admin/global/vendor/intro-js/introjs.css">
+    <link rel="stylesheet" href="~/admin/global/vendor/jquery-mmenu/jquery-mmenu.css">
+    @* Addition End *@
+
+    @RenderSection("Style",required: false)
+
+    <script src="~/admin/global/vendor/breakpoints/breakpoints.js"></script>
+    <script>
+        Breakpoints();
+    </script>
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">KeyboardVN</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Admin Home</a>
-                        </li>
-                    </ul>
-                </div>
+<body class="animsition site-navbar-small">
+    <nav class="site-navbar navbar navbar-default navbar-fixed-top navbar-mega" role="navigation">
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggler hamburger hamburger-close navbar-toggler-left hided"
+                    data-toggle="menubar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="hamburger-bar"></span>
+            </button>
+            <button type="button" class="navbar-toggler collapsed" data-target="#site-navbar-collapse"
+                    data-toggle="collapse">
+                <i class="icon wb-more-horizontal" aria-hidden="true"></i>
+            </button>
+            <div class="navbar-brand navbar-brand-center site-gridmenu-toggle">
+                <img class="navbar-brand-logo" src="~/admin/img/logo.ico" title="Remark">
+                <span class="navbar-brand-text hidden-xs-down"> Elj shop</span>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+            <button type="button" class="navbar-toggler collapsed" data-target="#site-navbar-search"
+                    data-toggle="collapse">
+                <span class="sr-only">Toggle Search</span>
+                <i class="icon wb-search" aria-hidden="true"></i>
+            </button>
+        </div>
+
+        <div class="navbar-container container-fluid">
+            <!-- Navbar Collapse -->
+            <div class="collapse navbar-collapse navbar-collapse-toolbar" id="site-navbar-collapse">
+                <!-- Navbar Toolbar -->
+                <ul class="nav navbar-toolbar">
+                    <li class="nav-item hidden-float" id="toggleMenubar">
+                        <a class="nav-link" data-toggle="menubar" href="#" role="button">
+                            <i class="icon hamburger hamburger-arrow-left">
+                                <span class="sr-only">Toggle menubar</span>
+                                <span class="hamburger-bar"></span>
+                            </i>
+                        </a>
+                    </li>
+                    <li class="nav-item hidden-sm-down" id="toggleFullscreen">
+                        <a class="nav-link icon icon-fullscreen" data-toggle="fullscreen" href="#" role="button">
+                            <span class="sr-only">Toggle fullscreen</span>
+                        </a>
+                    </li>
+                    <li class="nav-item hidden-float">
+                        <a class="nav-link icon wb-search" data-toggle="collapse" href="#" data-target="#site-navbar-search"
+                           role="button">
+                            <span class="sr-only">Toggle Search</span>
+                        </a>
+                    </li>
+                </ul>
+                <!-- End Navbar Toolbar -->
+                <!-- Navbar Toolbar Right -->
+                <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link navbar-avatar" data-toggle="dropdown" href="#" aria-expanded="false"
+                           data-animation="scale-up" role="button">
+                            <span class="avatar avatar-online">
+                                <img src="~/admin/global/portraits/5.jpg" alt="~/admin.">
+                                <i></i>
+                            </span>
+                        </a>
+                        <div class="dropdown-menu" role="menu">
+                            <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon wb-user" aria-hidden="true"></i> Profile</a>
+                            <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon wb-payment" aria-hidden="true"></i> Billing</a>
+                            <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon wb-settings" aria-hidden="true"></i> Settings</a>
+                            <div class="dropdown-divider" role="presentation"></div>
+                            <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon wb-power" aria-hidden="true"></i> Logout</a>
+                        </div>
+                    </li>
+                </ul>
+                <!-- End Navbar Toolbar Right -->
+            </div>
+            <!-- End Navbar Collapse -->
+            <!-- Site Navbar Seach -->
+            <div class="collapse navbar-search-overlap" id="site-navbar-search">
+                <form asp-controller="" role="search">
+                    <div class="form-group">
+                        <div class="input-search">
+                            <i class="input-search-icon wb-search" aria-hidden="true"></i>
+                            <input type="text" class="form-control" name="site-search" placeholder="Search...">
+                            <button type="button" class="input-search-close icon wb-close" data-target="#site-navbar-search"
+                                    data-toggle="collapse" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- End Site Navbar Seach -->
+        </div>
+    </nav>
+    <div class="site-menubar">
+        <ul class="site-menu">
+            <li class="site-menu-item has-sub">
+                <a href="javascript:void(0)">
+                    <i class="site-menu-icon wb-dashboard" aria-hidden="true"></i>
+                    <span class="site-menu-title">Dashboard</span>
+                    <span class="site-menu-arrow"></span>
+                </a>
+                <ul class="site-menu-sub">
+                    <li class="site-menu-item active">
+                        <a class="animsition-link" asp-controller="Home" asp-action="Index">
+                            <span class="site-menu-title">Dashboard v1</span>
+                        </a>
+                    </li>
+                    <li class="site-menu-item">
+                        <a class="animsition-link" asp-controller="Home" asp-action="Privacy">
+                            <span class="site-menu-title">Dashboard v2</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="site-menu-item">
+                <a href="javascript:void(0)">
+                    <i class="site-menu-icon wb-layout" aria-hidden="true"></i>
+                    <span class="site-menu-title">Layouts</span>
+                </a>
+            </li>
+            <li class="site-menu-item">
+                <a href="javascript:void(0)">
+                    <i class="site-menu-icon wb-file" aria-hidden="true"></i>
+                    <span class="site-menu-title">Pages</span>
+                </a>
+            </li>
+        </ul>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - KeyboardVN - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    @RenderBody()
+
+    <footer class="site-footer">
+        <div class="site-footer-legal">© 2018 <a href="http://themeforest.net/item/remark-responsive-bootstrap-admin-template/11989202">Remark</a></div>
+        <div class="site-footer-right">
+            Crafted with <i class="red-600 wb wb-heart"></i> by <a href="https://themeforest.net/user/creation-studio">Creation Studio</a>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+
+    <script src="~/admin/global/vendor/screenfull/screenfull.js"></script>
+    <script src="~/admin/global/vendor/babel-external-helpers/babel-external-helpers.js"></script>
+    <script src="~/admin/global/vendor/jquery/jquery.js"></script>
+    <script src="~/admin/global/vendor/popper-js/umd/popper.min.js"></script>
+    <script src="~/admin/global/vendor/bootstrap/bootstrap.js"></script>
+    <script src="~/admin/global/vendor/animsition/animsition.js"></script>
+    <script src="~/admin/global/vendor/mousewheel/jquery.mousewheel.js"></script>
+    <script src="~/admin/global/vendor/asscrollbar/jquery-asScrollbar.js"></script>
+    <script src="~/admin/global/vendor/asscrollable/jquery-asScrollable.js"></script>
+    <script src="~/admin/global/vendor/ashoverscroll/jquery-asHoverScroll.js"></script>
+
+    <script src="~/admin/global/js/Component.js"></script>
+    <script src="~/admin/global/js/Plugin.js"></script>
+    <script src="~/admin/global/js/Base.js"></script>
+    <script src="~/admin/global/js/Config.js"></script>
+
+    <script src="~/admin/mmenu/assets/js/Section/Menubar.js"></script>
+    <script src="~/admin/mmenu/assets/js/Section/GridMenu.js"></script>
+    <script src="~/admin/mmenu/assets/js/Section/Sidebar.js"></script>
+    <script src="~/admin/mmenu/assets/js/Section/PageAside.js"></script>
+    <script src="~/admin/mmenu/assets/js/Plugin/menu.js"></script>
+
+    <script src="~/admin/mmenu/assets/js/config/tour.js"></script>
+    <script src="~/admin/global/js/config/colors.js"></script>
+    <script>
+        Config.set('assets', '~/admin/mmenu/assets');
+    </script>
+
+    <script src="~/admin/mmenu/assets/js/Site.js"></script>
+    <script>
+        (function (document, window, $) {
+            'use strict';
+
+            var Site = window.Site;
+
+            $(document).ready(function () {
+                Site.run();
+            });
+        })(document, window, jQuery);
+    </script>
+    @RenderSection("Script",required: false)
+    <script src="~/admin/global/vendor/jquery-mmenu/jquery.mmenu.min.all.js"></script>
 </body>
 </html>
