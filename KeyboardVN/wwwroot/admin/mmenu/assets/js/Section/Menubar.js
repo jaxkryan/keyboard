@@ -131,7 +131,7 @@
             offCanvas: false,
             navbars: [{
               position: 'bottom',
-              content: ["<div class=\"site-menubar-footer\"></div>"]
+                content: ["<div class=\"site-menubar-footer\" id=\"toggleFullscreen\">\n              <a class=\"nav-link icon icon-fullscreen\" data-toggle=\"fullscreen\" href=\"#\" role=\"button\" data-placement=\"top\" data-toggle=\"tooltip\" data-original-title=\"Fullscreen\">\n                <span class=\"\" aria-hidden=\"true\"></span>\n              </a>\n            \n              <a href=\"#\" class=\"fold-show\">\n                <span aria-hidden=\"true\"></span>\n              </a>\n\n              <a href=\"#\" class=\"fold-show\">\n                <span aria-hidden=\"true\"></span>\n              </a>\n</div>"]
             }]
           });
         }
