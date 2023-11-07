@@ -31,7 +31,8 @@ namespace KeyboardVN.Areas.Guest.Controllers
         [Area("Guest")]
         public IActionResult Details(int id)
         {
-            return View();
+            Product product = context.Products.FirstOrDefault(product => product.Id == id);
+            return View(product);
         }
     }
 }
