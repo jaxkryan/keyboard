@@ -3,6 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using KeyboardVN.Models;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("KeyboardVNContextConnection") ?? throw new InvalidOperationException("Connection string 'KeyboardVNContextConnection' not found.");
+builder.Services.AddHttpContextAccessor(); // Thêm dòng này
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options => {
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+});
 
 builder.Services.AddDbContext<KeyboardVNContext>(options =>
     options.UseSqlServer(connectionString));
@@ -22,6 +27,8 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.UseSession();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
