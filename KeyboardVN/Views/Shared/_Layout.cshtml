@@ -1,4 +1,9 @@
-﻿@using KeyboardVN.Models
+﻿@using Microsoft.AspNetCore.Identity
+@using KeyboardVN.Models
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
 @{
     String searchName = ViewBag.searchName;
     String userId = ViewBag.userId;
@@ -6,6 +11,7 @@
     List<Brand>? brands = ViewBag.brands;
     int productInCart = ViewBag.productInCart ?? 0;
 }
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,15 +61,15 @@
                     </form>
                 </div>
                 <div class="col-lg-4 col-sm-6 col-12 text-xs-center text-right pt-xs-3">
-                    @if(userId == null){
-                        <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-primary mx-2">Log In</a>
-                        <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-primary">Register</a>
+                    @if (SignInManager.IsSignedIn(User)){
+                        <a asp-area="Identity" asp-page="/Account/Manage/Index" class="fa fa-user-circle btn btn-primary mx-2"></a>
+                        <form id="logoutForm" class="btn"  asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                            <button class="btn btn-primary" type="submit">Logout</button>
+                        </form>
                     } else
                     {
-                        <a asp-area="Identity" asp-page="/Account/Manage/Index" class="fa fa-user-circle btn btn-primary mx-2"></a>
-                        <form id="logoutForm" class="btn btn-primary" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                            <button type="submit">Logout</button>
-                        </form>
+                        <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-primary mx-2">Log In</a>
+                        <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-primary">Register</a>
                     }
                 </div>
             </div>
