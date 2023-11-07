@@ -4,7 +4,7 @@
     String userId = ViewBag.userId;
     List<Category>? categories = ViewBag.categories;
     List<Brand>? brands = ViewBag.brands;
-    int productInCart = ViewBag.productInCart;
+    int productInCart = ViewBag.productInCart ?? 0;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -56,12 +56,14 @@
                 </div>
                 <div class="col-lg-4 col-sm-6 col-12 text-xs-center text-right pt-xs-3">
                     @if(userId == null){
-                        <a href="~/customer/login" class="btn btn-primary mx-2">Log In</a>
-                        <a href="~/customer/register" class="btn btn-primary">Register</a>
+                        <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-primary mx-2">Log In</a>
+                        <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-primary">Register</a>
                     } else
                     {
-                        <a href="~/customer/profile" class="fa fa-user-circle btn btn-primary mx-2"></a>
-                        <a href="~/customer/logout" class="btn btn-primary">Log Out</a>
+                        <a asp-area="Identity" asp-page="/Account/Manage/Index" class="fa fa-user-circle btn btn-primary mx-2"></a>
+                        <form id="logoutForm" class="btn btn-primary" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                            <button type="submit">Logout</button>
+                        </form>
                     }
                 </div>
             </div>
@@ -77,9 +79,14 @@
                     </a>
                     <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999;">
                         <div class="navbar-nav w-100">
-                            @foreach (Category cate in categories)
-                            {
-                                <a href="~/customer/productfilter?categoryId=@cate.Id" class="nav-item nav-link">@cate.Name</a>
+                            @{
+                                if (categories != null)
+                                {
+                                    foreach (Category cate in categories)
+                                    {
+                                        <a href="~/customer/productfilter?categoryId=@cate.Id" class="nav-item nav-link">@cate.Name</a>
+                                    }
+                                }
                             }
                         </div>
                     </nav>
@@ -93,9 +100,14 @@
                                 <div class="nav-item dropdown">
                                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Brands <i class="fa fa-angle-down mt-1"></i></a>
                                     <div class="dropdown-menu bg-primary rounded-0 border-0 m-0">
-                                        @foreach (Brand brand in brands)
-                                        {
-                                            <a href="~/customer/productfilter?brandId=@brand.Id" class="dropdown-item">@brand.Name</a>
+                                        @{
+                                            if (brands != null)
+                                            {
+                                                foreach (Brand brand in brands)
+                                                {
+                                                    <a href="~/customer/productfilter?brandId=@brand.Id" class="dropdown-item">@brand.Name</a>
+                                                }
+                                            }
                                         }
                                     </div>
                                 </div>
@@ -157,6 +169,6 @@
 
     <!-- Template Javascript -->
     <script src="~/customer/js/main.js"></script>
-    @await RenderSectionAsync("Script", required: false)
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
