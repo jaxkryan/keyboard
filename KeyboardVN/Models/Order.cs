@@ -22,7 +22,7 @@ namespace KeyboardVN.Models
         public string Status { get; set; } = null!;
         public DateTime? CreatedTime { get; set; }
 
-        public virtual User User { get; set; } = null!;
+        public virtual User? User { get; set; } = null!;
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

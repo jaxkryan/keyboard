@@ -9,5 +9,10 @@ namespace KeyboardVN.Areas.Guest.Controllers
         {
             return View();
         }
+        [Area("Guest")]
+        public IActionResult Details(int id)
+        {
+            return View();
+        }
     }
 }
