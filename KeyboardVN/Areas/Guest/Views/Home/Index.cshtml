@@ -1,10 +1,201 @@
-﻿@{
+﻿@using KeyboardVN.Models
+@{
     ViewData["Title"] = "Home Page";
+    String searchName = ViewBag.searchName;
+    String userId = ViewBag.userId;
+    List<Category> categories = ViewBag.categories;
+    List<Brand> brands = ViewBag.brands;
+    List<Product> products = ViewBag.products;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Homepage</h1>
-    <p>This is areas/guest/home/index view</a>.</p>
+<!-- Carousel Start -->
+<div class="container-fluid mb-3">
+    <div class="row px-xl-5">
+        <div class="col-lg-8">
+            <div id="header-carousel" class="carousel slide carousel-fade mb-30 mb-lg-0" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#header-carousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#header-carousel" data-slide-to="1"></li>
+                    <li data-target="#header-carousel" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item position-relative active" style="height: 430px;">
+                        <img class="position-absolute w-100 h-100" src="https://shoebakery.com/cdn/shop/files/sneaker_banner_22_1400x.progressive.jpg?v=1656607256" style="object-fit: cover;">
+                        <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                            <div class="p-3" style="max-width: 700px;">
+                                <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Adidas</h1>
+                                <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Make a statement - Stand out from the crowd and express your unique sense of style.</p>
+                                <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="${pageContext.request.contextPath}/productfilter?providerId=1">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item position-relative" style="height: 430px;">
+                        <img class="position-absolute w-100 h-100" src="https://media.istockphoto.com/id/1350560575/photo/pair-of-blue-running-sneakers-on-white-background-isolated.webp?b=1&s=170667a&w=0&k=20&c=liUSgX6SafJ7HWvefFqR9-pnf3KuH6v1lwQ6iEpePWc=" style="object-fit: cover;">
+                        <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                            <div class="p-3" style="max-width: 700px;">
+                                <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Nike</h1>
+                                <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Style up your game - Boost your confidence and stand out in every activity!</p>
+                                <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="${pageContext.request.contextPath}/productfilter?providerId=2">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item position-relative" style="height: 430px;">
+                        <img class="position-absolute w-100 h-100" src="https://marvel-b1-cdn.bc0a.com/f00000000114841/www.florsheim.com/shop/index/FW23-FL-FirstRefresh-CasualHeist-Desktop.jpg" style="object-fit: cover;">
+                        <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                            <div class="p-3" style="max-width: 700px;">
+                                <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Puma</h1>
+                                <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Elegance and genteel - Shoes for true gentlemen</p>
+                                <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="${pageContext.request.contextPath}/productfilter?providerId=3">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="product-offer mb-30" style="height: 200px;">
+                <img class="img-fluid" src="https://www.barkershoes.com/cdn/shop/collections/8I5A5326_1024x700_crop_center.jpg?v=1618574799" alt="">
+                <div class="offer-text">
+                    <h3 class="text-white mb-3">Style</h3>
+                    <h6 class="text-white text-uppercase">Style up yourself</h6>
+                    <a href="${pageContext.request.contextPath}/productfilter" class="btn btn-primary">Shop Now</a>
+                </div>
+            </div>
+            <div class="product-offer mb-30" style="height: 200px;">
+                <img class="img-fluid" src="https://www.barkershoes.com/cdn/shop/files/SS20_HOMEPAGE_MCCLEANPAIR_880x550_crop_center.jpg?v=1614334815" alt="">
+                <div class="offer-text">
+                    <h3 class="text-white mb-3">Fashion</h3>
+                    <h6 class="text-white text-uppercase">Become a gentlemen</h6>
+                    <a href="${pageContext.request.contextPath}/productfilter" class="btn btn-primary">Shop Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<h1>Can u see something here</h1>
-<a href="@Url.Action("Details", "HomeController")" class="btn btn-primary">View Details</a>
+<!-- Carousel End -->
+<!-- Categories Start -->
+<div class="container-fluid pt-5">
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Categories</span></h2>
+    <div class="row px-xl-5 pb-3">
+        @foreach (Category cate in categories)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                <a class="text-decoration-none" href="${pageContext.request.contextPath}/productfilter?categoryId=${cate.id}">
+                    <div class="cat-item d-flex align-items-center mb-4">
+                        <div class="overflow-hidden" style="width: 100px; height: 100px; display: flex; justify-content: center;">
+                            <img class="img-category" style="width: 100px; height: 100px" src="@cate.Image" alt="">
+                        </div>
+                        <div class="flex-fill pl-3">
+                            <h6>@cate.Name</h6>
+                            <small class="text-body">@cate.Name Shoes</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</div>
+<!-- Categories End -->
+<!-- Brands Start -->
+<div class="container-fluid pt-5">
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Brands</span></h2>
+    <div class="row px-xl-5 pb-3">
+        @foreach (Brand brand in brands)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                <a class="text-decoration-none" href="${pageContext.request.contextPath}/productfilter?providerId=${provider.id}">
+                    <div class="cat-item d-flex align-items-center mb-4">
+                        <div class="overflow-hidden" style="width: 100px; height: 100px; display: flex; justify-content: center;">
+                            <img class="img-provider" style="width: 100px; height: 100px" src="@brand.Image" alt="">
+                        </div>
+                        <div class="flex-fill pl-3">
+                            <h6>@brand.Name</h6>
+                            <small class="text-body">@brand.Name Shoes</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</div>
+<!-- Brands End -->
+<!-- Products Start -->
+<div class="container-fluid pt-5 pb-3">
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Hot Products</span></h2>
+    <div class="row px-xl-5">
+        @foreach(Product product in products)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                <div class="product-item bg-light mb-4">
+                    <div class="product-img position-relative overflow-hidden">
+                        <img class="img-fluid w-100" style="width: 276.13px; height: 276.13px" src="@product.Image" alt="">
+                        <div class="product-action">
+                            <a title="Add to cart" class="btn btn-outline-dark btn-square" asp-controller="Cart" asp-action="addToCart" asp-route-id="@product.Id"><i class="fa fa-shopping-cart"></i></a>
+                            <a title="See details" class="btn btn-outline-dark btn-square" href="details?proId=${pro.id}&from=home"><i class="fa fa-search"></i></a>
+                        </div>
+                    </div>
+                    <div class="text-center py-4">
+                        <a title="@product.Name" class="h6 text-decoration-none text-truncate" href="details?proId=${pro.id}">@product.Name</a>
+                        <div class="d-flex align-items-center justify-content-center mt-2">
+                            @{
+                                double? currentPrice = product.Price - product.Discount;
+                            }
+                            <h5 class="text-primary">@currentPrice</h5>
+                            @if(currentPrice < product.Price)
+                            {
+                                <h6 class="text-muted ml-2">
+                                    <del>@product.Price</del>
+                                </h6>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<!-- Products End -->
+
+<div class="container-fluid pt-5">
+    <div class="row px-xl-5 pb-3">
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
+                <h1 class="fa fa-check text-primary m-0 mr-3"></h1>
+                <h5 class="font-weight-semi-bold m-0">Quality Product</h5>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
+                <h1 class="fa fa-shipping-fast text-primary m-0 mr-2"></h1>
+                <h5 class="font-weight-semi-bold m-0">Fast Shipping</h5>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
+                <h1 class="fas fa-exchange-alt text-primary m-0 mr-3"></h1>
+                <h5 class="font-weight-semi-bold m-0">14-Day Return</h5>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
+                <h1 class="fa fa-phone-volume text-primary m-0 mr-3"></h1>
+                <h5 class="font-weight-semi-bold m-0">24/7 Support</h5>
+            </div>
+        </div>
+    </div>
+</div>
+@section Script
+{
+                    <script>
+                    $(document).ready(function () {
+                        setInterval(function () {
+                            var next = $('.carousel-item.active').next();
+                            if (!next.length) {
+                                next = $('.carousel-item:first');
+                            }
+                            next.addClass('active');
+                            $('.carousel-item.active').first().removeClass('active');
+                        }, 5000);
+                    });
+                </script>
+}

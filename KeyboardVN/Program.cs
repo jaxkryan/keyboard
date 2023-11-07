@@ -3,6 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using KeyboardVN.Models;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("KeyboardVNContextConnection") ?? throw new InvalidOperationException("Connection string 'KeyboardVNContextConnection' not found.");
+builder.Services.AddHttpContextAccessor(); // Thêm dòng này
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options => {
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+});
 
 builder.Services.AddDbContext<KeyboardVNContext>(options =>
     options.UseSqlServer(connectionString));
@@ -23,6 +28,8 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseSession();
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -38,7 +45,7 @@ app.MapControllerRoute(
 
 app.MapAreaControllerRoute(
    name: "default",
-   areaName: "Guest",
+   areaName: "Admin",
    pattern: "{controller=Home}/{action=Index}/{id?}"
    );
 

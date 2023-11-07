@@ -17,17 +17,7 @@ namespace KeyboardVN.Areas.Admin.Controllers
         [Area("Admin")]
         public IActionResult Index()
         {
-            var userid = _userManager.GetUserId(HttpContext.User);
-
-            User user = _userManager.FindByIdAsync(userid).Result;
-            return View(user);
-        }
-
-        public IActionResult Details(int id)
-        {
-            var userid = _userManager.GetUserId(HttpContext.User);
-            User user = _userManager.FindByIdAsync(userid).Result;
-            return View(user);
+            return RedirectToAction("Index", "ManageUser");
         }
     }
 }
