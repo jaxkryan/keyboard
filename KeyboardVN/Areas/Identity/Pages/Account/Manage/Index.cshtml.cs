@@ -7,12 +7,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using KeyboardVN.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace KeyboardVN.Areas.Identity.Pages.Account.Manage
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly UserManager<User> _userManager;
@@ -25,12 +27,11 @@ namespace KeyboardVN.Areas.Identity.Pages.Account.Manage
             _userManager = userManager;
             _signInManager = signInManager;
         }
-
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        public string Username { get; set; }
+        public string UserName { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -59,18 +60,54 @@ namespace KeyboardVN.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Required]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
+            [Display(Name = "Street")]
+            public string Street { get; set; }
+
+            [Display(Name = "City")]
+            public string City { get; set; }
+
+            [Display(Name = "Province")]
+            public string Province { get; set; }
+
+            [Display(Name = "Country")]
+            public string Country { get; set; }
+
+            [Required]
+            [Display(Name = "User Name")]
+            public string UserName { get; set; }
+
+            [Required]
+            [EmailAddress]
+            [Display(Name = "Email")]
+            public string Email { get; set; }
         }
 
         private async Task LoadAsync(User user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-
-            Username = userName;
+            UserName = userName;
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Street = user.Street,
+                City = user.City,
+                Country = user.Country,
+                UserName = userName,
+                Email = user.Email,
+                Province = user.Province
             };
         }
 
@@ -111,7 +148,20 @@ namespace KeyboardVN.Areas.Identity.Pages.Account.Manage
                 }
             }
 
+            user.FirstName = Input.FirstName;
+            user.LastName = Input.LastName;
+            user.Email = Input.Email;
+            user.Street = Input.Street;
+            user.City = Input.City; 
+            user.Province = Input.Province; 
+            user.Country = Input.Country;
+            user.UserName = Input.UserName;
+            user.Email = Input.Email;
+            user.PhoneNumber = phoneNumber;
+            await _userManager.UpdateAsync(user);
+
             await _signInManager.RefreshSignInAsync(user);
+            await _userManager.UpdateAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
         }
