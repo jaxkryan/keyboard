@@ -1,8 +1,25 @@
 ﻿@{
     ViewData["Title"] = "Admin Home Page";
 }
-
+@model KeyboardVN.Models.User
 <div class="text-center">
     <h1 class="display-4">Admin Homepage</h1>
     <p>This is areas/admin/home/index view</a>.</p>
+</div>
+
+<div>
+    <h1>Detail</h1>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
 </div>

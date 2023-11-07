@@ -63,11 +63,11 @@ namespace KeyboardVN.Models
         public override bool LockoutEnabled { get; set; }
         public override int AccessFailedCount { get; set; }
 
-        public virtual ICollection<Cart> Carts { get; set; }
-        public virtual ICollection<Order> Orders { get; set; }
-        public virtual ICollection<UserClaim> UserClaims { get; set; }
-        public virtual ICollection<UserLogin> UserLogins { get; set; }
-        public virtual ICollection<UserRole> UserRoles { get; set; }
-        public virtual ICollection<UserToken> UserTokens { get; set; }
+        public virtual ICollection<Cart>? Carts { get; set; }
+        public virtual ICollection<Order>? Orders { get; set; }
+        public virtual ICollection<UserClaim>? UserClaims { get; set; }
+        public virtual ICollection<UserLogin>? UserLogins { get; set; }
+        public virtual ICollection<UserRole>? UserRoles { get; set; }
+        public virtual ICollection<UserToken>? UserTokens { get; set; }
     }
 }

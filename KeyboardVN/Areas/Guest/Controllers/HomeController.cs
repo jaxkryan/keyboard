@@ -28,5 +28,10 @@ namespace KeyboardVN.Areas.Guest.Controllers
             ViewBag.productInCart = productInCart;
             return View();
         }
+        [Area("Guest")]
+        public IActionResult Details(int id)
+        {
+            return View();
+        }
     }
 }
