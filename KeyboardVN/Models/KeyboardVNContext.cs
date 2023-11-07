@@ -38,7 +38,7 @@ namespace KeyboardVN.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var ConnectionString = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetConnectionString("DefaultConnection");
+                var ConnectionString = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetConnectionString("KeyboardVNContextConnection");
                 optionsBuilder.UseSqlServer(ConnectionString);
             }
         }
