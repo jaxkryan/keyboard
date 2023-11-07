@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace KeyboardVN.Models
 {
-    public partial class KeyboardVNContext : DbContext
+    public partial class KeyboardVNContext : IdentityDbContext<User, Role, int,
+        UserClaim, UserRole, UserLogin,
+        RoleClaim, UserToken>
     {
         public KeyboardVNContext()
         {
@@ -23,14 +26,20 @@ namespace KeyboardVN.Models
         public virtual DbSet<Order> Orders { get; set; } = null!;
         public virtual DbSet<OrderDetail> OrderDetails { get; set; } = null!;
         public virtual DbSet<Product> Products { get; set; } = null!;
-        public virtual DbSet<User> Users { get; set; } = null!;
+        public override DbSet<Role> Roles { get; set; } = null!;
+        public override DbSet<RoleClaim> RoleClaims { get; set; } = null!;
+        public override DbSet<User> Users { get; set; } = null!;
+        public override DbSet<UserClaim> UserClaims { get; set; } = null!;
+        public override DbSet<UserLogin> UserLogins { get; set; } = null!;
+        public override DbSet<UserRole> UserRoles { get; set; } = null!;
+        public override DbSet<UserToken> UserTokens { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("server =(local); database = KeyboardVN;uid=sa;pwd=123456; TrustServerCertificate=True; Trusted_Connection=True; ");
+                var ConnectionString = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetConnectionString("DefaultConnection");
+                optionsBuilder.UseSqlServer(ConnectionString);
             }
         }
 
@@ -62,13 +71,13 @@ namespace KeyboardVN.Models
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Carts)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__Cart__userId__4D94879B");
+                    .HasConstraintName("FK__Cart__userId__5EBF139D");
             });
 
             modelBuilder.Entity<CartItem>(entity =>
             {
                 entity.HasKey(e => new { e.ProductId, e.CartId })
-                    .HasName("PK__CartItem__B9056151BFCE8990");
+                    .HasName("PK__CartItem__B905615191E0496C");
 
                 entity.ToTable("CartItem");
 
@@ -84,13 +93,13 @@ namespace KeyboardVN.Models
                     .WithMany(p => p.CartItems)
                     .HasForeignKey(d => d.CartId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__CartItem__cartId__4E88ABD4");
+                    .HasConstraintName("FK__CartItem__cartId__5FB337D6");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.CartItems)
                     .HasForeignKey(d => d.ProductId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__CartItem__produc__4F7CD00D");
+                    .HasConstraintName("FK__CartItem__produc__60A75C0F");
             });
 
             modelBuilder.Entity<Category>(entity =>
@@ -160,7 +169,7 @@ namespace KeyboardVN.Models
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Order__userId__4AB81AF0");
+                    .HasConstraintName("FK__Order__userId__5BE2A6F2");
             });
 
             modelBuilder.Entity<OrderDetail>(entity =>
@@ -183,13 +192,13 @@ namespace KeyboardVN.Models
                     .WithMany(p => p.OrderDetails)
                     .HasForeignKey(d => d.OrderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__OrderDeta__order__4BAC3F29");
+                    .HasConstraintName("FK__OrderDeta__order__5CD6CB2B");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.OrderDetails)
                     .HasForeignKey(d => d.ProductId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__OrderDeta__produ__4CA06362");
+                    .HasConstraintName("FK__OrderDeta__produ__5DCAEF64");
             });
 
             modelBuilder.Entity<Product>(entity =>
@@ -224,13 +233,29 @@ namespace KeyboardVN.Models
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.BrandId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Product__brandId__49C3F6B7");
+                    .HasConstraintName("FK__Product__brandId__5AEE82B9");
 
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.CategoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Product__categor__48CFD27E");
+                    .HasConstraintName("FK__Product__categor__59FA5E80");
+            });
+
+            modelBuilder.Entity<Role>(entity =>
+            {
+                entity.Property(e => e.Name).HasMaxLength(256);
+
+                entity.Property(e => e.NormalizedName).HasMaxLength(256);
+            });
+
+            modelBuilder.Entity<RoleClaim>(entity =>
+            {
+                entity.Property(e => e.RoleId).HasMaxLength(450);
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.RoleClaims)
+                    .HasForeignKey(d => d.RoleId);
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -249,11 +274,6 @@ namespace KeyboardVN.Models
                     .IsUnicode(false)
                     .HasColumnName("country");
 
-                entity.Property(e => e.Email)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("email");
-
                 entity.Property(e => e.FirstName)
                     .HasMaxLength(50)
                     .HasColumnName("firstName");
@@ -262,30 +282,79 @@ namespace KeyboardVN.Models
                     .HasMaxLength(50)
                     .HasColumnName("lastName");
 
-                entity.Property(e => e.Password)
-                    .HasMaxLength(20)
-                    .IsUnicode(false)
-                    .HasColumnName("password");
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(256)
+                    .HasColumnName("userName");
 
-                entity.Property(e => e.Phone)
-                    .HasMaxLength(15)
-                    .IsUnicode(false)
-                    .HasColumnName("phone");
+                entity.Property(e => e.NormalizedUserName)
+                    .HasMaxLength(256)
+                    .HasColumnName("NormalizedUserName");
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(256)
+                    .HasColumnName("Email");
+
+                entity.Property(e => e.NormalizedEmail)
+                    .HasMaxLength(256)
+                    .HasColumnName("NormalizedEmail");
 
                 entity.Property(e => e.Province)
                     .HasMaxLength(30)
                     .IsUnicode(false)
                     .HasColumnName("province");
 
-                entity.Property(e => e.Role)
-                    .HasMaxLength(15)
-                    .IsUnicode(false)
-                    .HasColumnName("role");
-
                 entity.Property(e => e.Street)
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("street");
+            });
+
+            modelBuilder.Entity<UserClaim>(entity =>
+            {
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.UserClaims)
+                    .HasForeignKey(d => d.UserId);
+            });
+
+            modelBuilder.Entity<UserLogin>(entity =>
+            {
+                entity.HasKey(e => new { e.LoginProvider, e.ProviderKey });
+
+                entity.Property(e => e.LoginProvider).HasMaxLength(128);
+
+                entity.Property(e => e.ProviderKey).HasMaxLength(128);
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.UserLogins)
+                    .HasForeignKey(d => d.UserId);
+            });
+
+            modelBuilder.Entity<UserRole>(entity =>
+            {
+                entity.HasKey(e => new { e.UserId, e.RoleId });
+
+                entity.Property(e => e.CreatedDate).HasColumnType("date");
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.UserRoles)
+                    .HasForeignKey(d => d.RoleId);
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.UserRoles)
+                    .HasForeignKey(d => d.UserId);
+            });
+
+            modelBuilder.Entity<UserToken>(entity =>
+            {
+                entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
+
+                entity.Property(e => e.LoginProvider).HasMaxLength(128);
+
+                entity.Property(e => e.Name).HasMaxLength(128);
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.UserTokens)
+                    .HasForeignKey(d => d.UserId);
             });
 
             OnModelCreatingPartial(modelBuilder);
