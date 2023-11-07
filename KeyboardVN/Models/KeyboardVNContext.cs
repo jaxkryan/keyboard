@@ -26,13 +26,13 @@ namespace KeyboardVN.Models
         public virtual DbSet<Order> Orders { get; set; } = null!;
         public virtual DbSet<OrderDetail> OrderDetails { get; set; } = null!;
         public virtual DbSet<Product> Products { get; set; } = null!;
-        public virtual DbSet<Role> Roles { get; set; } = null!;
-        public virtual DbSet<RoleClaim> RoleClaims { get; set; } = null!;
-        public virtual DbSet<User> Users { get; set; } = null!;
-        public virtual DbSet<UserClaim> UserClaims { get; set; } = null!;
-        public virtual DbSet<UserLogin> UserLogins { get; set; } = null!;
-        public virtual DbSet<UserRole> UserRoles { get; set; } = null!;
-        public virtual DbSet<UserToken> UserTokens { get; set; } = null!;
+        public override DbSet<Role> Roles { get; set; } = null!;
+        public override DbSet<RoleClaim> RoleClaims { get; set; } = null!;
+        public override DbSet<User> Users { get; set; } = null!;
+        public override DbSet<UserClaim> UserClaims { get; set; } = null!;
+        public override DbSet<UserLogin> UserLogins { get; set; } = null!;
+        public override DbSet<UserRole> UserRoles { get; set; } = null!;
+        public override DbSet<UserToken> UserTokens { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -274,11 +274,6 @@ namespace KeyboardVN.Models
                     .IsUnicode(false)
                     .HasColumnName("country");
 
-                entity.Property(e => e.Email)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("email");
-
                 entity.Property(e => e.FirstName)
                     .HasMaxLength(50)
                     .HasColumnName("firstName");
@@ -287,15 +282,21 @@ namespace KeyboardVN.Models
                     .HasMaxLength(50)
                     .HasColumnName("lastName");
 
-                entity.Property(e => e.Password)
-                    .HasMaxLength(20)
-                    .IsUnicode(false)
-                    .HasColumnName("password");
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(256)
+                    .HasColumnName("userName");
 
-                entity.Property(e => e.Phone)
-                    .HasMaxLength(15)
-                    .IsUnicode(false)
-                    .HasColumnName("phone");
+                entity.Property(e => e.NormalizedUserName)
+                    .HasMaxLength(256)
+                    .HasColumnName("NormalizedUserName");
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(256)
+                    .HasColumnName("Email");
+
+                entity.Property(e => e.NormalizedEmail)
+                    .HasMaxLength(256)
+                    .HasColumnName("NormalizedEmail");
 
                 entity.Property(e => e.Province)
                     .HasMaxLength(30)

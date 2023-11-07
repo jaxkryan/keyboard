@@ -12,10 +12,10 @@ namespace KeyboardVN.Models
             UserRoles = new HashSet<UserRole>();
         }
 
-        public int Id { get; set; }
-        public string? Name { get; set; }
-        public string? NormalizedName { get; set; }
-        public string? ConcurrencyStamp { get; set; }
+        public override int Id { get; set; }
+        public override string? Name { get; set; }
+        public override string? NormalizedName { get; set; }
+        public override string? ConcurrencyStamp { get; set; }
 
         public virtual ICollection<RoleClaim> RoleClaims { get; set; }
         public virtual ICollection<UserRole> UserRoles { get; set; }
