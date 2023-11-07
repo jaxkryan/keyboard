@@ -1,0 +1,191 @@
+﻿@using KeyboardVN.Models
+@{
+    ViewData["Title"] = "Shop Page";
+    string? searchName = ViewBag.searchName;
+    List<Category> categories = ViewBag.categories;
+    List<Brand> brands = ViewBag.brands;
+    List<Product> products = ViewBag.products;
+    int? categoryId = ViewBag.categoryId;
+    int? brandId = ViewBag.brandId;
+    string? price = ViewBag.price;
+    string? sort = ViewBag.sort;
+    int? page = ViewBag.page;
+    int? numberOfProduct = ViewBag.numberOfProduct;
+}
+
+<form asp-controller="Home" asp-action="productfilter" method="GET">
+    <div class="container-fluid">
+        <div class="row px-xl-5">
+            <!-- Shop Sidebar Start -->
+            <div class="col-lg-3 col-md-4">
+                <!-- Categories Start -->
+                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Categories</span></h5>
+                <div class="bg-light p-4 mb-30">
+                    <div class="custom-control custom-radio d-flex align-items-center justify-content-between mb-3">
+                        <input type="radio" class="custom-control-input" id="cate-all" name="categoryId" value="-1" onclick="this.form.submit()" @(categoryId == null || categoryId == -1 ? "checked" : "")>
+                        <label class="custom-control-label" for="cate-all">All</label>
+                    </div>
+                    @foreach (Category cate in categories)
+                    {
+                        <div class="custom-control custom-radio d-flex align-items-center justify-content-between mb-3">
+                            <input type="radio" class="custom-control-input" id="category-@cate.Id" name="categoryId" value="@cate.Id" onclick="this.form.submit()" @(categoryId == cate.Id ? "checked" : "")>
+                            <label class="custom-control-label" for="category-@cate.Id">@cate.Name</label>
+                        </div>
+                    }
+                </div>
+                <!-- Categories End -->
+                <!-- Price Start -->
+                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Price</span></h5>
+                <div class="bg-light p-4 mb-30">
+                    <div class="custom-control custom-radio d-flex align-items-center justify-content-between mb-3">
+                        <input type="radio" class="custom-control-input" name="price" id="priceAll" value="" onclick="this.form.submit()" @(price == "" || price == null ? "checked" : "")>
+                        <label class="custom-control-label" for="priceAll">All</label>
+                    </div>
+                    <div class="custom-control custom-radio d-flex align-items-center justify-content-between mb-3">
+                        <input type="radio" class="custom-control-input" name="price" id="price1" value="0-100" onclick="this.form.submit()" @(price == "0-100" ? "checked" : "")>
+                        <label class="custom-control-label" for="price1">Below 100$</label>
+                    </div>
+                    <div class="custom-control custom-radio d-flex align-items-center justify-content-between mb-3">
+                        <input type="radio" class="custom-control-input" name="price" id="price2" value="100-200" onclick="this.form.submit()" @(price == "100-200" ? "checked" : "")>
+                        <label class="custom-control-label" for="price2">100$ - 200$</label>
+                    </div>
+                    <div class="custom-control custom-radio d-flex align-items-center justify-content-between mb-3">
+                        <input type="radio" class="custom-control-input" name="price" id="price3" value="200-500" onclick="this.form.submit()" @(price == "200-500" ? "checked" : "")>
+                        <label class="custom-control-label" for="price3">200$ - 500$</label>
+                    </div>
+                    <div class="custom-control custom-radio d-flex align-items-center justify-content-between mb-3">
+                        <input type="radio" class="custom-control-input" name="price" id="price4" value="500-1000000" onclick="this.form.submit()" @(price == "500-1000000" ? "checked" : "")>
+                        <label class="custom-control-label" for="price4">Above 500$</label>
+                    </div>
+                </div>
+                <!-- Price End -->
+                <!-- Brand Start -->
+                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Brands</span></h5>
+                <div class="bg-light p-4 mb-30">
+                    <div class="custom-control custom-radio d-flex align-items-center justify-content-between mb-3">
+                        <input type="radio" class="custom-control-input" id="brand-all" name="brandId" value="-1" onclick="this.form.submit()" @(brandId == -1 || brandId == null ? "checked" : "")>
+                        <label class="custom-control-label" for="brand-all">All</label>
+                    </div>
+                    @foreach (Brand brand in brands)
+                    {
+                        <div class="custom-control custom-radio d-flex align-items-center justify-content-between mb-3">
+                            <input type="radio" class="custom-control-input" id="brand-@brand.Id" name="brandId" value="@brand.Id" onclick="this.form.submit()" @(brandId == brand.Id ? "checked" : "")>
+                            <label class="custom-control-label" for="brand-@brand.Id">@brand.Name</label>
+                        </div>
+                    }
+
+                    <input type="hidden" name="searchName" value="@searchName">
+                </div>
+
+                <!-- Brand End -->
+            </div>
+            <!-- Shop Sidebar End -->
+            <!-- Shop Product Start -->
+            <div class="col-lg-9 col-md-8">
+                <div class="row pb-3">
+                    <div class="col-12 pb-1">
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                            <div>
+                            </div>
+                            <div class="row ml-2">
+                                @if (sort == "" || sort == null)
+                                {
+                                    <select name="sort" class="custom-select" onchange="this.form.submit()">
+                                        <option value="" selected>Sort by price</option>
+                                        <option value="ascending">Ascending</option>
+                                        <option value="descending">Descending</option>
+                                    </select>
+                                }
+                                @if (sort == "ascending")
+                                {
+                                    <select name="sort" class="custom-select" onchange="this.form.submit()">
+                                        <option value="">Sort by price</option>
+                                        <option value="ascending" selected>Ascending</option>
+                                        <option value="descending">Descending</option>
+                                    </select>
+                                }
+                                @if (sort == "descending")
+                                {
+                                    <select name="sort" class="custom-select" onchange="this.form.submit()">
+                                        <option value="">Sort by price</option>
+                                        <option value="ascending">Ascending</option>
+                                        <option value="descending" selected>Descending</option>
+                                    </select>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    @if (products.Count == 0)
+                    {
+                        <div class="col-12 pb-1">
+                            <p style="
+                                       text-align: center;
+                                       font-weight: 500;
+                                       font-size: 24px
+                                       ">No matching products found</p>
+                        </div>
+                    }
+                    @foreach (Product product in products)
+                    {
+                        <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                            <div class="product-item bg-light mb-4">
+                                <div class="product-img position-relative overflow-hidden">
+                                    <img class="img-fluid w-100" style="height: 174.08px; width: 174.08px;" src="@product.Image" alt="">
+                                    <div class="product-action">
+                                        <a title="Add to cart" class="btn btn-outline-dark btn-square" href="${pageContext.request.contextPath}/add-to-cart-shop-page?proId=${pro.id}&sort=${sort}&categoryId=${categoryId}&price=${price}&providerId=${providerId}&searchName=${searchName}&page=${page}"><i class="fa fa-shopping-cart"></i></a>
+                                        <a title="See details" class="btn btn-outline-dark btn-square" href="${pageContext.request.contextPath}/details?proId=${pro.id}&from=shop&sort=${sort}&categoryId=${categoryId}&price=${price}&providerId=${providerId}&searchName=${searchName}&page=${page}"><i class="fa fa-search"></i></a>
+                                    </div>
+                                </div>
+                                <div class="text-center py-4">
+                                    <a title="@product.Name" class="h6 text-decoration-none text-truncate" href="${pageContext.request.contextPath}/details?proId=${pro.id}&from=shop&sort=${sort}&categoryId=${categoryId}&price=${price}&providerId=${providerId}&searchName=${searchName}&page=${page}">@product.Name</a>
+                                    <div class="d-flex align-items-center justify-content-center mt-2">
+                                        @{
+                                            double? currrentPrice = product.Price - product.Discount;
+                                        }
+                                        <h5 class="text-primary">@currrentPrice$</h5>
+                                        @if (currrentPrice < product.Price)
+                                        {
+                                            <h6 class="text-muted ml-2">
+                                                <del>@product.Price$</del>
+                                            </h6>
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+                @if (products.Count != 0)
+                {
+                    <div class="clearfix">
+                        <ul class="pagination justify-content-center">
+                            @if (page != 1)
+                            {
+                                <li class="page-item"><a asp-controller="Home" asp-action="ProductFilter" asp-route-page="@(page-1)" asp-route-sort="@sort" asp-route-categoryId="@categoryId" asp-route-brandId="@brandId" asp-route-searchName="@searchName" asp-route-price="@price" class="page-link">Previous</a></li>
+                            }
+                            @for (int i = 1; i <= Math.Ceiling((double)numberOfProduct / 16); i++)
+                            {
+                                if (page == i)
+                                {
+                                    <li class="page-item active"><a class="page-link">@i</a></li>
+                                }
+                                else
+                                {
+                                    <li class="page-item "><a asp-controller="Home" asp-action="ProductFilter" asp-route-page="@i" asp-route-sort="@sort" asp-route-categoryId="@categoryId" asp-route-brandId="@brandId" asp-route-searchName="@searchName" asp-route-price="@price" class="page-link">${i}</a></li>
+                                }
+                            }
+                            @if (page < Math.Ceiling((double)numberOfProduct / 16))
+                            {
+                                <li class="page-item"><a asp-controller="Home" asp-action="ProductFilter" asp-route-page="@(page+1)" asp-route-sort="@sort" asp-route-categoryId="@categoryId" asp-route-brandId="@brandId" asp-route-searchName="@searchName" asp-route-price="@price" class="page-link">Next</a></li>
+
+                            }
+                        </ul>
+                    </div>
+                }
+            </div>
+            <!-- Shop Product End -->
+        </div>
+    </div>
+</form>
