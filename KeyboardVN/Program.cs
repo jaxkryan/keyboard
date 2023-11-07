@@ -45,8 +45,8 @@ app.MapControllerRoute(
 
 app.MapAreaControllerRoute(
    name: "default",
-   areaName: "Admin",
-   pattern: "{controller=ManageOrder}/{action=ViewOrder}/{id?}"
+   areaName: "Guest",
+   pattern: "{controller=Home}/{action=Index}/{id?}"
    );
 
 app.MapRazorPages();

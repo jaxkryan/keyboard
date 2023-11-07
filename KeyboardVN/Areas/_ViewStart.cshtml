@@ -1,9 +1,21 @@
 ﻿@{
     string curentArea = this.ViewContext.RouteData.Values["area"].ToString();
-    Console.WriteLine(curentArea);
     string layout = "";
     switch (curentArea)
     {
+        case "Identity":
+            string page = this.ViewContext.RouteData.Values["page"].ToString();
+            if (page.Equals("/Account/Register") || page.Equals("/Account/Login"))
+            {
+                Console.WriteLine(page);
+                layout = "~/Views/Shared/_LayoutLogin.cshtml";
+            }
+            else
+            {
+
+                layout = "~/Views/Shared/_Layout.cshtml";
+            }
+            break;
         case "Admin":
             layout = "~/Views/Shared/_LayoutAdmin.cshtml";
             break;
@@ -12,5 +24,4 @@
             break;
     }
     Layout = layout;
-
 }
