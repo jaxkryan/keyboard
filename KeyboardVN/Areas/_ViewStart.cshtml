@@ -1,0 +1,15 @@
+﻿@{
+    string curentArea = this.ViewContext.RouteData.Values["area"].ToString();
+    string layout = "";
+    switch (curentArea)
+    {
+        case "Admin":
+            layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+            break;
+        default:
+            layout = "~/Views/Shared/_Layout.cshtml";
+            break;
+    }
+    Layout = layout;
+
+}
