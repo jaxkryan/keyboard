@@ -7,7 +7,7 @@ namespace KeyboardVN.Areas.Admin.Controllers
         [Area("Admin")]
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "ManageUser");
         }
     }
 }
