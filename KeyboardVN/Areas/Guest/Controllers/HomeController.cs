@@ -1,6 +1,7 @@
 ﻿using KeyboardVN.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace KeyboardVN.Areas.Guest.Controllers
 {
@@ -31,7 +32,7 @@ namespace KeyboardVN.Areas.Guest.Controllers
         [Area("Guest")]
         public IActionResult Details(int id)
         {
-            Product product = context.Products.FirstOrDefault(product => product.Id == id);
+            var product = context.Products.Include(c=>c.Category).Include(c=>c.Brand).FirstOrDefault(product => product.Id == id);
             return View(product);
         }
     }
