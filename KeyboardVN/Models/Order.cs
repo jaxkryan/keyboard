@@ -23,6 +23,6 @@ namespace KeyboardVN.Models
         public DateTime? CreatedTime { get; set; }
 
         public virtual User? User { get; set; } = null!;
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<OrderDetail>? OrderDetails { get; set; }
     }
 }
