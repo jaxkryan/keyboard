@@ -92,7 +92,7 @@
                                 {
                                     foreach (Category cate in categories)
                                     {
-                                        <a asp-action="ProductFilter" asp-route-categoryId="@cate.Id" class="nav-item nav-link">@cate.Name</a>
+                                        <a asp-controller="Home" asp-action="ProductFilter" asp-route-categoryId="@cate.Id" class="nav-item nav-link">@cate.Name</a>
                                     }
                                 }
                             }
@@ -113,7 +113,7 @@
                                             {
                                                 foreach (Brand brand in brands)
                                                 {
-                                                    <a asp-action="ProductFilter" asp-route-brandId="@brand.Id" class="dropdown-item">@brand.Name</a>
+                                                    <a asp-controller="Home"  asp-action="ProductFilter" asp-route-brandId="@brand.Id" class="dropdown-item">@brand.Name</a>
                                                 }
                                             }
                                         }
@@ -122,7 +122,7 @@
                                 <a class="nav-item nav-link">History</a>
                             </div>
                             <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
-                                <a href="~/customer/cart" class="btn px-0 ml-3">
+                                <a asp-controller="Cart" asp-action="CartPage" class="btn px-0 ml-3">
                                     <i class="fas fa-shopping-cart text-primary"></i>
                                 </a>
                                 <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">

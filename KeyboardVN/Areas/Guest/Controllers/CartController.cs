@@ -1,6 +1,8 @@
 ﻿using KeyboardVN.Models;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 using System.Text.Encodings.Web;
 
 namespace KeyboardVN.Areas.Guest.Controllers
@@ -22,7 +24,7 @@ namespace KeyboardVN.Areas.Guest.Controllers
                                     int? brandId,
                                     String? sort,
                                     int? page,
-                                    int? quantity)
+                                    int? quantityToBuy)
         {
             int? userId = httpContextAccessor.HttpContext.Session.GetInt32("userId");
             if (productId == null)
@@ -30,9 +32,9 @@ namespace KeyboardVN.Areas.Guest.Controllers
                 productId = 1;
             }
             Console.WriteLine(userId);
-            if (quantity == null)
+            if (quantityToBuy == null)
             {
-                quantity = 1;
+                quantityToBuy = 1;
             }
             if (userId == null)
             {
@@ -48,7 +50,7 @@ namespace KeyboardVN.Areas.Guest.Controllers
                 TempData["notiType"] = "RED";
                 return RedirectToAction("Index", "Home");
             }
-            if (quantity + context.CartItems.FirstOrDefault(x => x.CartId == cart.Id && x.ProductId == productId).Quantity > context.Products.FirstOrDefault(p => p.Id == productId).UnitInStock)
+            if (quantityToBuy + context.CartItems.FirstOrDefault(x => x.CartId == cart.Id && x.ProductId == productId).Quantity > context.Products.FirstOrDefault(p => p.Id == productId).UnitInStock)
             {
                 TempData["notification"] = "Not Enough in stock!";
                 TempData["notiType"] = "RED";
@@ -61,7 +63,7 @@ namespace KeyboardVN.Areas.Guest.Controllers
                     CartItem temp = new CartItem();
                     temp.CartId = cart.Id;
                     temp.ProductId = productId;
-                    temp.Quantity = (int)quantity;
+                    temp.Quantity = (int)quantityToBuy;
                     temp.Product = context.Products.FirstOrDefault(p => p.Id == productId);
                     temp.Cart = cart;
                     context.CartItems.Add(temp);
@@ -69,10 +71,10 @@ namespace KeyboardVN.Areas.Guest.Controllers
                 }
                 else
                 {
-                    context.CartItems.FirstOrDefault(ci => ci.CartId == cart.Id && ci.ProductId == productId).Quantity += (int)quantity;
+                    context.CartItems.FirstOrDefault(ci => ci.CartId == cart.Id && ci.ProductId == productId).Quantity += (int)quantityToBuy;
                     context.SaveChanges();
                 }
-                TempData["notification"] = "Added " + quantity + " " + context.Products.FirstOrDefault(p => p.Id == productId).Name + " to Cart!";
+                TempData["notification"] = "Added " + quantityToBuy + " " + context.Products.FirstOrDefault(p => p.Id == productId).Name + " to Cart!";
                 TempData["notiType"] = "GREEN";
             }
             if (from == "home")
@@ -104,6 +106,58 @@ namespace KeyboardVN.Areas.Guest.Controllers
             {
                 return View();
             }
+        }
+        [Area("Guest")]
+        public IActionResult CartPage()
+        {
+            List<Category> categories = new List<Category>();
+            List<Brand> brands = new List<Brand>();
+            categories = context.Categories.ToList();
+            brands = context.Brands.ToList();
+            ViewBag.Categories = categories;
+            ViewBag.Brands = brands;
+            List<CartItem> cartItems = context.CartItems
+                .Include(ci => ci.Product)
+                .Where(ci => ci.CartId == context.Carts.FirstOrDefault(c => c.UserId == httpContextAccessor.HttpContext.Session.GetInt32("userId")).Id)
+                .ToList(); ViewBag.cartItems = cartItems;
+            int productInCart = 0;
+            if (httpContextAccessor.HttpContext.Session.GetInt32("userId") != null)
+            {
+                productInCart = context.CartItems.Where(ci => ci.CartId == context.Carts.FirstOrDefault(c => c.UserId == httpContextAccessor.HttpContext.Session.GetInt32("userId")).Id).Count();
+            }
+            ViewBag.productInCart = productInCart;
+            return View();
+        }
+        [Area("Guest")]
+        [HttpPost]
+        public IActionResult UpdateCartQuantity()
+        {
+            foreach (string key in Request.Form.Keys)
+            {
+                if (key.StartsWith("quantity-"))
+                {
+                    int productId = Convert.ToInt32(key.Replace("quantity-", ""));
+                    int newQuantity = Convert.ToInt32(Request.Form[key]);
+                    if( newQuantity > context.Products.FirstOrDefault(p => p.Id == productId).UnitInStock)
+                    {
+                        TempData["notification"] = "Not enough " + context.Products.FirstOrDefault(p => p.Id == productId).Name +" in stock!";
+                        TempData["notiType"] = "RED";
+                        return RedirectToAction("CartPage", "Cart");
+                    }
+                    context.CartItems.FirstOrDefault(c => c.ProductId == productId && c.CartId == context.Carts.FirstOrDefault(c => c.UserId == httpContextAccessor.HttpContext.Session.GetInt32("userId")).Id).Quantity = newQuantity;
+                    context.SaveChanges();
+                }
+            }
+            TempData["notification"] = "Saved change!";
+            TempData["notiType"] = "GREEN";
+            return RedirectToAction("CartPage", "Cart");
+        }
+        [Area("Guest")]
+        public IActionResult DeleteCartItem(int productId)
+        {
+            context.CartItems.Remove(context.CartItems.FirstOrDefault(c => c.ProductId == productId && c.CartId == context.Carts.FirstOrDefault(c => c.UserId == httpContextAccessor.HttpContext.Session.GetInt32("userId")).Id));
+            context.SaveChanges();
+            return RedirectToAction("CartPage", "Cart");
         }
     }
 }

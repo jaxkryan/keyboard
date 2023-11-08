@@ -51,7 +51,7 @@
                                 <i class="fa fa-minus"></i>
                             </button>
                         </div>
-                        <input name="quantity" id="quantity" class="form-control bg-secondary border-0 text-center" value="1" required>
+                        <input name="quantityToBuy" id="quantityToBuy" class="form-control bg-secondary border-0 text-center" pattern="[1-9]\d*" title="Quantity must be a number more than 0" value="1" required>
                         <input type="hidden" name="productId" value="@Model?.Id"></input>
                         <input type="hidden" name="from" value="detail"></input>
                         <div class="input-group-btn">
@@ -66,7 +66,6 @@
         </div>
     </div>
 </div>
-
 
 
 
