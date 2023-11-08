@@ -1,0 +1,119 @@
+﻿@model KeyboardVN.Models.Product
+
+@{
+    ViewData["Title"] = "View";
+}
+<link rel="stylesheet" href="~admin/mmenu/assets/examples/css/forms/masks.css">
+
+<div class="page">
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1 class="page-title">Manage User</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="ManageProduct" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item active">Edit product</li>
+        </ol>
+    </div>
+    <!-- End Page Header -->
+    <!-- Page Content -->
+    <div class="page-content">
+
+        <!-- Panel -->
+        <div class="panel">
+            <div class="panel-heading">
+                <h3 class="panel-title">List Of Users</h3>
+            </div>
+            <div class="panel-body">
+                <form asp-action="Edit" class="form-horizontal">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-group row">
+                        <label class="col-md-3 form-control-label">Date</label>
+                        <div class="col-md-9">
+                            <label asp-for="CategoryId" class="control-label"></label>
+                            <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+                            <span asp-validation-for="CategoryId" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-3 form-control-label">Date</label>
+                        <div class="col-md-9">
+                            <label asp-for="BrandId" class="control-label"></label>
+                            <select asp-for="BrandId" class="form-control" asp-items="ViewBag.BrandId"></select>
+                            <span asp-validation-for="BrandId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 form-control-label">Date</label>
+                        <div class="col-md-9">
+                            <label asp-for="Name" class="control-label"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 form-control-label">Date</label>
+                        <div class="col-md-9">
+                            <label asp-for="Image" class="control-label"></label>
+                            <input asp-for="Image" class="form-control" />
+                            <span asp-validation-for="Image" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 form-control-label">Date</label>
+                        <div class="col-md-9">
+                            <label asp-for="Description" class="control-label"></label>
+                            <input asp-for="Description" class="form-control" />
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 form-control-label">Date</label>
+                        <div class="col-md-9">
+                            <label asp-for="Price" class="control-label"></label>
+                            <input asp-for="Price" class="form-control" />
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 form-control-label">Date</label>
+                        <div class="col-md-9">
+                            <label asp-for="Discount" class="control-label"></label>
+                            <input asp-for="Discount" class="form-control" />
+                            <span asp-validation-for="Discount" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 form-control-label">Date</label>
+                        <div class="col-md-9">
+                            <label asp-for="UnitInStock" class="control-label"></label>
+                            <input asp-for="UnitInStock" class="form-control" />
+                            <span asp-validation-for="UnitInStock" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-9 offset-md-3">
+                            <button type="button" class="btn-primary btn">Submit</button>
+                            <a asp-action="Index" asp-controller="ManageProduct" type="button" class="btn-default btn">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- End Panel -->
+    </div>
+    <!-- End Page Content -->
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~admin/global/js/Plugin/formatter.js"></script>
+    <script src="~admin/global/vendor/formatter/jquery.formatter.js"></script>
+}
