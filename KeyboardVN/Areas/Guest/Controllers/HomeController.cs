@@ -1,4 +1,5 @@
 ﻿using KeyboardVN.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,9 @@ namespace KeyboardVN.Areas.Guest.Controllers
     {
         private KeyboardVNContext context = new KeyboardVNContext();
         private IHttpContextAccessor httpContextAccessor = new HttpContextAccessor();
+
         [Area("Guest")]
+        [AllowAnonymous]
         public IActionResult Index()
         {
             List<Category> categories = new List<Category>();

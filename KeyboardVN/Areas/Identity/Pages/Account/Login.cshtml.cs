@@ -124,9 +124,12 @@ namespace KeyboardVN.Areas.Identity.Pages.Account
                     _logger.LogInformation("User logged in.");
                     User user = _keyboardVNContext.Users.FirstOrDefault(x => x.Email == Input.Email);
                     _httpContext.HttpContext.Session.SetInt32("userId", user.Id);
-                    Console.WriteLine(user.Id);
-                    return RedirectToAction("Index", "Home", new { area = "Guest" });
-                    //return LocalRedirect(returnUrl);
+                    _logger.LogInformation($"returnUrl: {returnUrl}");
+                    //if(returnUrl.Equals("/Identity/Account/Logout"))
+                    //{
+                    //    return RedirectToAction("Index", "Home", new { area = "Guest" });
+                    //}
+                    return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
                 {

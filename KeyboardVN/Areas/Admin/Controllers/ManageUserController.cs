@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using KeyboardVN.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KeyboardVN.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ManageUserController : Controller
     {
         private readonly KeyboardVNContext _context;

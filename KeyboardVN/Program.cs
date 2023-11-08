@@ -4,9 +4,21 @@ using KeyboardVN.Models;
 using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
+
 var connectionString = builder.Configuration.GetConnectionString("KeyboardVNContextConnection") ?? throw new InvalidOperationException("Connection string 'KeyboardVNContextConnection' not found.");
+
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.ConfigureApplicationCookie(options => {
+    // options.Cookie.HttpOnly = true;
+    // options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+    options.LoginPath = $"/login/";
+    options.LogoutPath = $"/logout/";
+    options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+});
+
 builder.Services.AddDistributedMemoryCache();
+
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -39,9 +51,11 @@ if (!app.Environment.IsDevelopment())
 app.UseSession();
 
 app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 
 app.UseRouting();
+
 app.UseAuthentication(); ;
 
 app.UseAuthorization();
@@ -60,4 +74,3 @@ app.MapAreaControllerRoute(
 app.MapRazorPages();
 
 app.Run();
-    
