@@ -132,7 +132,7 @@
                                 <div class="product-img position-relative overflow-hidden">
                                     <img class="img-fluid w-100" style="height: 174.08px; width: 174.08px;" src="@product.Image" alt="">
                                     <div class="product-action">
-                                        <a title="Add to cart" class="btn btn-outline-dark btn-square" href="${pageContext.request.contextPath}/add-to-cart-shop-page?proId=${pro.id}&sort=${sort}&categoryId=${categoryId}&price=${price}&providerId=${providerId}&searchName=${searchName}&page=${page}"><i class="fa fa-shopping-cart"></i></a>
+                                        <a title="Add to cart" class="btn btn-outline-dark btn-square" asp-controller="Cart" asp-action="addToCart" asp-route-productId ="@product.Id" asp-route-from="shop" asp-route-searchName="@searchName" asp-route-categoryId="@categoryId" asp-route-price="@price" asp-route-brandId="@brandId" asp-route-sort="@sort" asp-route-page="@(page)"><i class="fa fa-shopping-cart"></i></a>
                                         <a title="See details" class="btn btn-outline-dark btn-square" asp-controller="Home" asp-action="Details" asp-route-id="@product.Id"><i class="fa fa-search"></i></a>
                                     </div>
                                 </div>

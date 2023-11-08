@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using System.Security.Claims;
 
 namespace KeyboardVN.Areas.Identity.Pages.Account
 {
@@ -24,6 +25,7 @@ namespace KeyboardVN.Areas.Identity.Pages.Account
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly KeyboardVNContext _keyboardVNContext = new KeyboardVNContext();
 
         public LoginModel(IHttpContextAccessor httpContext, UserManager<User> userManager, SignInManager<User> signInManager, ILogger<LoginModel> logger)
         {
@@ -120,10 +122,9 @@ namespace KeyboardVN.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    var user = _userManager.GetUserAsync(User);
-                    int userId = user.Id;
-
-                    _httpContext.HttpContext.Session.SetInt32("userId", userId);
+                    User user = _keyboardVNContext.Users.FirstOrDefault(x => x.Email == Input.Email);
+                    _httpContext.HttpContext.Session.SetInt32("userId", user.Id);
+                    Console.WriteLine(user.Id);
                     return RedirectToAction("Index", "Home", new { area = "Guest" });
                     //return LocalRedirect(returnUrl);
                 }

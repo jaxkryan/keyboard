@@ -6,7 +6,6 @@
 
 @{
     String searchName = ViewBag.searchName;
-    String userId = ViewBag.userId;
     List<Category>? categories = ViewBag.categories;
     List<Brand>? brands = ViewBag.brands;
     int productInCart = ViewBag.productInCart ?? 0;
@@ -43,7 +42,7 @@
         <div class="container-fluid">
             <div class="row align-items-center bg-light py-3 px-xl-5 d-lg-flex">
                 <div class="col-lg-4 d-xs-none d-sm-none d-lg-block">
-                    <a asp-action="Index" asp-controller="Home" class="text-decoration-none">
+                    <a asp-controller="Home" asp-action="Index" class="text-decoration-none">
                         <span class="h1 text-primary bg-dark px-2">Elj</span>
                         <span class="h1 text-dark bg-primary px-2 ml-n1">Shop</span>
                     </a>
@@ -141,7 +140,7 @@
             if (TempData["notification"] != null)
             {
                 string notiType = "";
-                if (TempData["notiType"] == "RED")
+                if (TempData["notiType"].Equals("RED"))
                 {
                     notiType = "alert-danger";
                 }
