@@ -20,11 +20,15 @@ namespace KeyboardVN.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
     {
+        private readonly IHttpContextAccessor _httpContext;
+        private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(IHttpContextAccessor httpContext, UserManager<User> userManager, SignInManager<User> signInManager, ILogger<LoginModel> logger)
         {
+            _httpContext = httpContext;
+            _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
         }
@@ -116,8 +120,12 @@ namespace KeyboardVN.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+                    var user = _userManager.GetUserAsync(User);
+                    int userId = user.Id;
 
-                    return LocalRedirect(returnUrl);
+                    _httpContext.HttpContext.Session.SetInt32("userId", userId);
+                    return RedirectToAction("Index", "Home", new { area = "Guest" });
+                    //return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
                 {
