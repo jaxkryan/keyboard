@@ -16,10 +16,21 @@ namespace KeyboardVN.Areas.Admin.Controllers
             return View(orderList);
         }
 
+        [Area("Admin")]
         // GET: ManageOrderController/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> ViewDetails(int? id)
         {
-            return View();
+            if (id == null ||keyboardVN.OrderDetails == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            var orderDetail = await keyboardVN.Orders.Include(x => x.OrderDetails).ThenInclude(d => d.Product).AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
+            if (orderDetail == null)
+            {
+                return RedirectToAction(nameof(Index));
+
+            }
+            return View(orderDetail);
         }
 
         // GET: ManageOrderController/Create
