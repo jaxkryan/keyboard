@@ -27,10 +27,6 @@ namespace KeyboardVN.Areas.Guest.Controllers
                                     int? quantityToBuy)
         {
             int? userId = httpContextAccessor.HttpContext.Session.GetInt32("userId");
-            if (productId == null)
-            {
-                productId = 1;
-            }
             Console.WriteLine(userId);
             if (quantityToBuy == null)
             {
@@ -50,7 +46,8 @@ namespace KeyboardVN.Areas.Guest.Controllers
                 TempData["notiType"] = "RED";
                 return RedirectToAction("Index", "Home");
             }
-            if (quantityToBuy + context.CartItems.FirstOrDefault(x => x.CartId == cart.Id && x.ProductId == productId).Quantity > context.Products.FirstOrDefault(p => p.Id == productId).UnitInStock)
+            CartItem cartItem = context.CartItems.FirstOrDefault(x => x.CartId == cart.Id && x.ProductId == productId);
+            if (quantityToBuy + (cartItem?.Quantity ?? 0) > context.Products.FirstOrDefault(p => p.Id == productId).UnitInStock)
             {
                 TempData["notification"] = "Not Enough in stock!";
                 TempData["notiType"] = "RED";
@@ -119,7 +116,8 @@ namespace KeyboardVN.Areas.Guest.Controllers
             List<CartItem> cartItems = context.CartItems
                 .Include(ci => ci.Product)
                 .Where(ci => ci.CartId == context.Carts.FirstOrDefault(c => c.UserId == httpContextAccessor.HttpContext.Session.GetInt32("userId")).Id)
-                .ToList(); ViewBag.cartItems = cartItems;
+                .ToList(); 
+            ViewBag.cartItems = cartItems;
             int productInCart = 0;
             if (httpContextAccessor.HttpContext.Session.GetInt32("userId") != null)
             {
