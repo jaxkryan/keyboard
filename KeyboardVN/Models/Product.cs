@@ -21,8 +21,8 @@ namespace KeyboardVN.Models
         public double? Discount { get; set; }
         public int UnitInStock { get; set; }
 
-        public virtual Brand Brand { get; set; } = null!;
-        public virtual Category Category { get; set; } = null!;
+        public virtual Brand? Brand { get; set; } = null!;
+        public virtual Category? Category { get; set; } = null!;
         public virtual ICollection<CartItem> CartItems { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
