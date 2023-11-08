@@ -22,11 +22,11 @@
                 <div class="d-flex" style="align-items: center;">
                     <div class="d-flex" style="align-items: center;">
                         @{
-                            double currentPrice = Model.Price - (Model.Discount ?? 0);
+                            double? currentPrice = Model?.Price - (Model?.Discount ?? 0);
                         }
                         <fmt:setLocale value="en_US" />
                         <h3 class="font-weight-semi-bold mb-4"><fmt:formatNumber type="currency" pattern="###,###¤">Price: @currentPrice</fmt:formatNumber></h3>
-                        @if (currentPrice < Model.Price)
+                        @if (currentPrice < Model?.Price)
                         {
                             <h4 class="font-weight-semi-bold text-muted ml-2 mb-4">
                                 <del><fmt:formatNumber type="currency" pattern="###,###¤">Price: @Html.DisplayFor(Model=>Model.Price)</fmt:formatNumber></del>
@@ -36,22 +36,24 @@
                 </div>
                 <p class="mb-4">@Html.DisplayFor(model => model.Description)</p>
                 <div class="d-flex mb-3">
-                    <strong class="text-dark mr-1">Category: </strong>@Html.DisplayFor(model => model.Category.Name);
+                    <strong class="text-dark mr-1">Category: </strong>@Html.DisplayFor(model => model.Category.Name)
                 </div>
                 <div class="d-flex mb-4">
-                    <strong class="text-dark mr-1">Brand: </strong>@Html.DisplayFor(model => model.Brand.Name);
+                    <strong class="text-dark mr-1">Brand: </strong>@Html.DisplayFor(model => model.Brand.Name)
                 </div>
                 <div class="d-flex mb-4">
                     <strong class="text-dark mr-1">In Stock: </strong>@Html.DisplayFor(model => model.UnitInStock)
                 </div>
-                <form asp-action="AddToCart" class="d-flex align-items-center mb-4 pt-2">
+                <form asp-controller="Cart" asp-action="addToCart" class="d-flex align-items-center mb-4 pt-2">
                     <div class="input-group quantity mr-3" style="width: 130px;">
                         <div class="input-group-btn">
                             <button type="button" class="btn btn-primary btn-minus">
                                 <i class="fa fa-minus"></i>
                             </button>
                         </div>
-                        <input name="quantityToBuy" id="quantityToBuy" class="form-control bg-secondary border-0 text-center" value="1" required>
+                        <input name="quantity" id="quantity" class="form-control bg-secondary border-0 text-center" value="1" required>
+                        <input type="hidden" name="productId" value="@Model?.Id"></input>
+                        <input type="hidden" name="from" value="detail"></input>
                         <div class="input-group-btn">
                             <button type="button" class="btn btn-primary btn-plus">
                                 <i class="fa fa-plus"></i>

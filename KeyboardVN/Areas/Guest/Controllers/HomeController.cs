@@ -1,8 +1,10 @@
 ﻿using KeyboardVN.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Encodings.Web;
 
 namespace KeyboardVN.Areas.Guest.Controllers
 {
@@ -33,6 +35,12 @@ namespace KeyboardVN.Areas.Guest.Controllers
         [Area("Guest")]
         public IActionResult Details(int id)
         {
+            int productInCart = 0;
+            if (httpContextAccessor.HttpContext.Session.GetInt32("userId") != null)
+            {
+                productInCart = context.CartItems.Where(ci => ci.CartId == context.Carts.FirstOrDefault(c => c.UserId == httpContextAccessor.HttpContext.Session.GetInt32("userId")).Id).Count();
+            }
+            ViewBag.productInCart = productInCart;
             var product = context.Products.Include(c=>c.Category).Include(c=>c.Brand).FirstOrDefault(product => product.Id == id);
             return View(product);
         }
