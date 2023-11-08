@@ -59,7 +59,7 @@ ALTER TABLE [dbo].[UserClaims] CHECK CONSTRAINT [FK_UserClaims_User_UserId]
 GO
 
 CREATE TABLE [dbo].[Roles](
-  [Id] [int] NOT NULL,
+  [Id] [int] IDENTITY(1, 1) NOT NULL,
   [Name] [nvarchar](256) NULL,
   [NormalizedName] [nvarchar](256) NULL,
   [ConcurrencyStamp] [nvarchar](max) NULL,
