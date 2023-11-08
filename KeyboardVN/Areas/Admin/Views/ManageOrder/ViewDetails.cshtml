@@ -1,0 +1,214 @@
+﻿@model KeyboardVN.Models.Order
+
+@section Style {
+    <link rel="stylesheet" href="~/admin/global/vendor/tablesaw/tablesaw.css">
+    <link rel="stylesheet" href="~/admin/global/vendor/datatables.net-bs4/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="~/admin/global/vendor/datatables.net-fixedheader-bs4/dataTables.fixedheader.bootstrap4.css">
+    <link rel="stylesheet" href="~/admin/global/vendor/datatables.net-fixedcolumns-bs4/dataTables.fixedcolumns.bootstrap4.css">
+    <link rel="stylesheet" href="~/admin/global/vendor/datatables.net-rowgroup-bs4/dataTables.rowgroup.bootstrap4.css">
+    <link rel="stylesheet" href="~/admin/global/vendor/datatables.net-scroller-bs4/dataTables.scroller.bootstrap4.css">
+    <link rel="stylesheet" href="~/admin/global/vendor/datatables.net-select-bs4/dataTables.select.bootstrap4.css">
+    <link rel="stylesheet" href="~/admin/global/vendor/datatables.net-responsive-bs4/dataTables.responsive.bootstrap4.css">
+    <link rel="stylesheet" href="~/admin/global/vendor/datatables.net-buttons-bs4/dataTables.buttons.bootstrap4.css">
+    <link rel="stylesheet" href="~/admin/mmenu/assets/examples/css/tables/datatable.css">
+    <link rel="stylesheet" href="~/admin/mmenu/assets/examples/css/forms/masks.css">
+    <link rel="stylesheet" href="~/admin/mmenu/assets/examples/css/forms/layouts.css">
+}
+
+<div class="page">
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1 class="page-title">Order Details</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="ManageOrder" asp-action="ViewOrder">Manage Order</a></li>
+            <li class="breadcrumb-item active">Order Details</li>
+        </ol>
+    </div>
+    <!-- End Page Header -->
+    <!-- Page Content -->
+    <div class="page-content container-fluid">
+        <div class="row">
+            <div class="col-xl-6">
+                <!-- Panel -->
+                <div class="panel ">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Order Infomation</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-12">
+                            <!-- Example Basic Form (Form row) -->
+                            <div class="example-wrap">
+                                <h4 class="example-title">Receiver Infomation</h4>
+                                <div class="example">
+                                    <form asp-action="EditOrder" method="POST">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                        <input type="hidden" asp-for="Id" />
+                                        <input type="hidden" asp-for="UserId" />
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label class="form-control-label" asp-for="Receiver"></label>
+                                                <input asp-for="Receiver" class="form-control" />
+                                                <span asp-validation-for="Receiver" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="form-control-label" asp-for="ShipPhone"></label>
+                                                <input asp-for="ShipPhone" class="form-control" />
+                                                <span asp-validation-for="ShipPhone" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label" asp-for="ShipEmail"></label>
+                                            <input asp-for="ShipEmail" class="form-control" />
+                                            <span asp-validation-for="ShipEmail" class="text-danger"></span>
+                                        </div>
+                                        <h4 class="example-title">order detail</h4>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-4">
+                                                <label class="form-control-label" asp-for="ShipCountry"></label>
+                                                <input asp-for="ShipCountry" class="form-control" />
+                                                <span asp-validation-for="ShipCountry" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label class="form-control-label" asp-for="ShipCity"></label>
+                                                <input asp-for="ShipCity" class="form-control" />
+                                                <span asp-validation-for="ShipCity" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label class="form-control-label" asp-for="ShipProvince"></label>
+                                                <input asp-for="ShipProvince" class="form-control" />
+                                                <span asp-validation-for="ShipProvince" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label class="form-control-label" asp-for="ShipStreet"></label>
+                                                <input asp-for="ShipStreet" class="form-control" />
+                                                <span asp-validation-for="ShipStreet" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="form-control-label" asp-for="CreatedTime"></label>
+                                                <input asp-for="CreatedTime" class="form-control" />
+                                                <span asp-validation-for="CreatedTime" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        @* <div class="form-group ">
+                                        <label class="form-control-label" asp-for="Status"></label>
+                                        <input asp-for="Status" class="form-control" />
+                                        <span asp-validation-for="Status" class="text-danger"></span>
+                                        </div> *@
+                                        <div class="example" style="width:150px">
+                                            <select asp-for="Status" class="form-control">
+                                                <option value="Processing">Processing</option>
+                                                <option value="Accepted">Accepted</option>
+                                                <option value="Received">Received</option>
+                                                <option value="Canceled">Canceled</option>
+                                            </select>
+                                            <span asp-validation-for="Status" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <button type="submit" value="Save" class="btn btn-primary">Update</button>
+                                            <a type="button" asp-controller="ManageOrder" asp-action="ViewOrder" class="btn-default btn">Cancel</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- End Example Basic Form (Form row) -->
+                        </div>
+                    </div>
+                </div>
+                <!-- End Panel -->
+            </div>
+            <!-- End Page Content -->
+            <div class="col-xl-6">
+                <!-- Panel -->
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Order Details</h3>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        OrderID
+                                    </th>
+                                    <th>
+                                        Product
+                                    </th>
+                                    <th>
+                                        Quantity
+                                    </th>
+                                    <th>
+                                        Price
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.OrderDetails)
+                                {
+                                    <tr>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.OrderId)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Product.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Quantity)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Price)
+                                        </td>
+                                        @* <td>
+                                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                    </td> *@
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- End Panel -->
+            </div>
+            <!-- End Page Content -->
+        </div>
+        
+    </div>
+</div>
+
+</div>
+
+@section Scripts {
+    <script src="~/admin/global/vendor/tablesaw/tablesaw.jquery.js"></script>
+    <script src="~/admin/global/vendor/tablesaw/tablesaw-init.js"></script>
+    <script src="~/admin/global/js/Plugin/tablesaw.js"></script>
+    <script src="~/admin/mmenu/assets/examples/js/tables/responsive.js"></script>
+    <script src="~/admin/global/vendor/datatables.net/jquery.dataTables.js"></script>
+    <script src="~/admin/global/vendor/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+    <script src="~/admin/global/vendor/datatables.net-fixedheader/dataTables.fixedHeader.js"></script>
+    <script src="~/admin/global/vendor/datatables.net-fixedcolumns/dataTables.fixedColumns.js"></script>
+    <script src="~/admin/global/vendor/datatables.net-rowgroup/dataTables.rowGroup.js"></script>
+    <script src="~/admin/global/vendor/datatables.net-scroller/dataTables.scroller.js"></script>
+    <script src="~/admin/global/vendor/datatables.net-responsive/dataTables.responsive.js"></script>
+    <script src="~/admin/global/vendor/datatables.net-responsive-bs4/responsive.bootstrap4.js"></script>
+    <script src="~/admin/global/vendor/datatables.net-buttons/dataTables.buttons.js"></script>
+    <script src="~/admin/global/vendor/datatables.net-buttons/buttons.html5.js"></script>
+    <script src="~/admin/global/vendor/datatables.net-buttons/buttons.flash.js"></script>
+    <script src="~/admin/global/vendor/datatables.net-buttons/buttons.print.js"></script>
+    <script src="~/admin/global/vendor/datatables.net-buttons/buttons.colVis.js"></script>
+    <script src="~/admin/global/vendor/datatables.net-buttons-bs4/buttons.bootstrap4.js"></script>
+    <script src="~/admin/global/vendor/asrange/jquery-asRange.min.js"></script>
+    <script src="~/admin/global/vendor/bootbox/bootbox.js"></script>
+
+    <script src="~/admin/global/js/Plugin/datatables.js"></script>
+
+    <script src="~/admin/mmenu/assets/examples/js/tables/datatable.js"></script>
+    <script src="~/admin/global/vendor/formatter/jquery.formatter.js"></script>
+    <script src="~/admin/global/js/Plugin/formatter.js"></script>
+    <script src="~/admin/global/vendor/jquery-placeholder/jquery.placeholder.js"></script>
+    <script src="~/admin/global/js/Plugin/jquery-placeholder.js"></script>
+}
