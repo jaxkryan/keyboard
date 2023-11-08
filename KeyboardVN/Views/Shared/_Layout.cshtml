@@ -60,11 +60,14 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-lg-4 col-sm-6 col-12 text-xs-center text-right pt-xs-3">
+                <div class="col-lg-4 col-sm-6 col-12 text-xs-center text-right pt-xs-3" style="padding: 0px;">
                     @if (SignInManager.IsSignedIn(User)){
                         <a asp-area="Identity" asp-page="/Account/Manage/Index" class="fa fa-user-circle btn btn-primary mx-2"></a>
-                        <form id="logoutForm" class="btn"  asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                            <button class="btn btn-primary" type="submit">Logout</button>
+                        <form id="logoutForm" class="btn mx-2" style="padding: 0px; margin: 0px !important;" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                            @* <button class="btn btn-primary" type="submit">Logout</button> *@
+                            <button class="btn btn-primary">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </button>
                         </form>
                     } else
                     {
@@ -163,11 +166,22 @@
 
            @RenderBody()
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - KeyboardVN - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-secondary mt-5 pt-5">
+        <div class="row px-xl-5 pt-5">
+            <div class="col-lg-12 col-md-12 mb-5 pr-3 pr-xl-5">
+                <h5 class="text-secondary text-uppercase mb-4">Contact us</h5>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>FPT University, Hoa Lac, Ha Noi, Viet Nam</p>
+                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>huyldhe176275@fpt.edu.vn</p>
+                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>0868390784</p>
+            </div>
         </div>
-    </footer>
+    </div>
+    <!-- Footer End -->
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script src="~/customer/lib/easing/easing.min.js"></script>

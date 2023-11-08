@@ -25,9 +25,10 @@ namespace KeyboardVN.Areas.Admin.Controllers
         }
 
         // GET: ManageUserController/Details/5
-        public ActionResult Details(int id)
+        [Area("Admin")]
+        public ActionResult Details(int? id)
         {
-            return View();
+            return RedirectToPage("/Account/Manage/Index", new { area = "Identity", userId = id });
         }
 
         // GET: ManageUserController/Create
