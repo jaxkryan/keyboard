@@ -9872,3 +9872,11 @@ a .active{
 .card-title a{
     color: black;
 }
+
+.nav-item a {
+    color: #6C757D;
+}
+
+.nav-link.active {
+    color: white;
+}
