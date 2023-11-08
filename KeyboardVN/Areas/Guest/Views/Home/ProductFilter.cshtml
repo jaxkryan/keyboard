@@ -133,11 +133,11 @@
                                     <img class="img-fluid w-100" style="height: 174.08px; width: 174.08px;" src="@product.Image" alt="">
                                     <div class="product-action">
                                         <a title="Add to cart" class="btn btn-outline-dark btn-square" href="${pageContext.request.contextPath}/add-to-cart-shop-page?proId=${pro.id}&sort=${sort}&categoryId=${categoryId}&price=${price}&providerId=${providerId}&searchName=${searchName}&page=${page}"><i class="fa fa-shopping-cart"></i></a>
-                                        <a title="See details" class="btn btn-outline-dark btn-square" href="${pageContext.request.contextPath}/details?proId=${pro.id}&from=shop&sort=${sort}&categoryId=${categoryId}&price=${price}&providerId=${providerId}&searchName=${searchName}&page=${page}"><i class="fa fa-search"></i></a>
+                                        <a title="See details" class="btn btn-outline-dark btn-square" asp-controller="Home" asp-action="Details" asp-route-id="@product.Id"><i class="fa fa-search"></i></a>
                                     </div>
                                 </div>
                                 <div class="text-center py-4">
-                                    <a title="@product.Name" class="h6 text-decoration-none text-truncate" href="${pageContext.request.contextPath}/details?proId=${pro.id}&from=shop&sort=${sort}&categoryId=${categoryId}&price=${price}&providerId=${providerId}&searchName=${searchName}&page=${page}">@product.Name</a>
+                                    <a title="@product.Name" class="h6 text-decoration-none text-truncate" asp-controller="Home" asp-action="Details" asp-route-id="@product.Id">@product.Name</a>
                                     <div class="d-flex align-items-center justify-content-center mt-2">
                                         @{
                                             double? currrentPrice = product.Price - product.Discount;

@@ -111,9 +111,17 @@ namespace KeyboardVN.Areas.Identity.Pages.Account.Manage
             };
         }
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int? userId)
         {
-            var user = await _userManager.GetUserAsync(User);
+            User user = null;
+            if (userId == null)
+            {
+                user = await _userManager.GetUserAsync(User);
+            }
+            else 
+            {
+                user = await _userManager.FindByIdAsync(userId.ToString());
+            }
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
