@@ -8,10 +8,10 @@
 <div class="page">
     <!-- Page Header -->
     <div class="page-header">
-        <h1 class="page-title">Edit product's information</h1>
+        <h1 class="page-title">Add new product's information</h1>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a asp-controller="ManageProduct" asp-action="Index">Home</a></li>
-            <li class="breadcrumb-item active">Edit product's information</li>
+            <li class="breadcrumb-item active">Add new product's information</li>
         </ol>
     </div>
     <!-- End Page Header -->
@@ -24,7 +24,7 @@
                 <h3 class="panel-title"></h3>
             </div>
             <div class="panel-body">
-                <form asp-action="Edit" method="post" class="form-horizontal">
+                <form asp-action="Create" method="post" class="form-horizontal">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="Id" />
                     <div class="form-group row">

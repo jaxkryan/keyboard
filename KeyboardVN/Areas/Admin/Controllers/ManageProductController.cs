@@ -34,6 +34,10 @@ namespace KeyboardVN.Areas.Admin.Controllers
         [Area("Admin")]
         public ActionResult Create()
         {
+            List<Category> category = _context.Categories.ToList();
+            ViewBag.Category = category;
+            List<Brand> brand = _context.Brands.ToList();
+            ViewBag.Brand = brand;
             return View();
         }
 
@@ -41,16 +45,22 @@ namespace KeyboardVN.Areas.Admin.Controllers
         [Area("Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create([Bind("CategoryId,BrandId,Name,Image,Description,Price,Discount,UnitInStock")] Product product)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(product);
+                    _context.SaveChanges();
+                    return RedirectToAction(nameof(Index));
+                }
             }
-            catch
+            catch (DbUpdateException ex)
             {
-                return View();
+                ModelState.AddModelError("", "Unable to save change");
             }
+            return View(product);
         }
 
         // GET: ManageProductController/Edit/5
@@ -71,8 +81,8 @@ namespace KeyboardVN.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, [Bind("Id,CategoryId,BrandId,Name,Image,Description,Price,Discount,UnitInStock")] Product product)
         {
-            Console.WriteLine("run update");
-            Console.WriteLine(product.BrandId); Console.WriteLine(product.CategoryId);
+            //Console.WriteLine("run update");
+            //Console.WriteLine(product.BrandId); Console.WriteLine(product.CategoryId);
 
             if (id != product.Id)
             {
@@ -82,7 +92,7 @@ namespace KeyboardVN.Areas.Admin.Controllers
             {
                 try
                 {
-                    Console.WriteLine("done update");
+                    //Console.WriteLine("done update");
                     _context.Update(product);
                     _context.SaveChanges();
                 }
@@ -103,24 +113,35 @@ namespace KeyboardVN.Areas.Admin.Controllers
         }
         [Area("Admin")]
         // GET: ManageProductController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            return View();
+            Console.WriteLine("get delete");
+            if (id == null || _context.Products == null)
+            {
+                return NotFound();
+            }
+            if (_context.Products == null)
+            {
+                Console.WriteLine("its null");
+                return Problem("ded");
+            }
+            var product = _context.Products.Find(id);
+            if (product != null)
+            {
+                Console.WriteLine("remove done");
+                _context.Products.Remove(product);
+            }
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: ManageProductController/Delete/5
+        [Area("Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult DeleteConfirm(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return View(id);
         }
         private bool ProductExists(int id)
         {
