@@ -315,7 +315,6 @@ VALUES (1, 'Huy Nguyen', '199 Le Van Luyen', 'Ha Noi', 'Thach That', 'Viet Nam',
 	   (3, 'Nam Pham', '32 Thanh Ngan', 'TP Thanh Binh', 'Thai Binh', 'Viet Nam', 'Thulm@fpt.edu.vn', '0912451234', 'Processing', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE())),
 	   (9, 'Thanh Ngan', '9 Hoan Kiem', 'TP Ha Noi', 'Ha Noi', 'Viet Nam', 'Thulm@fpt.edu.vn', '0912451234', 'Processing', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE()));
 
-
 -- Random OrderDetail for Order 1
 INSERT INTO [dbo].[OrderDetail] ([orderId], [productId], [price], [quantity])
 VALUES (1, 1, 200, ABS(CHECKSUM(NEWID()) % 3 + 1)),
@@ -380,12 +379,7 @@ INSERT INTO [dbo].[OrderDetail] ([orderId], [productId], [price], [quantity])
 VALUES (14, 9, 199, ABS(CHECKSUM(NEWID()) % 3 + 1)),
        (14, 6, 340, ABS(CHECKSUM(NEWID()) % 3 + 1));
 
-INSERT INTO [dbo].[OrderDetail] ([orderId],[productId],[price],[quantity])
-VALUES (1,1 ,200,1),
-	   (2,4 ,400,2),
-	   (2,7 ,199,1),
-	   (3,9 ,550,1)
-GO
+
 
 USE master;
 GO
