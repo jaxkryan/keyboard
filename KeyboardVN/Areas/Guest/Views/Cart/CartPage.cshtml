@@ -48,7 +48,7 @@
                                         <a asp-controller="Home" asp-action="Details" asp-route-id="@item.Product.Id" title="@item.Product.Name" class="product-name-in-cart text-truncate ml-2">@proName </a>
                                     </td>
                                     <td class="align-middle">
-                                        @item.Product.Price$
+                                        @(item.Product.Price - item.Product.Discount)$
                                     </td>
                                     <td class="align-middle">
                                         <div class="input-group quantity mx-auto" style="width: 100px;">
