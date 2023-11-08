@@ -90,7 +90,7 @@
                                 {
                                     foreach (Category cate in categories)
                                     {
-                                        <a href="~/customer/productfilter?categoryId=@cate.Id" class="nav-item nav-link">@cate.Name</a>
+                                        <a asp-action="ProductFilter" asp-route-categoryId="@cate.Id" class="nav-item nav-link">@cate.Name</a>
                                     }
                                 }
                             }
@@ -102,7 +102,7 @@
                         <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                             <div class="navbar-nav mr-auto py-0">
                                 <a asp-controller="Home" asp-action="Index" class="nav-item nav-link">Home</a>
-                                <a href="~/customer/productfilter?" class="nav-item nav-link">Shop</a>
+                                <a asp-controller="Home" asp-action="ProductFilter" class="nav-item nav-link">Shop</a>
                                 <div class="nav-item dropdown">
                                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Brands <i class="fa fa-angle-down mt-1"></i></a>
                                     <div class="dropdown-menu bg-primary rounded-0 border-0 m-0">
@@ -111,13 +111,13 @@
                                             {
                                                 foreach (Brand brand in brands)
                                                 {
-                                                    <a href="~/customer/productfilter?brandId=@brand.Id" class="dropdown-item">@brand.Name</a>
+                                                    <a asp-action="ProductFilter" asp-route-brandId="@brand.Id" class="dropdown-item">@brand.Name</a>
                                                 }
                                             }
                                         }
                                     </div>
                                 </div>
-                                <a href="~/customer/customer-view-history" class="nav-item nav-link">History</a>
+                                <a class="nav-item nav-link">History</a>
                             </div>
                             <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
                                 <a href="~/customer/cart" class="btn px-0 ml-3">
