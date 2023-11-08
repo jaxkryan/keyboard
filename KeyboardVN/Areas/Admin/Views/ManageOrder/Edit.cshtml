@@ -1,74 +1,117 @@
 ﻿@model KeyboardVN.Models.Order
 
-@{
-    ViewData["Title"] = "Edit";
+@section style {
+    <link rel="stylesheet" href="~/admin/mmenu/assets/examples/css/forms/masks.css">
 }
 
-<h1>Edit</h1>
-
-<h4>Order</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="EditOrder" method="POST">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <input type="hidden" asp-for="UserId" />
-            @* <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div> *@
-            <div class="form-group">
-                <label asp-for="Receiver" class="control-label"></label>
-                <input asp-for="Receiver" class="form-control" />
-                <span asp-validation-for="Receiver" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ShipStreet" class="control-label"></label>
-                <input asp-for="ShipStreet" class="form-control" />
-                <span asp-validation-for="ShipStreet" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ShipCity" class="control-label"></label>
-                <input asp-for="ShipCity" class="form-control" />
-                <span asp-validation-for="ShipCity" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ShipProvince" class="control-label"></label>
-                <input asp-for="ShipProvince" class="form-control" />
-                <span asp-validation-for="ShipProvince" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ShipCountry" class="control-label"></label>
-                <input asp-for="ShipCountry" class="form-control" />
-                <span asp-validation-for="ShipCountry" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ShipEmail" class="control-label"></label>
-                <input asp-for="ShipEmail" class="form-control" />
-                <span asp-validation-for="ShipEmail" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ShipPhone" class="control-label"></label>
-                <input asp-for="ShipPhone" class="form-control" />
-                <span asp-validation-for="ShipPhone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <input asp-for="Status" class="form-control" />
-                <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedTime" class="control-label"></label>
-                <input asp-for="CreatedTime" class="form-control" />
-                <span asp-validation-for="CreatedTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="page">
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1 class="page-title">Edit Order Status</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="ManageOrder" asp-action="ViewOrder">Manage Order</a></li>
+            <li class="breadcrumb-item active">Edit Order</li>
+        </ol>
     </div>
+    <!-- End Page Header -->
+    <!-- Page Content -->
+    <div class="page-content">
+
+        <!-- Panel -->
+        <div class="panel">
+            <div class="panel-heading">
+                <h3 class="panel-title">Order Infomation</h3>
+            </div>
+            <div class="panel-body">
+                <form asp-action="EditOrder" method="POST" class="form-horizontal">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="UserId" />
+                    @* <div class="form-group">
+                    <label asp-for="UserId" class="control-label"></label>
+                    <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                    <span asp-validation-for="UserId" class="text-danger"></span>
+                    </div> *@
+                    <div class="form-group row">
+                        <label class="col-md-3 form-control-label" asp-for="Receiver" class="control-label"></label>
+                        <div class="col-md-9">
+                            @* <label asp-for="Receiver" class="control-label"></label> *@
+                            <input asp-for="Receiver" class="form-control" />
+                            <span asp-validation-for="Receiver" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 form-control-label" asp-for="ShipStreet" class="control-label"></label>
+                        <div class="col-md-9">
+                            @* <label asp-for="ShipStreet" class="control-label"></label> *@
+                            <input asp-for="ShipStreet" class="form-control" />
+                            <span asp-validation-for="ShipStreet" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 form-control-label" asp-for="ShipCity" class="control-label"></label>
+                        <div class="col-md-9">
+                            @*  <label asp-for="ShipCity" class="control-label"></label> *@
+                            <input asp-for="ShipCity" class="form-control" />
+                            <span asp-validation-for="ShipCity" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 form-control-label" asp-for="ShipProvince" class="control-label"></label>
+                        <div class="col-md-9">
+
+                            <input asp-for="ShipProvince" class="form-control" />
+                            <span asp-validation-for="ShipProvince" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 form-control-label" asp-for="ShipCountry" class="control-label"></label>
+                        <div class="col-md-9">
+                            <input asp-for="ShipCountry" class="form-control" />
+                            <span asp-validation-for="ShipCountry" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 form-control-label" asp-for="ShipEmail" class="control-label"></label>
+                        <div class="col-md-9">
+                            <input asp-for="ShipEmail" class="form-control" />
+                            <span asp-validation-for="ShipEmail" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 form-control-label" asp-for="ShipPhone" class="control-label"></label>
+                        <div class="col-md-9">
+                            <input asp-for="ShipPhone" class="form-control" />
+                            <span asp-validation-for="ShipPhone" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 form-control-label" asp-for="Status" class="control-label"></label>
+                        <div class="col-md-9">
+                            <input asp-for="Status" class="form-control" />
+                            <span asp-validation-for="Status" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 form-control-label" asp-for="CreatedTime" class="control-label"></label>
+                        <div class="col-md-9">
+                            <input asp-for="CreatedTime" class="form-control" />
+                            <span asp-validation-for="CreatedTime" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-9 offset-md-3">
+                            <button type="submit" value="Save" class="btn-primary btn">Submit</button>
+                            <a type="button" asp-controller="ManageOrder" asp-action="ViewOrder" class="btn-default btn">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- End Panel -->
+
+    </div>
+    <!-- End Page Content -->
 </div>
 
 <div>
@@ -76,5 +119,10 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/admin/global/vendor/formatter/jquery.formatter.js"></script>
+    <script src="~/admin/global/js/Plugin/formatter.js"></script>
+
 }
