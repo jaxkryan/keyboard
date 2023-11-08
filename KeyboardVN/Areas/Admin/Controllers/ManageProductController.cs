@@ -1,6 +1,7 @@
 ﻿using KeyboardVN.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace KeyboardVN.Areas.Admin.Controllers
@@ -56,6 +57,10 @@ namespace KeyboardVN.Areas.Admin.Controllers
         [Area("Admin")]
         public ActionResult Edit(int id)
         {
+            List<Category> category = _context.Categories.ToList();
+            ViewBag.Category = category;
+            List<Brand> brand = _context.Brands.ToList();
+            ViewBag.Brand = brand;
             var product = _context.Products.SingleOrDefault(p => p.Id == id);
             return View(product);
         }
@@ -64,16 +69,37 @@ namespace KeyboardVN.Areas.Admin.Controllers
         [Area("Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, [Bind("Id,CategoryId,BrandId,Name,Image,Description,Price,Discount,UnitInStock")] Product product)
         {
-            try
+            Console.WriteLine("run update");
+            Console.WriteLine(product.BrandId); Console.WriteLine(product.CategoryId);
+
+            if (id != product.Id)
             {
+                Console.WriteLine("ded");
+            }
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    Console.WriteLine("done update");
+                    _context.Update(product);
+                    _context.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ProductExists(product.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(product);
         }
         [Area("Admin")]
         // GET: ManageProductController/Delete/5
@@ -95,6 +121,10 @@ namespace KeyboardVN.Areas.Admin.Controllers
             {
                 return View();
             }
+        }
+        private bool ProductExists(int id)
+        {
+            return (_context.Products?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
