@@ -70,6 +70,8 @@ namespace KeyboardVN.Areas.Admin.Controllers
         {
             Console.WriteLine("run update");
 
+            List<string> status = new List<string> { "Processing", "Accepted", "Received", "Canceled" };
+            ViewBag.status = status;
             if (id != order.Id)
             {
                 //return View("ViewOrder");
@@ -111,8 +113,13 @@ namespace KeyboardVN.Areas.Admin.Controllers
         }
 
         // GET: ManageOrderController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int? id)
         {
+            if(id == null || keyboardVN.Orders == null)
+            {
+                return RedirectToAction(nameof(ViewOrder));
+            }
+            //var deleteOrder = await keyboardVN.Orders.Include(c => c.OrderDetails)
             return View();
         }
 
