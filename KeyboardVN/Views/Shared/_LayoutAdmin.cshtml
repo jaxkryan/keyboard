@@ -123,8 +123,8 @@
                     <span class="site-menu-title">Manage Product</span>
                 </a>
             </li>
-            <li class="site-menu-item">
-                <a href="javascript:void(0)">
+            <li class="site-menu-item" >
+                <a asp-controller="ManageOrder" asp-action="ViewOrder">
                     <i class="site-menu-icon wb-order" aria-hidden="true"></i>
                     <span class="site-menu-title">Manage Order</span>
                 </a>
@@ -181,7 +181,7 @@
             });
         })(document, window, jQuery);
     </script>
-    @RenderSection("Script",required: false)
+    @RenderSection("Scripts",required: false)
     <script src="~/admin/global/vendor/jquery-mmenu/jquery.mmenu.min.all.js"></script>
 </body>
 </html>
