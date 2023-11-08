@@ -235,7 +235,7 @@ GO
 ALTER TABLE [Order] ADD FOREIGN KEY ([userId]) REFERENCES [User] ([id])
 GO
 
-ALTER TABLE [OrderDetail] ADD FOREIGN KEY ([orderId]) REFERENCES [Order] ([id])
+ALTER TABLE [OrderDetail] ADD FOREIGN KEY ([orderId]) REFERENCES [Order] ([id]) ON DELETE CASCADE
 GO
 
 ALTER TABLE [OrderDetail] ADD FOREIGN KEY ([productId]) REFERENCES [Product] ([id]) on delete cascade on update cascade
@@ -296,15 +296,20 @@ VALUES (2, 2, 'MonsGeek M1 QMK Black AKKO Switch v3 Cream Yellow Pro', 'https://
 	   (4,6,'Kensington Pro Fit Ergo Wireless Keyboard','https://i.rtings.com/assets/products/bek2IpSu/kensington-pro-fit-ergo-wireless-keyboard/design-medium.jpg','The Kensington Pro Fit Ergo Wireless Keyboard is a great keyboard for the office if you re looking for an affordable curved board with a split-key layout. The board is entirely made of plastic and doesnt have the most durable keycaps, but it offers amazing ergonomics with a comfortable wrist rest and the possibility to use its feet to create a negative angle. This wireless keyboard supports multi-device pairing with its receiver and via Bluetooth, which makes it very versatile, and it can be used with practically any operating system, whether computers or mobile devices.',550,0,2)
 
 INSERT INTO [dbo].[Order]([userId], [receiver], [shipStreet], [shipCity], [shipProvince], [shipCountry], [shipEmail], [shipPhone], [status], [createdTime])
-VALUES (1, 'Huy Nguyen', 'Thach That', 'Ha Noi', 'Bien Hoa', 'Viet Nam', 'Huynnt@fpt.edu.vn', '0912345678', 'Processing', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE())),
-       (1, 'Thu Nguyen', 'Thach That', 'Ha Noi', 'Bien Hoa', 'Viet Nam', 'Thulm@fpt.edu.vn', '0912345678', 'Received', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE())),
-       (2, 'Huy Le', 'Thach Hoa', 'Ha Noi', 'Thai Nguyen', 'Viet Nam', 'Huyld@fpt.edu.vn', '09198765', 'Accepted', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE())),
-       (7, 'Kien Dinh', 'Thach That', 'Ha Noi', 'Thai Binh', 'Viet Nam', 'Thulm@fpt.edu.vn', '0912348678', 'Canceled', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE())),
-       (3, 'Thanh Ngan', 'Tan Xa', 'Ha Noi', 'Hoa Binh', 'Viet Nam', 'Thulm@fpt.edu.vn', '0912378923', 'Received', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE())),
-       (7, 'Kien Dinh', 'Thach That', 'Ha Noi', 'Thai Binh', 'Viet Nam', 'Thulm@fpt.edu.vn', '0912125898', 'Canceled', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE())),
-       (9, 'Pham Khanh', 'Tan Xa', 'Ha Noi', 'Thai Binh', 'Viet Nam', 'Thulm@fpt.edu.vn', '0911473695', 'Received', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE())),
-       (3, 'Hung Nguyen', 'Thach That', 'Ha Noi', 'Thai Binh', 'Viet Nam', 'Thulm@fpt.edu.vn', '0925836978', 'Received', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE())),
-       (7, 'Kien Dinh', 'Thach That', 'Ha Noi', 'Thai Binh', 'Viet Nam', 'Thulm@fpt.edu.vn', '0912456778', 'Processing', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE()));
+VALUES (1, 'Huy Nguyen', '199 Le Van Luyen', 'Ha Noi', 'Thach That', 'Viet Nam', 'Huynnt@fpt.edu.vn', '0912345678', 'Processing', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE())),
+       (1, 'Thu Nguyen', '32 Ngo Tat To', 'Binh Thach', 'Da Nang', 'Viet Nam', 'Thulm@fpt.edu.vn', '0912345678', 'Received', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE())),
+       (2, 'Huy Le', '53 Thach Hoa', 'Thai Nguyen', 'Thai Nguyen', 'Viet Nam', 'Huyld@fpt.edu.vn', '09198765', 'Accepted', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE())),
+       (7, 'Kien Dinh', '32 Thach That', 'TP Thai Binh', 'Thai Binh', 'Viet Nam', 'Thulm@fpt.edu.vn', '0912348678', 'Canceled', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE())),
+       (3, 'Thanh Ngan', '94 Tan Xa', 'TP Hoa Binh', 'Hoa Binh', 'Viet Nam', 'Thulm@fpt.edu.vn', '0912378923', 'Received', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE())),
+       (7, 'Kien Dinh', '32 Thai Binh', 'TP Thai Binh', 'Thai Binh', 'Viet Nam', 'Thulm@fpt.edu.vn', '0912125798', 'Canceled', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE())),
+       (9, 'Pham Khanh', '194 Pham Thach', 'TP Thai Binh', 'Thai Binh', 'Viet Nam', 'Thulm@fpt.edu.vn', '0911473456', 'Received', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE())),
+       (3, 'Hung Nguyen', '34 Le Bui', 'TP Ha Noi', 'Ha Noi', 'Viet Nam', 'Thulm@fpt.edu.vn', '0925889798', 'Received', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE())),
+       (6, 'Kien Dinh', '22 Thai Dinh', 'TP Thai Nguyen', 'Thai Binh', 'Viet Nam', 'Thulm@fpt.edu.vn', '0915786778', 'Processing', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE())),
+	   (3, 'Kien Ngan', '936 Thach Phat', 'TP Thai Nguyen', 'Thai Nguyen', 'Viet Nam', 'Thulm@fpt.edu.vn', '0912459785', 'Processing', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE())),
+	   (9, 'Pham Nguyen', '246 Nam Dinh', 'TP Ha Long', 'Da Nang', 'Viet Nam', 'Thulm@fpt.edu.vn', '0912458897', 'Processing', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE())),
+	   (8, 'Nguyen Dinh', '32 Binh Thach', 'TP Ho Chi Minh', 'Ho Chi Minh', 'Viet Nam', 'Thulm@fpt.edu.vn', '0912456547', 'Processing', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE())),
+	   (3, 'Nam Pham', '32 Thanh Ngan', 'TP Thanh Binh', 'Thai Binh', 'Viet Nam', 'Thulm@fpt.edu.vn', '0912451234', 'Processing', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE())),
+	   (9, 'Thanh Ngan', '9 Hoan Kiem', 'TP Ha Noi', 'Ha Noi', 'Viet Nam', 'Thulm@fpt.edu.vn', '0912451234', 'Processing', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE()));
 
 
 -- Random OrderDetail for Order 1
@@ -353,6 +358,23 @@ VALUES (8, 1, 200, ABS(CHECKSUM(NEWID()) % 3 + 1)),
 INSERT INTO [dbo].[OrderDetail] ([orderId], [productId], [price], [quantity])
 VALUES (9, 3, 199, ABS(CHECKSUM(NEWID()) % 3 + 1)),
        (9, 6, 340, ABS(CHECKSUM(NEWID()) % 3 + 1));
+
+INSERT INTO [dbo].[OrderDetail] ([orderId], [productId], [price], [quantity])
+VALUES (10, 3, 199, ABS(CHECKSUM(NEWID()) % 3 + 1)),
+       (10, 6, 340, ABS(CHECKSUM(NEWID()) % 3 + 1));
+
+INSERT INTO [dbo].[OrderDetail] ([orderId], [productId], [price], [quantity])
+VALUES (11, 3, 199, ABS(CHECKSUM(NEWID()) % 3 + 1)),
+       (11, 4, 340, ABS(CHECKSUM(NEWID()) % 3 + 1));
+INSERT INTO [dbo].[OrderDetail] ([orderId], [productId], [price], [quantity])
+VALUES (12, 4, 199, ABS(CHECKSUM(NEWID()) % 3 + 1)),
+       (12, 7, 340, ABS(CHECKSUM(NEWID()) % 3 + 1));
+INSERT INTO [dbo].[OrderDetail] ([orderId], [productId], [price], [quantity])
+VALUES (13, 3, 199, ABS(CHECKSUM(NEWID()) % 3 + 1)),
+       (13, 6, 340, ABS(CHECKSUM(NEWID()) % 3 + 1));
+INSERT INTO [dbo].[OrderDetail] ([orderId], [productId], [price], [quantity])
+VALUES (14, 9, 199, ABS(CHECKSUM(NEWID()) % 3 + 1)),
+       (14, 6, 340, ABS(CHECKSUM(NEWID()) % 3 + 1));
 
 INSERT INTO [dbo].[OrderDetail] ([orderId],[productId],[price],[quantity])
 VALUES (1,1 ,200,1),

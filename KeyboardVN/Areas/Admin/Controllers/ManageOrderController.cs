@@ -113,14 +113,26 @@ namespace KeyboardVN.Areas.Admin.Controllers
         }
 
         // GET: ManageOrderController/Delete/5
+        [Area("Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if(id == null || keyboardVN.Orders == null)
             {
                 return RedirectToAction(nameof(ViewOrder));
             }
-            //var deleteOrder = await keyboardVN.Orders.Include(c => c.OrderDetails)
-            return View();
+            if (keyboardVN.Orders == null)
+            {
+                Console.WriteLine("its null");
+                return RedirectToAction(nameof(ViewOrder));
+            }
+            var deleteOrder = keyboardVN.Orders.FirstOrDefault(c => c.Id == id);
+            if (deleteOrder != null)
+            {
+                Console.WriteLine("remove done");
+                keyboardVN.Orders.Remove(deleteOrder);
+            }
+            keyboardVN.SaveChanges();
+            return RedirectToAction(nameof(ViewOrder));
         }
 
         // POST: ManageOrderController/Delete/5
