@@ -1,0 +1,136 @@
+﻿@using KeyboardVN.Models
+@{
+    List<CartItem> cartItems = ViewBag.cartItems;
+}
+<div class="container-fluid">
+    <form asp-action="UpdateCartQuantity" method="POST">
+        @if (cartItems.Count == 0)
+        {
+            <div class="col-12 pb-1">
+                <p style="
+                               text-align: center;
+                               font-weight: 500;
+                               font-size: 24px
+                               ">Your cart is empty!</p>
+            </div>
+        }
+        else
+        {
+            <div class="row px-xl-5">
+                <div class="col-lg-8 table-responsive mb-5">
+                    <table class="table table-light table-borderless table-hover text-center mb-0">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Products</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th>Remove</th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="align-middle">
+                            @{
+                                double? subtotal = 0;
+                            }
+                            @foreach (CartItem item in cartItems)
+                            {
+                                <tr>
+                                    <td class="align-middle container-fluid" style="display: flex; align-items: center;">
+                                        <img src="@item.Product.Image" alt="" style="width: 50px;">
+                                        @{
+                                            string proName = item.Product.Name;
+                                            if(item.Product.Name.Length > 50)
+                                            {
+                                                proName = item.Product.Name.Substring(0, 50) + "...";
+                                            }
+                                        }
+                                        <a asp-controller="Home" asp-action="Details" asp-route-id="@item.Product.Id" title="@item.Product.Name" class="product-name-in-cart text-truncate ml-2">@proName </a>
+                                    </td>
+                                    <td class="align-middle">
+                                        @item.Product.Price$
+                                    </td>
+                                    <td class="align-middle">
+                                        <div class="input-group quantity mx-auto" style="width: 100px;">
+                                            <div class="input-group-btn">
+                                                <button type="button" class="btn btn-sm btn-primary btn-minus" onclick="subtractQuantity(@item.Product.Id)">
+                                                    <i class="fa fa-minus"></i>
+                                                </button>
+                                            </div>
+                                            <input name="quantity-@item.Product.Id" id="quantity-@item.Product.Id" type="text" pattern="[1-9]\d*" title="Quantity must be a number more than 0" class="form-control form-control-sm bg-secondary border-0 text-center" value="@item.Quantity" required>
+                                            <div class="input-group-btn">
+                                                <button type="button" class="btn btn-sm btn-primary btn-plus" onclick="addQuantity(@item.Product.Id)">
+                                                    <i class="fa fa-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle">
+                                        @(item.Product.Price * item.Quantity)$
+                                        @{
+                                            subtotal += item.Product.Price * item.Quantity;
+                                        }
+                                    </td>
+                                    <td class="align-middle">
+                                        <a asp-action="DeleteCartItem" asp-route-productId="@item.Product.Id" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <button type="submit" class="btn btn-block btn-primary font-weight-bold my-3 py-3">Save Quantity Change</button>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Cart Summary</span></h5>
+                    <div class="bg-light p-30 mb-5">
+                        <div class="border-bottom pb-2">
+                            <div class="d-flex justify-content-between mb-3">
+                                <h6>Subtotal</h6>
+                                <h6 id="subtotalText">
+                                    <h5 id="totalText">
+                                        @Math.Round((decimal) (subtotal), 1)$
+                                    </h5>
+                                </h6>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <h6 class="font-weight-medium">Shipping</h6>
+                                <h6 class="font-weight-medium" id="shippingText">
+                                    <h5 id="totalText">
+                                        @Math.Round((decimal) (subtotal * 0.1), 1)$
+                                    </h5>
+                                </h6>
+                            </div>
+                        </div>
+                        <div class="pt-2">
+                            <div class="d-flex justify-content-between mt-2">
+                                <h5>Total</h5>
+                                <h5 id="totalText">
+                                    @Math.Round((decimal) (subtotal * 1.1), 1)$
+                                </h5>
+                            </div>
+                            <a asp-controller="Checkout" asp-action="CheckoutPage" class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Checkout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </form>
+</div>
+@section scripts
+    {
+    <script>
+        function addQuantity(index) {
+            var quantityInput = document.getElementById("quantity-" + index);
+            var quantityValue = parseInt(quantityInput.value);
+            quantityInput.value = quantityValue + 1;
+        }
+
+        function subtractQuantity(index) {
+            var quantityInput = document.getElementById("quantity-" + index);
+            var quantityValue = parseInt(quantityInput.value);
+            if (quantityValue > 1) {
+                quantityInput.value = quantityValue - 1;
+            } 
+        }
+    </script>
+}

@@ -20,12 +20,12 @@ namespace KeyboardVN.Areas.Guest.Controllers
         {
             List<Category> categories = new List<Category>();
             List<Brand> brands = new List<Brand>();
-            List<Product> products = new List<Product>();
             categories = context.Categories.ToList();
             brands = context.Brands.ToList();
-            products = context.Products.OrderBy(p => p.UnitInStock).Take(3).ToList();
             ViewBag.Categories = categories;
             ViewBag.Brands = brands;
+            List<Product> products = new List<Product>();
+            products = context.Products.OrderBy(p => p.UnitInStock).Take(3).ToList();
             ViewBag.Products = products;
             int productInCart = 0;
             if (httpContextAccessor.HttpContext.Session.GetInt32("userId") != null)
