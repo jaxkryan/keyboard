@@ -172,5 +172,45 @@ namespace KeyboardVN.Areas.Guest.Controllers
             ViewBag.numberOfProduct = context.Products.Count();
             return View();
         }
+        [Area("Guest")]
+        public ActionResult History()
+        {
+            int? sessionId = HttpContext.Session.GetInt32("userId");
+            List<Order> orderList = (from order in context.Orders where 
+                                     sessionId == order.UserId select order).ToList();
+            return View(orderList);
+        }
+
+        [Area("Guest")]
+        public ActionResult OrderDetail(int id)
+        {
+            Order userOrder = (from Order in context.Orders where id == Order.Id select Order).SingleOrDefault();
+            ViewBag.userOrder = userOrder;
+            List<OrderDetail> detail = context.OrderDetails
+            .Where(od => od.OrderId == id)
+            .Include(od => od.Product)
+            .ToList();
+            foreach (var item in detail)
+            {
+                Console.WriteLine("Qty" + item.Quantity + " " + item.Product.Name);
+            }
+            return View(detail);
+        }
+        [Area("Guest")]
+        public ActionResult EditStatus(int id, string status)
+        {
+            var order = context.Orders.SingleOrDefault(item => item.Id == id);
+            if (status == "Cancel")
+            {
+                order.Status = "Cancelled";
+                context.SaveChanges();
+            }
+            else if (status == "Received")
+            {
+                order.Status = "Received";
+                context.SaveChanges();
+            }
+            return RedirectToAction("History", "Home");
+        }
     }
 }

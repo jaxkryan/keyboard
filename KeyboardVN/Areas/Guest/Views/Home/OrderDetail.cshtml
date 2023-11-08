@@ -1,0 +1,125 @@
+﻿@model IEnumerable<KeyboardVN.Models.OrderDetail>
+
+@{
+    ViewData["Title"] = "OrderDetail";
+}
+@{
+    var userOrder = ViewBag.userOrder as Order;
+}
+@{
+    double oldTotal = 0;
+    double shipping = 0;
+    double grandTotal = 0;
+    foreach (var item in Model)
+    {
+        oldTotal += item.Price * item.Quantity;
+    }
+    shipping = oldTotal * 0.1;
+    grandTotal = oldTotal + shipping;
+}
+<div class="bg-light ml-5 mr-5 p-30 mb-5 px-xl-5">
+    <div class="row px-xl-5">
+        <div class="col-md-6 form-group vertical-line">
+            <h5>Receiver Information</h5>
+            <label>Name</label>
+            <input name="firstName" class="form-control" type="text" placeholder="Receiver Name" value="@userOrder.Receiver" readonly>
+            <label>Phone</label>
+            <input name="street" class="form-control" type="text" placeholder="Phone" value="@userOrder.ShipPhone" readonly>
+            <label>Address</label>
+            <input name="province" class="form-control" type="text" placeholder="Address" value="@userOrder.ShipStreet, @userOrder.ShipCity, @userOrder.ShipProvince, @userOrder.ShipCountry" readonly>
+            <label>E-mail</label>
+            <input name="email" class="form-control" type="email" placeholder="example@email.com" value="@userOrder.ShipEmail" readonly>
+        </div>
+        <div class="col-md-6 form-group">
+            <h5>Order Information</h5>
+            <label>Created Date</label>
+            <input name="lastName" class="form-control" type="text" placeholder="Created Time" value="@userOrder.CreatedTime" readonly>
+            <label>Status</label>
+            <input name="city" class="form-control" type="text" placeholder="Status" value="@userOrder.Status" readonly>
+            <label>Subtotal</label>
+            <input name="country" class="form-control" type="text" placeholder="Subtotal" value="@string.Format("{0:C}", oldTotal)" readonly>
+
+            <label>Shipping</label>
+            <input name="country" class="form-control" type="text" placeholder="Shipping" value="@string.Format("{0:C}", shipping)" readonly>
+
+            <label>Grand Total</label>
+            <input name="country" class="form-control" type="text" placeholder="Total" value="@string.Format("{0:C}", grandTotal)" readonly>
+
+        </div>
+    </div>
+</div>
+
+<div class="row px-xl-5">
+    <div class="col-lg-12 table-responsive mb-5">
+        <table class="table table-light table-borderless table-hover mb-0">
+            <thead class="thead-dark text-center">
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal Price</th>
+                </tr>
+            </thead>
+            <tbody class="align-middle">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-left">
+                            @Html.DisplayFor(modelItem => item.Product.Name)
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.Product.Price)
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.Quantity)
+                        </td>
+                        <td class="text-center">
+                            @{
+                                double subtotal = item.Product.Price * item.Quantity;
+                            }
+                            @subtotal
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@* <table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Order)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @userOrder.User
+            </td>
+            <td>
+                    @userOrder.ShipProvince
+            </td>
+            <td>
+                    @userOrder.CreatedTime
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Id)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+ *@
