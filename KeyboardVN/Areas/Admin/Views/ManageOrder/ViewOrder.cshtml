@@ -1,89 +1,159 @@
 ﻿@model IEnumerable<KeyboardVN.Models.Order>
 
-@{
-    ViewData["Title"] = "ViewOrder";
+@section style {
+    <link rel="stylesheet" href="~/admin/global/vendor/datatables.net-bs4/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="~/admin/global/vendor/datatables.net-fixedheader-bs4/dataTables.fixedheader.bootstrap4.css">
+    <link rel="stylesheet" href="~/admin/global/vendor/datatables.net-fixedcolumns-bs4/dataTables.fixedcolumns.bootstrap4.css">
+    <link rel="stylesheet" href="~/admin/global/vendor/datatables.net-rowgroup-bs4/dataTables.rowgroup.bootstrap4.css">
+    <link rel="stylesheet" href="~/admin/global/vendor/datatables.net-scroller-bs4/dataTables.scroller.bootstrap4.css">
+    <link rel="stylesheet" href="~/admin/global/vendor/datatables.net-select-bs4/dataTables.select.bootstrap4.css">
+    <link rel="stylesheet" href="~/admin/global/vendor/datatables.net-responsive-bs4/dataTables.responsive.bootstrap4.css">
+    <link rel="stylesheet" href="~/admin/global/vendor/datatables.net-buttons-bs4/dataTables.buttons.bootstrap4.css">
+    <link rel="stylesheet" href="~/admin/mmenu/assets/examples/css/tables/datatable.css">
 }
 
-<h1>ViewOrder</h1>
+<div class="page">
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1 class="page-title">View Order</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item active">Manage Order</li>
+        </ol>
+        <div class="page-header-actions">
+            <a class="btn btn-sm btn-default btn-outline btn-round" asp-action="Create">
+                <i class="icon wb-user-add" aria-hidden="true"></i>
+                <span class="hidden-sm-down">Add New Order</span>
+            </a>
+        </div>
+    </div>
+    <!-- End Page Header -->
+    <!-- Page Content -->
+    <div class="page-content">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Receiver)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ShipStreet)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ShipCity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ShipProvince)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ShipCountry)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ShipEmail)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ShipPhone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Receiver)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShipStreet)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShipCity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShipProvince)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShipCountry)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShipEmail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShipPhone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+        <!-- Panel -->
+        <div class="panel">
+            <div class="panel-heading">
+                <h3 class="panel-title">List of Orders</h3>
+            </div>
+            <div class="panel-body">
+
+                <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Receiver)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ShipStreet)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ShipCity)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ShipProvince)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ShipCountry)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ShipEmail)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ShipPhone)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Status)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CreatedTime)
+                            </th>
+                            @* <th>
+                                @Html.DisplayNameFor(model => model.User)
+                            </th> *@
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Receiver)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ShipStreet)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ShipCity)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ShipProvince)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ShipCountry)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ShipEmail)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ShipPhone)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Status)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreatedTime)
+                                </td>
+                                @* <td>
+                                    @Html.DisplayFor(modelItem => item.User.Id)
+                                </td> *@
+                                <td>
+                                    @* <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> | *@
+                                    <a asp-action="Edit" asp-route-id="@item.Id" style="text-decoration: none;">
+                                        <i class="icon fa-pencil-square-o " data-toggle="tooltip" title="Edit"></i>
+                                    </a> |
+                                    <a asp-action="Details" asp-route-id="@item.Id" style="text-decoration: none;">
+                                        <i class="icon fa-shopping-bag " data-toggle="tooltip" title="Details"></i>
+                                    </a> |
+                                    <a asp-action="Delete" asp-route-id="@item.Id" style="text-decoration: none;">
+                                        <i class="icon fa-trash-o " data-toggle="tooltip" title="Delete"></i>
+                                    </a> 
+                                    @* <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> *@
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- End Panel -->
+
+    </div>
+    <!-- End Page Content -->
+</div>
+
+
+@section Scripts {
+    <script src="~/admin/global/vendor/datatables.net/jquery.dataTables.js"></script>
+    <script src="~/admin/global/vendor/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+    <script src="~/admin/global/vendor/datatables.net-fixedheader/dataTables.fixedHeader.js"></script>
+    <script src="~/admin/global/vendor/datatables.net-fixedcolumns/dataTables.fixedColumns.js"></script>
+    <script src="~/admin/global/vendor/datatables.net-rowgroup/dataTables.rowGroup.js"></script>
+    <script src="~/admin/global/vendor/datatables.net-scroller/dataTables.scroller.js"></script>
+    <script src="~/admin/global/vendor/datatables.net-responsive/dataTables.responsive.js"></script>
+    <script src="~/admin/global/vendor/datatables.net-responsive-bs4/responsive.bootstrap4.js"></script>
+    <script src="~/admin/global/vendor/datatables.net-buttons/dataTables.buttons.js"></script>
+    <script src="~/admin/global/vendor/datatables.net-buttons/buttons.html5.js"></script>
+    <script src="~/admin/global/vendor/datatables.net-buttons/buttons.flash.js"></script>
+    <script src="~/admin/global/vendor/datatables.net-buttons/buttons.print.js"></script>
+    <script src="~/admin/global/vendor/datatables.net-buttons/buttons.colVis.js"></script>
+    <script src="~/admin/global/vendor/datatables.net-buttons-bs4/buttons.bootstrap4.js"></script>
+    <script src="~/admin/global/vendor/asrange/jquery-asRange.min.js"></script>
+    <script src="~/admin/global/vendor/bootbox/bootbox.js"></script>
+
+    <script src="~/admin/global/js/Plugin/datatables.js"></script>
+
+    <script src="~/admin/mmenu/assets/examples/js/tables/datatable.js"></script>
 }
-    </tbody>
-</table>
