@@ -12,6 +12,13 @@ namespace KeyboardVN.Models
             UserRoles = new HashSet<UserRole>();
         }
 
+        public Role(String roleName)
+        {
+            Name = roleName;
+            RoleClaims = new HashSet<RoleClaim>();
+            UserRoles = new HashSet<UserRole>();
+        }
+
         public override int Id { get; set; }
         public override string? Name { get; set; }
         public override string? NormalizedName { get; set; }
