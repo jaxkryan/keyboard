@@ -140,11 +140,11 @@
                             @{
                                 double? currentPrice = product.Price - product.Discount;
                             }
-                            <h5 class="text-primary">@currentPrice</h5>
+                            <h5 class="text-primary">@currentPrice$</h5>
                             @if(currentPrice < product.Price)
                             {
                                 <h6 class="text-muted ml-2">
-                                    <del>@product.Price</del>
+                                    <del>@product.Price$</del>
                                 </h6>
                             }
                         </div>
