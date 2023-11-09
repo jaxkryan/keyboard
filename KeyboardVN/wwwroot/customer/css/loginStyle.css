@@ -1190,3 +1190,9 @@ button.close {
 .register:not(.loading) .registerSubmit:focus {
   border-bottom-width: 4px !important;
 }
+.text-danger {
+    color: red;
+    font-size: 0.8em;
+    margin-top: -5px;
+    margin-bottom: 10px;
+}

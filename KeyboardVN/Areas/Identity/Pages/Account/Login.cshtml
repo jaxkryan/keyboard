@@ -32,10 +32,13 @@
     <form id="account" method="post" class="login">
         <p class="title">Log in</p>
         <!--notification-->
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input asp-for="Input.Email" type="text" placeholder="Email" autofocus />
         <i class="fa fa-user"></i>
+        <span asp-validation-for="Input.Email" class="text-danger"></span>
         <input asp-for="Input.Password" type="password" placeholder="Password" />
         <i class="fa fa-key"></i>
+        <span asp-validation-for="Input.Password" class="text-danger"></span>
         <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register</a>
         <span style="font-size: 0.8em;">or</span>
         <a id="forgot-password" asp-page="./ForgotPassword">Forgot password?</a>
