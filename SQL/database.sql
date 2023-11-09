@@ -391,7 +391,14 @@ INSERT INTO [dbo].[OrderDetail] ([orderId], [productId], [price], [quantity])
 VALUES (14, 9, 199, ABS(CHECKSUM(NEWID()) % 3 + 1)),
        (14, 6, 340, ABS(CHECKSUM(NEWID()) % 3 + 1));
 
-
+INSERT INTO [dbo].[Cart] ([id],[userId])
+VALUES (4, 4),
+	(5, 5),
+	(6, 6),
+	(7, 7),
+	(8, 8),
+	(9, 9),
+	(10, 10)
 
 USE master;
 GO

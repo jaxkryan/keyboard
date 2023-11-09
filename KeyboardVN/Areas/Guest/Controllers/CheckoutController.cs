@@ -66,6 +66,8 @@ namespace KeyboardVN.Areas.Guest.Controllers
                 context.CartItems.Remove(item);
             }
             context.SaveChanges();
+            TempData["notification"] = "Place order successfully!";
+            TempData["notiType"] = "GREEN";
             return RedirectToAction("Index", "Home");
         }
     }
