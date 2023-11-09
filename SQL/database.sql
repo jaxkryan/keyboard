@@ -265,12 +265,13 @@ VALUES ('Huy', 'Nguyen', 'Thach That', 'Ha Noi', 'Hanoi', 'Vietnam', 'huynnthe17
 
 INSERT INTO [dbo].[Roles]([Name],[NormalizedName])
 VALUES ('Admin', 'ADMIN'),
-	('Customer', 'CUSTOMER')
+	('Customer', 'CUSTOMER'),
+	('Seller', 'SELLER')
 
 INSERT INTO [dbo].[UserRoles]([UserId],[RoleId],[CreatedDate])
 VALUES(1, 1, '2023-11-09'),
-	(2, 1, '2023-11-09'),
-	(3, 1, '2023-11-09'),
+	(2, 3, '2023-11-09'),
+	(3, 2, '2023-11-09'),
 	(4, 2, '2023-11-09'),
 	(5, 2, '2023-11-09'),
 	(6, 2, '2023-11-09'),
@@ -312,9 +313,9 @@ VALUES (2, 2, 'MonsGeek M1 QMK Black AKKO Switch v3 Cream Yellow Pro', 'https://
 	   (4,6,'Kensington Pro Fit Ergo Wireless Keyboard','https://i.rtings.com/assets/products/bek2IpSu/kensington-pro-fit-ergo-wireless-keyboard/design-medium.jpg','The Kensington Pro Fit Ergo Wireless Keyboard is a great keyboard for the office if you re looking for an affordable curved board with a split-key layout. The board is entirely made of plastic and doesnt have the most durable keycaps, but it offers amazing ergonomics with a comfortable wrist rest and the possibility to use its feet to create a negative angle. This wireless keyboard supports multi-device pairing with its receiver and via Bluetooth, which makes it very versatile, and it can be used with practically any operating system, whether computers or mobile devices.',550,0,2)
 
 INSERT INTO [dbo].[Order]([userId], [receiver], [shipStreet], [shipCity], [shipProvince], [shipCountry], [shipEmail], [shipPhone], [status], [createdTime])
-VALUES (1, 'Huy Nguyen', '199 Le Van Luyen', 'Ha Noi', 'Thach That', 'Viet Nam', 'Huynnt@fpt.edu.vn', '0912345678', 'Processing', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE())),
-       (1, 'Thu Nguyen', '32 Ngo Tat To', 'Binh Thach', 'Da Nang', 'Viet Nam', 'Thulm@fpt.edu.vn', '0912345678', 'Received', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE())),
-       (2, 'Huy Le', '53 Thach Hoa', 'Thai Nguyen', 'Thai Nguyen', 'Viet Nam', 'Huyld@fpt.edu.vn', '09198765', 'Accepted', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE())),
+VALUES (4, 'Huy Nguyen', '199 Le Van Luyen', 'Ha Noi', 'Thach That', 'Viet Nam', 'Huynnt@fpt.edu.vn', '0912345678', 'Processing', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE())),
+       (4, 'Thu Nguyen', '32 Ngo Tat To', 'Binh Thach', 'Da Nang', 'Viet Nam', 'Thulm@fpt.edu.vn', '0912345678', 'Received', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE())),
+       (4, 'Huy Le', '53 Thach Hoa', 'Thai Nguyen', 'Thai Nguyen', 'Viet Nam', 'Huyld@fpt.edu.vn', '09198765', 'Accepted', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE())),
        (7, 'Kien Dinh', '32 Thach That', 'TP Thai Binh', 'Thai Binh', 'Viet Nam', 'Thulm@fpt.edu.vn', '0912348678', 'Canceled', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE())),
        (3, 'Thanh Ngan', '94 Tan Xa', 'TP Hoa Binh', 'Hoa Binh', 'Viet Nam', 'Thulm@fpt.edu.vn', '0912378923', 'Received', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE())),
        (7, 'Kien Dinh', '32 Thai Binh', 'TP Thai Binh', 'Thai Binh', 'Viet Nam', 'Thulm@fpt.edu.vn', '0912125798', 'Canceled', DATEADD(second, ABS(CHECKSUM(NEWID())) % 100000, GETDATE())),
