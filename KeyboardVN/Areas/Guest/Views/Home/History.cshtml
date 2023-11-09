@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<KeyboardVN.Models.Order>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
 @{
     ViewData["Title"] = "History";
 }
-<div class="container-fluid">
+<div class="container-fluid mb-3">
     @if (!Model.Any())
     {
 
@@ -94,3 +94,4 @@
             </div>
         </div>
     }
+</div>
