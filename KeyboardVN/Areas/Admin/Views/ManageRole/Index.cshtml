@@ -46,7 +46,7 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.Name)
                             </th>
-                            <th  style="width: 100px !important;">
+                            <th style="width: 75px !important;">
                                 Actions
                             </th>
                         </tr>
@@ -62,9 +62,15 @@
                                     @Html.DisplayFor(modelItem => item.Name)
                                 </td>
                                 <td>
-                                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                                    @* <a asp-action="Details" asp-route-id="@item.Id">Details</a> | *@
-                                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                    <a style="text-decoration: none;" asp-action="Edit" asp-route-id="@item.Id">
+                                        <i class="icon fa-pencil" data-toggle="tooltip" title="Edit"></i>
+                                    </a> |
+                                    <a style="text-decoration: none;" asp-action="Details" asp-route-id="@item.Id">
+                                        <i class="icon fa-info" data-toggle="tooltip" title="Details"></i>
+                                    </a> |
+                                    <a style="text-decoration: none;" asp-action="Delete" asp-route-id="@item.Id" onclick="return confirm('Are you sure you want to delete this user?');">
+                                        <i class="icon fa-trash" data-toggle="tooltip" title="Delete"></i>
+                                    </a>
                                 </td>
                             </tr>
                         }

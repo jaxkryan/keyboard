@@ -16,6 +16,11 @@
                 ViewData["layout"] = "Admin";
                 layout = "~/Views/Shared/_LayoutAdmin.cshtml";
             }
+            else if (page.StartsWith("/Account/Manage") && User.IsInRole("Seller"))
+            {
+                ViewData["layout"] = "Seller";
+                layout = "~/Views/Shared/_LayoutSeller.cshtml";
+            }
             else
             {
                 ViewData["layout"] = "Customer";
@@ -24,6 +29,9 @@
             break;
         case "Admin":
             layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+            break;
+        case "Seller":
+            layout = "~/Views/Shared/_LayoutSeller.cshtml";
             break;
         default:
             layout = "~/Views/Shared/_Layout.cshtml";

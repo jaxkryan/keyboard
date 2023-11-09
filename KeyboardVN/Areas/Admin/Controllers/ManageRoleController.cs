@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KeyboardVN.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     [Authorize(Roles = "Admin")]
     public class ManageRoleController : Controller
     {
@@ -21,7 +22,7 @@ namespace KeyboardVN.Areas.Admin.Controllers
         }
 
         // GET: ManageRoleController
-        [Area("Admin")]
+        
         public ActionResult Index()
         {
             var roles = _context.Roles;
@@ -31,14 +32,12 @@ namespace KeyboardVN.Areas.Admin.Controllers
         }
 
         // GET: ManageRoleController/Details/5
-        [Area("Admin")]
         public ActionResult Details(int id)
         {
             return View();
         }
 
         // GET: ManageRoleController/Create
-        [Area("Admin")]
         public ActionResult Create()
         {
             ViewData["Title"] = "Add New Role";
@@ -46,7 +45,6 @@ namespace KeyboardVN.Areas.Admin.Controllers
         }
 
         // POST: ManageRoleController/Create
-        [Area("Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateAsync([Bind("Name")] Role role)
@@ -71,7 +69,6 @@ namespace KeyboardVN.Areas.Admin.Controllers
         }
 
         // GET: ManageRoleController/Edit/5
-        [Area("Admin")]
         public async Task<ActionResult> EditAsync(int? id)
         {
             if (id == null || _context.Roles == null)
@@ -89,7 +86,6 @@ namespace KeyboardVN.Areas.Admin.Controllers
         }
 
         // POST: ManageRoleController/Edit/5
-        [Area("Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditAsync(int id, [Bind("Id, Name")] Role role)
@@ -119,7 +115,6 @@ namespace KeyboardVN.Areas.Admin.Controllers
         }
 
         // GET: ManageRoleController/Delete/5
-        [Area("Admin")]
         public async Task<ActionResult> DeleteAsync(int? id)
         {
             if (id == null || _context.Roles == null)
@@ -137,7 +132,6 @@ namespace KeyboardVN.Areas.Admin.Controllers
         }
 
         // POST: ManageRoleController/Delete/5
-        [Area("Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmedAsync(int id)

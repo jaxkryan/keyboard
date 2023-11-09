@@ -5,18 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace KeyboardVN.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     [Authorize(Roles = "Admin")]
     public class HomeController : Controller
     {
-
-        private readonly UserManager<User> _userManager;
-
-        public HomeController(UserManager<User> userManager)
-        {
-            _userManager = userManager;
-        }
-
-        [Area("Admin")]
         public IActionResult Index()
         {
             return RedirectToAction("Index", "ManageUser");

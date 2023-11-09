@@ -74,6 +74,49 @@ else if (ViewData["layout"].Equals("Admin"))
         <!-- End Page Content -->
     </div>
 }
+else if (ViewData["layout"].Equals("Seller"))
+{
+    <div class="page">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Your Settings</h1>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-area="Seller" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li class="breadcrumb-item active">User Settings</li>
+            </ol>
+        </div>
+        <!-- End Page Header -->
+        <!-- Page Content -->
+        <div class="page-content">
+
+            <!-- Panel -->
+            <div class="container-fluid">
+                <div class="row px-xl-5">
+                    <div class="col-lg-1 col-md-1"></div>
+                    <div class="panel col-lg-10 col-md-10">
+                        @* <div class="panel-heading">
+                    <h3 class="panel-title">Account settings</h3>
+                    </div> *@
+                        <div class="panel-body row">
+                            <div class="col-lg-4 col-md-5">
+                                <h3 class="section-title position-relative mb-3">
+                                    <span class="pr-3">Account settings</span>
+                                </h3>
+                                <partial name="_ManageNav" />
+                            </div>
+                            <div class="col-lg-8 col-md-7">
+                                @RenderBody()
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-1 col-md-1"></div>
+                </div>
+            </div>
+            <!-- End Panel -->
+        </div>
+        <!-- End Page Content -->
+    </div>
+}
 
 @section Scripts {
     @RenderSection("Scripts", required: false)

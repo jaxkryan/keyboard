@@ -2,25 +2,26 @@
 using Microsoft.AspNetCore.Mvc;
 using KeyboardVN.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
-namespace KeyboardVN.Areas.Admin.Controllers
+namespace KeyboardVN.Areas.Seller.Controllers
 {
+    [Area("Seller")]
+    [Authorize(Roles = "Seller")]
     public class ManageOrderController : Controller
     {
         private readonly KeyboardVNContext keyboardVN = new();
         // GET: ManageOrderController
-        [Area("Admin")]
         public ActionResult ViewOrder()
         {
             var orderList = keyboardVN.Orders.ToList();
             return View(orderList);
         }
 
-        [Area("Admin")]
         // GET: ManageOrderController/Details/5
         public async Task<IActionResult> ViewDetails(int? id)
         {
-            if (id == null ||keyboardVN.OrderDetails == null)
+            if (id == null || keyboardVN.OrderDetails == null)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -55,16 +56,15 @@ namespace KeyboardVN.Areas.Admin.Controllers
         }
 
         // GET: ManageOrderController/Edit/5
-        [Area("Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
-            if(id == null || keyboardVN.Orders == null)
+            if (id == null || keyboardVN.Orders == null)
             {
                 return View("ViewOrder");
                 Console.WriteLine("null id");
             }
             var editOrder = keyboardVN.Orders.Include(o => o.User).FirstOrDefault(a => a.Id == id);
-            if(editOrder == null)
+            if (editOrder == null)
             {
                 return View("ViewOrder");
                 Console.WriteLine("null order");
@@ -75,7 +75,6 @@ namespace KeyboardVN.Areas.Admin.Controllers
 
         // POST: ManageOrderController/Edit/5
         [HttpPost]
-        [Area("Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditOrder(int id, [Bind("Id,UserId,Receiver,ShipStreet,ShipCity,ShipProvince,ShipCountry,ShipEmail,ShipPhone,Status,CreatedTime")] Order order)
         {
@@ -124,10 +123,9 @@ namespace KeyboardVN.Areas.Admin.Controllers
         }
 
         // GET: ManageOrderController/Delete/5
-        [Area("Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
-            if(id == null || keyboardVN.Orders == null)
+            if (id == null || keyboardVN.Orders == null)
             {
                 return RedirectToAction(nameof(ViewOrder));
             }
