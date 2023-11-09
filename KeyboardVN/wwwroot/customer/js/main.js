@@ -84,48 +84,6 @@
     });
 
 
-    // Product Quantity
-    $('.quantity button').on('click', function () {
-        var button = $(this);
-        var oldValue = button.parent().parent().find('input').val();
-        if (button.hasClass('btn-plus')) {
-            var newVal = parseFloat(oldValue) + 1;
-        } else {
-            if (oldValue > 1) {
-                var newVal = parseFloat(oldValue) - 1;
-            } else {
-                newVal = 1;
-            }
-        }
-        // button.parent().parent().parent().find('input').val(newVal);
-        // $('#quantityToBuy').val(newVal);
-        button.parent().parent().parent().find('input[name="quantityToBuy"]').val(newVal)
-
-        if (newVal == 1) {
-            button.closest("tr").remove();
-        }
-
-        var currentCol = button.parent().parent().parent();
-        var price = currentCol.prev().text().slice(0,-1).replace(/\./g, '');
-        var oldTotal = currentCol.next().text().slice(0,-1).replace(/\./g, '');
-        if (button.hasClass('btn-plus')) {
-            if(currentCol.hasClass('align-middle')) {
-                var newTotal = (parseInt(oldTotal) + parseInt(price));
-                var subtotal = parseInt($("#subtotalText").text().slice(0,-1).replace(/\./g, '')) - oldTotal + newTotal;
-            }
-        } else {
-            if(currentCol.hasClass('align-middle')) {
-                var newTotal = (parseInt(oldTotal) - parseInt(price));
-                var subtotal = parseInt($("#subtotalText").text().slice(0,-1).replace(/\./g, '')) - oldTotal + newTotal;
-            }
-        }
-        var total = subtotal + shipping;
-        currentCol.next().text(newTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + 'đ');
-        $("#subtotalText").text(subtotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + 'đ');
-        $("#shippingText").text(shipping.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + 'đ');
-        $("#totalText").text(total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + 'đ');
-    });
-
     //Check out info
     $(document).ready(function() {
         $('input[type="checkbox"][id="newAccount"]').change(function() {
