@@ -1,4 +1,4 @@
-﻿use master
+use master
 go
 
 ALTER DATABASE KeyboardVN SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
@@ -226,6 +226,20 @@ CREATE TABLE [CartItem] (
 )
 GO
 
+CREATE TABLE [Feedback] (
+  [id] int PRIMARY KEY NOT NULL IDENTITY(1, 1),
+  orderId int,
+  customerId int,
+  productId int,
+  sellerId int,
+  content nvarchar(1000),
+  reply nvarchar(1000),
+  feedbackDate date,
+  replyDate date,
+  checked bit 
+)
+GO
+
 ALTER TABLE [Product] ADD FOREIGN KEY ([categoryId]) REFERENCES [Category] ([id])
 GO
 
@@ -250,6 +264,17 @@ GO
 ALTER TABLE [CartItem] ADD FOREIGN KEY ([productId]) REFERENCES [Product] ([id])
 GO
 
+alter table [feedback] ADD FOREIGN KEY([orderId]) references [order]([id]) ON DELETE CASCADE;
+go
+
+alter table [feedback] ADD FOREIGN KEY([customerId]) references [user]([id]) ON DELETE CASCADE;
+go
+
+alter table [feedback] ADD FOREIGN KEY(sellerId) references [user]([id])ON DELETE NO ACTION;
+go
+
+alter table [feedback] ADD FOREIGN KEY(productId) references [product]([id]) ON DELETE CASCADE;
+go
 
 INSERT INTO [User]([firstName],[lastName],[street],[city],[province],[country],[UserName],[NormalizedUserName],[Email],[NormalizedEmail],[EmailConfirmed],[PasswordHash],[SecurityStamp],[PhoneNumber],[PhoneNumberConfirmed],[TwoFactorEnabled],[LockoutEnabled],[AccessFailedCount])
 VALUES ('Huy', 'Nguyen', 'Thach That', 'Ha Noi', 'Hanoi', 'Vietnam', 'huynnthe176346@fpt.edu.vn', 'HUYNNTHE176346@FPT.EDU.VN', 'huynnthe176346@fpt.edu.vn', 'HUYNNTHE176346@FPT.EDU.VN', 'true', 'AQAAAAEAACcQAAAAEAnSX8hMOA15yNuUv9eALyy6vPWfLCqk1LpKCzP7u0Gp47K+HcM+ZGN3czYPkusgaQ==', 'ee3c73ef-a579-4d05-a27c-15d713f00cff', '0911362307', 'true', 'false', 'true', 0),
