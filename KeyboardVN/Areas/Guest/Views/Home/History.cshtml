@@ -43,10 +43,9 @@
                             <th>
                                 Action
                             </th>
-                            <th></th>
                         </tr>
                     </thead>
-                    <tbody class="align-middle">
+                    <tbody class="align-middle" style="width: 100%">
                         @foreach (var item in Model)
                         {
                             <tr>
@@ -71,20 +70,20 @@
                                 <td class="text-center">
                                     @Html.DisplayFor(modelItem => item.CreatedTime)
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     <a asp-action="OrderDetail" asp-route-id="@item.Id">
-                                        <i class="fas fa-info-circle fa-1.5x" style="color: #28a745;"></i>
+                                        <i class="fas fa-info-circle fa-1.56x" style="color: #28a745;"></i>
                                     </a>
                                     @if (item.Status.Equals("Processing"))
                                     {
-                                        <a asp-action="EditStatus" asp-route-id="@item.Id" asp-route-status="Received">
-                                            <i class="fa-regular fa-square-check fa-1.5x" style="color: #007bff;"></i>
+                                        <a style="padding-left: 5px" asp-action="EditStatus" asp-route-id="@item.Id" asp-route-status="Cancelled">
+                                            <i class="fas fa-trash-alt fa-1.5x" style="color: #dc3545;"></i>
                                         </a>
                                     }
                                     else if (item.Status.Equals("Shipping"))
                                     {
-                                        <a asp-action="EditStatus" asp-route-id="@item.Id" asp-route-status="Cancel">
-                                            <i class="fas fa-trash-alt fa-1.5x" style="color: #dc3545;"></i>
+                                        <a style="padding-left: 5px" asp-action="EditStatus" asp-route-id="@item.Id" asp-route-status="Received">
+                                            <i class="fa-regular fa-square-check fa-1.5x" style="color: #007bff;"></i>
                                         </a>
                                     }
                                 </td>
