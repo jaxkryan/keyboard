@@ -5,14 +5,20 @@
     {
         case "Identity":
             string page = this.ViewContext.RouteData.Values["page"].ToString();
+
+            Console.WriteLine($"Page: {page}");
             if (page.Equals("/Account/Register") || page.Equals("/Account/Login"))
             {
-                Console.WriteLine(page);
                 layout = "~/Views/Shared/_LayoutLogin.cshtml";
+            }
+            else if (page.StartsWith("/Account/Manage") && User.IsInRole("Admin"))
+            {
+                ViewData["layout"] = "Admin";
+                layout = "~/Views/Shared/_LayoutAdmin.cshtml";
             }
             else
             {
-
+                ViewData["layout"] = "Customer";
                 layout = "~/Views/Shared/_Layout.cshtml";
             }
             break;

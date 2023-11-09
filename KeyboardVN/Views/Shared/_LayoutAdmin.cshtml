@@ -41,19 +41,21 @@
     <nav class="site-navbar navbar navbar-default navbar-fixed-top navbar-mega" role="navigation">
 
         <div class="navbar-header">
-            <button type="button" class="navbar-toggler hamburger hamburger-close navbar-toggler-left hided"
-                    data-toggle="menubar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="hamburger-bar"></span>
-            </button>
-            <button type="button" class="navbar-toggler collapsed" data-target="#site-navbar-collapse"
-                    data-toggle="collapse">
-                <i class="icon wb-more-horizontal" aria-hidden="true"></i>
-            </button>
-            <div class="navbar-brand navbar-brand-center site-gridmenu-toggle">
-                <img class="navbar-brand-logo" src="~/admin/img/logo.ico" title="Remark">
-                <span class="navbar-brand-text hidden-xs-down"> Elj shop</span>
-            </div>
+            <a asp-controller="Home" asp-action="Index">
+                <button type="button" class="navbar-toggler hamburger hamburger-close navbar-toggler-left hided"
+                        data-toggle="menubar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="hamburger-bar"></span>
+                </button>
+                <button type="button" class="navbar-toggler collapsed" data-target="#site-navbar-collapse"
+                        data-toggle="collapse">
+                    <i class="icon wb-more-horizontal" aria-hidden="true"></i>
+                </button>
+                <div class="navbar-brand navbar-brand-center site-gridmenu-toggle">
+                    <img class="navbar-brand-logo" src="~/admin/img/logo.ico" title="Elj Shop">
+                    <span class="navbar-brand-text hidden-xs-down"> Elj shop</span>
+                </div>
+            </a>
         </div>
 
         <div class="navbar-container container-fluid">
@@ -73,7 +75,7 @@
                 <!-- End Navbar Toolbar -->
                 <!-- Navbar Toolbar Right -->
                 <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
-                    
+
                     <li class="nav-item dropdown">
                         <a class="nav-link navbar-avatar" data-toggle="dropdown" href="#" aria-expanded="false"
                            data-animation="scale-up" role="button">
@@ -83,9 +85,11 @@
                             </span>
                         </a>
                         <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon wb-user" aria-hidden="true"></i> Profile</a>
-                            <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon wb-payment" aria-hidden="true"></i> Billing</a>
-                            <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon wb-settings" aria-hidden="true"></i> Settings</a>
+                            @{
+                                IHttpContextAccessor httpContextAccessor = new HttpContextAccessor();
+                                int? userId = httpContextAccessor.HttpContext.Session.GetInt32("userId");
+                            }
+                            <a class="dropdown-item" asp-action="Details" asp-route-id="@userId" role="menuitem"><i class="icon wb-user" aria-hidden="true"></i> Profile</a>
                             <div class="dropdown-divider" role="presentation"></div>
                             <form id="logoutForm" style="padding: 0px; margin: 0px !important;" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                                 <button class="dropdown-item" role="menuitem">
@@ -98,30 +102,30 @@
                 <!-- End Navbar Toolbar Right -->
             </div>
             <!-- End Navbar Collapse -->
-            </div>
+        </div>
     </nav>
     <div class="site-menubar">
         <ul class="site-menu">
             <li class="site-menu-item">
-                <a asp-controller="ManageUser" asp-action="Index">
+                <a asp-area="Admin" asp-controller="ManageUser" asp-action="Index">
                     <i class="site-menu-icon wb-users" aria-hidden="true"></i>
                     <span class="site-menu-title">Manage User</span>
                 </a>
             </li>
             <li class="site-menu-item">
-                <a asp-controller="ManageRole" asp-action="Index">
+                <a asp-area="Admin" asp-controller="ManageRole" asp-action="Index">
                     <i class="site-menu-icon fa fa-star" aria-hidden="true"></i>
                     <span class="site-menu-title">Manage Role</span>
                 </a>
             </li>
-            <li class="site-menu-item" >
-                <a asp-controller="ManageProduct" asp-action="Index">
+            <li class="site-menu-item">
+                <a asp-area="Admin" asp-controller="ManageProduct" asp-action="Index">
                     <i class="site-menu-icon fa-keyboard-o" aria-hidden="true"></i>
                     <span class="site-menu-title">Manage Product</span>
                 </a>
             </li>
-            <li class="site-menu-item" >
-                <a asp-controller="ManageOrder" asp-action="ViewOrder">
+            <li class="site-menu-item">
+                <a asp-area="Admin" asp-controller="ManageOrder" asp-action="ViewOrder">
                     <i class="site-menu-icon wb-order" aria-hidden="true"></i>
                     <span class="site-menu-title">Manage Order</span>
                 </a>

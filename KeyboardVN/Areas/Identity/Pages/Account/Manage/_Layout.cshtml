@@ -10,26 +10,70 @@
 }
 
 @* <h1>Manage your account</h1> *@
-
-<div>
-    @* <h2>Change your account settings</h2>
-    <hr /> *@
-    <div class="container-fluid">
-        <div class="row px-xl-5">
-            <div class="col-lg-1 col-md-1"></div>
-            <div class="col-lg-3 col-md-4">
-                <h5 class="section-title position-relative text-uppercase mb-3">
-                    <span class="bg-secondary pr-3">Account settings</span>
-                </h5>
-                <partial name="_ManageNav" />
+@if (ViewData["layout"].Equals("Customer"))
+{
+    <div>
+        <div class="container-fluid">
+            <div class="row px-xl-5">
+                <div class="col-lg-1 col-md-1"></div>
+                <div class="col-lg-3 col-md-4">
+                    <h5 class="section-title position-relative text-uppercase mb-3">
+                        <span class="bg-secondary pr-3">Account settings</span>
+                    </h5>
+                    <partial name="_ManageNav" />
+                </div>
+                <div class="col-lg-7 col-md-6">
+                    @RenderBody()
+                </div>
+                <div class="col-lg-1 col-md-1"></div>
             </div>
-            <div class="col-lg-7 col-md-6">
-                @RenderBody()
-            </div>
-            <div class="col-lg-1 col-md-1"></div>
         </div>
     </div>
-</div>
+}
+else if (ViewData["layout"].Equals("Admin"))
+{
+    <div class="page">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Manage User</h1>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="ManageUser" asp-action="Index">Manage User</a></li>
+                <li class="breadcrumb-item active">User Information</li>
+            </ol>
+        </div>
+        <!-- End Page Header -->
+        <!-- Page Content -->
+        <div class="page-content">
+
+            <!-- Panel -->
+            <div class="container-fluid">
+                <div class="row px-xl-5">
+                    <div class="col-lg-1 col-md-1"></div>
+                    <div class="panel col-lg-10 col-md-10">
+                        @* <div class="panel-heading">
+                            <h3 class="panel-title">Account settings</h3>
+                        </div> *@
+                        <div class="panel-body row">
+                            <div class="col-lg-4 col-md-5">
+                                <h3 class="section-title position-relative mb-3">
+                                    <span class="pr-3">Account settings</span>
+                                </h3>
+                                <partial name="_ManageNav" />
+                            </div>
+                            <div class="col-lg-8 col-md-7">
+                                @RenderBody()
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-1 col-md-1"></div>
+                </div>
+            </div>
+            <!-- End Panel -->
+        </div>
+        <!-- End Page Content -->
+    </div>
+}
 
 @section Scripts {
     @RenderSection("Scripts", required: false)
