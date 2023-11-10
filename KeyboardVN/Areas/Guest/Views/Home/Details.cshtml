@@ -66,6 +66,54 @@
         </div>
     </div>
 </div>
+
+        <div class="row px-xl-5">
+            <div class="col">
+                <div class="bg-light p-30" style="padding-right:100px">
+                    <div class="nav nav-tabs mb-4">
+                        <a class="nav-item nav-link text-dark active" data-toggle="tab" href="#reviews">Reviews (@ViewBag.feedback.Count)</a>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="reviews">
+                            <div class="tab-pane fade active show">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        @if (ViewBag.feedback != null && ViewBag.feedback.Count > 0)
+                                        {
+                                            @foreach (var feedback in ViewBag.feedback)
+                                            {
+                                                <div class="media mb-4">
+                                                    <img src="https://tse1.mm.bing.net/th?id=OIP.4j4jNaPU3bIzDJHBj6HDSwHaHa&pid=Api&rs=1&c=1&qlt=95&w=114&h=114" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                                                    <div class="media-body">
+                                                        <h6>@feedback.Customer.FirstName @feedback.Customer.LastName<small> - <i>@feedback.FeedbackDate</i></small></h6>
+                                                        <p>@feedback.Content</p>
+                                                    </div>
+                                                </div>
+                                                @if (!string.IsNullOrEmpty(feedback.Reply))
+                                                {
+                                                    <div style="margin-left: 60px" class="media mb-4">
+                                                        <img src="https://tse1.mm.bing.net/th?id=OIP.4j4jNaPU3bIzDJHBj6HDSwHaHa&pid=Api&rs=1&c=1&qlt=95&w=114&h=114" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                                                        <div class="media-body">
+                                                            <h6>Elj Shop replied<small> - <i>@feedback.ReplyDate</i></small></h6>
+                                                            <p>@feedback.Reply</p>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <p>No reviews available.</p>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
 @section scripts
     {
     <script>

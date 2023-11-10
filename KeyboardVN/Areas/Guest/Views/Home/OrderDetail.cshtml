@@ -58,6 +58,7 @@
                     <th>Price</th>
                     <th>Quantity</th>
                     <th>Subtotal Price</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody class="align-middle">
@@ -79,47 +80,71 @@
                             }
                             @subtotal
                         </td>
+                        <td class="text-center">
+                            @{
+                                if (item.Order.Status.Equals("Received"))
+                                {
+                                    var feedbackList = ViewBag.feedback as List<Feedback>;
+
+                                    if (feedbackList != null)
+                                    {
+                                        var feedbackForProduct = feedbackList
+                                        .Where(f => f.ProductId == item.ProductId)
+                                        .FirstOrDefault();
+
+                                        if (feedbackForProduct != null && feedbackForProduct.Content == null)
+                                        {
+                                            <button class="btn btn-primary" data-target="#examplePositionCenter_@item.Id" data-toggle="modal" type="button">Write feedback</button>
+                                        }
+                                        else
+                                        {
+                                          
+                                            <span>You have feedback this product!</span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span>Error: Unable to retrieve feedback data</span>
+                                    }
+                                }
+                                else
+                                {
+                                    <span>You have not received this product yet</span>
+                                }
+                            }
+                        </td>
+                        <div class="modal fade" id="examplePositionCenter_@item.Id" aria-hidden="true" aria-labelledby="examplePositionCenter_@item.Id"
+                             role="dialog" tabindex="-1">
+                            <div class="modal-dialog modal-simple modal-center">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                        <h4 class="modal-title">Feedback's Detail</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="post" asp-area="Guest" asp-action="WriteFeedback" asp-controller="Home">
+                                            
+                                            <div class="form-group">
+                                                <label for="replyInput">Content</label>
+                                                <textarea type="text" class="form-control" name="feedback"></textarea>
+                                            </div>
+                                            <input type="hidden" value="@item.ProductId" name="id">
+                                            <input type="hidden" value="@item.OrderId" name="orderId">
+                                            
+                                            <div class="modal-footer">
+                                                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                                                <input type="submit" class="btn btn-primary" value="Save">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
 </div>
-@* <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Order)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @userOrder.User
-            </td>
-            <td>
-                    @userOrder.ShipProvince
-            </td>
-            <td>
-                    @userOrder.CreatedTime
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Product.Id)
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
- *@
