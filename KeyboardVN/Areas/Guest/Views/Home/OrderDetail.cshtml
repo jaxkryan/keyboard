@@ -92,14 +92,13 @@
                                         .Where(f => f.ProductId == item.ProductId)
                                         .FirstOrDefault();
 
-                                        if (feedbackForProduct != null && feedbackForProduct.Content == null)
+                                        if (feedbackForProduct != null && feedbackForProduct.Content != null)
                                         {
-                                            <button class="btn btn-primary" data-target="#examplePositionCenter_@item.Id" data-toggle="modal" type="button">Write feedback</button>
+                                            <span>You have feedback this product!</span>
                                         }
                                         else
                                         {
-                                          
-                                            <span>You have feedback this product!</span>
+                                            <button class="btn btn-primary" data-target="#examplePositionCenter_@item.Id" data-toggle="modal" type="button">Write feedback</button>
                                         }
                                     }
                                     else

@@ -77,10 +77,10 @@ namespace KeyboardVN.Areas.Guest.Controllers
                 {
                     return NotFound();
                 }
-                return RedirectToAction("History", "Home");
+                return RedirectToAction("OrderDetail", "Home", new { id = orderId });
             }
 
-            return RedirectToAction("History", "Home");
+            return RedirectToAction("OrderDetail", "Home", new { id = orderId });
         }
         [Area("Guest")]
         public IActionResult ProductFilter(String? searchName,
