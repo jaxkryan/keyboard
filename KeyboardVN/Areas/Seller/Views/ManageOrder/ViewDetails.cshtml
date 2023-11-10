@@ -1,5 +1,9 @@
 ﻿@model KeyboardVN.Models.Order
 
+@{
+    ViewData["Title"] = "Order Detail";
+}
+
 @section Style {
     <link rel="stylesheet" href="~/admin/global/vendor/tablesaw/tablesaw.css">
     <link rel="stylesheet" href="~/admin/global/vendor/datatables.net-bs4/dataTables.bootstrap4.css">
@@ -20,7 +24,7 @@
     <div class="page-header">
         <h1 class="page-title">Order Details</h1>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a asp-controller="ManageOrder" asp-action="ViewOrder">Manage Order</a></li>
+            <li class="breadcrumb-item"><a asp-controller="ManageOrder" asp-action="Index">Manage Order</a></li>
             <li class="breadcrumb-item active">Order Details</li>
         </ol>
     </div>
