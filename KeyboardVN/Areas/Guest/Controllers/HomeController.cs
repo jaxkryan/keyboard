@@ -39,8 +39,6 @@ namespace KeyboardVN.Areas.Guest.Controllers
                 productInCart = context.CartItems.Where(ci => ci.CartId == context.Carts.FirstOrDefault(c => c.UserId == httpContextAccessor.HttpContext.Session.GetInt32("userId")).Id).Count();
             }
             ViewBag.productInCart = productInCart;
-            Order order = (Order) context.Orders.FirstOrDefault(o => o.Id == 1);
-            createInvoieImage(order);
             return View();
         }
         [Area("Guest")]
