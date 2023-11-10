@@ -1,11 +1,14 @@
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using KeyboardVN.Models;
 using Microsoft.Extensions.Options;
+using KeyboardVN.Areas.Seller.Controllers;
+using KeyboardVN.Util.EmailSender;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("KeyboardVNContextConnection") ?? throw new InvalidOperationException("Connection string 'KeyboardVNContextConnection' not found.");
+var mailsettings = builder.Configuration.GetSection("MailSettings");
 
 builder.Services.AddHttpContextAccessor();
 
@@ -16,6 +19,10 @@ builder.Services.ConfigureApplicationCookie(options => {
     options.LogoutPath = $"/logout/";
     options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
 });
+
+builder.Services.AddOptions();
+builder.Services.Configure<MailSettings>(mailsettings);
+builder.Services.AddTransient<ISendMailService, SendMailService>();
 
 builder.Services.AddDistributedMemoryCache();
 
@@ -38,6 +45,10 @@ builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfi
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// Add services to send mail 
+builder.Services.AddScoped<ISendMailService, SendMailService>();
+builder.Services.AddScoped<ManageOrderController>(); // Add services to controller ManageOrderController
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -47,6 +58,7 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
 
 app.UseSession();
 
