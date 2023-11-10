@@ -1,0 +1,159 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@model KeyboardVN.Models.User
+@inject UserManager<User> UserManager
+@inject RoleManager<Role> RoleManager
+
+@section style {
+    <link rel="stylesheet" href="~/admin/mmenu/assets/examples/css/forms/masks.css">
+    <link rel="stylesheet" href="~/admin/mmenu/assets/examples/css/forms/layouts.css">
+}
+
+<div class="page">
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1 class="page-title">Edit User Information</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item"><a asp-controller="ManageUser" asp-action="Index">Manage User</a></li>
+            <li class="breadcrumb-item active">Edit User Information</li>
+        </ol>
+    </div>
+    <!-- End Page Header -->
+    <!-- Page Content -->
+    <div class="page-content">
+
+
+        <div class="row">
+            <div class="col-md-3">
+            </div>
+            <!-- Panel -->
+            <div class="panel col-md-6">
+                <div class="panel-heading">
+                    <h3 class="panel-title">User Infomation</h3>
+                </div>
+                <div class="panel-body">
+                    <form class="row" asp-action="Edit">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Id" />
+                        <input type="hidden" asp-for="SecurityStamp" />
+                        <div class="form-group col-md-4">
+                            <label asp-for="FirstName" class="control-label"></label>
+                            <input asp-for="FirstName" class="form-control" />
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="LastName" class="control-label"></label>
+                            <input asp-for="LastName" class="form-control" />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label">Role</label>
+                            @{
+                                var allRoles = RoleManager.Roles.ToList();
+                                var roles = await UserManager.GetRolesAsync(Model);
+                                string role = roles.First();
+                            }
+                            <select name="userRole" asp-for="@role" asp-items="@new SelectList( allRoles)" class="form-control">
+                            </select>
+                            <span asp-validation-for="@role" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label asp-for="Street" class="control-label"></label>
+                            <input asp-for="Street" class="form-control" />
+                            <span asp-validation-for="Street" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="City" class="control-label"></label>
+                            <input asp-for="City" class="form-control" />
+                            <span asp-validation-for="City" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="Province" class="control-label"></label>
+                            <input asp-for="Province" class="form-control" />
+                            <span asp-validation-for="Province" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="Country" class="control-label"></label>
+                            <input asp-for="Country" class="form-control" />
+                            <span asp-validation-for="Country" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label asp-for="UserName" class="control-label"></label>
+                            <input asp-for="UserName" class="form-control" />
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="AccessFailedCount" class="control-label"></label>
+                            <input asp-for="AccessFailedCount" class="form-control" readonly />
+                            <span asp-validation-for="AccessFailedCount" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <div class="checkbox-custom checkbox-success">
+                                <input asp-for="EmailConfirmed" />
+                                <label class="control-label">
+                                    @Html.DisplayNameFor(model => model.Email)
+                                </label>
+                            </div>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <div class="checkbox-custom checkbox-success">
+                                <input asp-for="PhoneNumberConfirmed"  />
+                            <label class="control-label">
+                                @Html.DisplayNameFor(model => model.PhoneNumber)
+                            </label>
+                            </div>
+                            <input asp-for="PhoneNumber" class="form-control" />
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+                        @* <div class="form-group">
+                        <label asp-for="SecurityStamp" class="control-label"></label>
+                        <input asp-for="SecurityStamp" class="form-control" />
+                        <span asp-validation-for="SecurityStamp" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                        <label asp-for="ConcurrencyStamp" class="control-label"></label>
+                        <input asp-for="ConcurrencyStamp" class="form-control" />
+                        <span asp-validation-for="ConcurrencyStamp" class="text-danger"></span>
+                        </div>
+                        <div class="form-group form-check">
+                        <label class="form-check-label">
+                        <input class="form-check-input" asp-for="TwoFactorEnabled" /> @Html.DisplayNameFor(model => model.TwoFactorEnabled)
+                        </label>
+                        </div>
+                        <div class="form-group">
+                        <label asp-for="LockoutEnd" class="control-label"></label>
+                        <input asp-for="LockoutEnd" class="form-control" />
+                        <span asp-validation-for="LockoutEnd" class="text-danger"></span>
+                        </div>
+                        <div class="form-group form-check">
+                        <label class="form-check-label">
+                        <input class="form-check-input" asp-for="LockoutEnabled" /> @Html.DisplayNameFor(model => model.LockoutEnabled)
+                        </label>
+                        </div>*@
+                        <div class="form-group col-md-12">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- End Panel -->
+            <div class="col-md-3">
+            </div>
+        </div>
+
+    </div>
+    <!-- End Page Content -->
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/admin/global/vendor/formatter/jquery.formatter.js"></script>
+    <script src="~/admin/global/js/Plugin/formatter.js"></script>
+    <script src="~/admin/global/vendor/jquery-placeholder/jquery.placeholder.js"></script>
+    <script src="~/admin/global/js/Plugin/jquery-placeholder.js"></script>
+}
