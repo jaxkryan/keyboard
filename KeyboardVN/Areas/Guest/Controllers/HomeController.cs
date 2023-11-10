@@ -39,6 +39,8 @@ namespace KeyboardVN.Areas.Guest.Controllers
                 productInCart = context.CartItems.Where(ci => ci.CartId == context.Carts.FirstOrDefault(c => c.UserId == httpContextAccessor.HttpContext.Session.GetInt32("userId")).Id).Count();
             }
             ViewBag.productInCart = productInCart;
+            Order order = (Order) context.Orders.FirstOrDefault(o => o.Id == 1);
+            createInvoieImage(order);
             return View();
         }
         [Area("Guest")]
@@ -309,11 +311,13 @@ namespace KeyboardVN.Areas.Guest.Controllers
             itemTable.AddCell(cell53);
             itemTable.AddCell(cell54);
 
-            List<OrderDetail> orderDetailList = context.OrderDetails.Where(od => od.OrderId == order.Id).ToList();
+            List<OrderDetail> orderDetailList = context.OrderDetails.Include(od => od.Product).Where(od => od.OrderId == order.Id).ToList();
+            Console.WriteLine(order.Id);
             double sub = 0;
 
             foreach (OrderDetail orderDetail in orderDetailList)
             {
+                
                 Cell item1 = new Cell(1, 2)
                     .SetFontSize(16)
                     .SetTextAlignment(TextAlignment.LEFT)
@@ -322,7 +326,7 @@ namespace KeyboardVN.Areas.Guest.Controllers
                 Cell item2 = new Cell(1, 1)
                     .SetFontSize(16)
                     .SetTextAlignment(TextAlignment.CENTER)
-                    .Add(new Paragraph("" + orderDetail.Price));
+                    .Add(new Paragraph("" + orderDetail.Price + "$"));
 
                 Cell item3 = new Cell(1, 1)
                     .SetFontSize(16)
@@ -332,7 +336,7 @@ namespace KeyboardVN.Areas.Guest.Controllers
                 Cell item4 = new Cell(1, 1)
                     .SetFontSize(16)
                     .SetTextAlignment(TextAlignment.CENTER)
-                    .Add(new Paragraph("" + orderDetail.Price * orderDetail.Quantity));
+                    .Add(new Paragraph("" + orderDetail.Price * orderDetail.Quantity + "$"));
                 sub += orderDetail.Price * orderDetail.Quantity;
 
                 itemTable.AddCell(item1);
@@ -349,21 +353,21 @@ namespace KeyboardVN.Areas.Guest.Controllers
                 .SetBorder(Border.NO_BORDER)
                 .SetTextAlignment(TextAlignment.RIGHT)
                 .SetPaddingRight(20f)
-                .Add(new Paragraph("subtotal: " + sub));
+                .Add(new Paragraph("subtotal: " + Math.Round(sub,2) + "$"));
 
             Cell shipping = new Cell(1, 1)
                 .SetFontSize(16)
                 .SetBorder(Border.NO_BORDER)
                 .SetTextAlignment(TextAlignment.RIGHT)
                 .SetPaddingRight(20f)
-                .Add(new Paragraph("Shipping: " + sub * 0.1));
+                .Add(new Paragraph("Shipping: " + Math.Round( sub * 0.1,2) + "$"));
 
             Cell total = new Cell(1, 1)
                 .SetFontSize(32)
                 .SetBorder(Border.NO_BORDER)
                 .SetTextAlignment(TextAlignment.RIGHT)
                 .SetPaddingRight(20f)
-                .Add(new Paragraph("Total: " + sub * 1.1));
+                .Add(new Paragraph("Total: " + Math.Round( sub * 1.1,2) + "$"));
 
             totalTable.AddCell(subtotal);
             totalTable.AddCell(shipping);
