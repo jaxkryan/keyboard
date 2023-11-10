@@ -1,4 +1,6 @@
-﻿@model IEnumerable<KeyboardVN.Models.User>
+﻿@using Microsoft.AspNetCore.Identity;
+@model IEnumerable<KeyboardVN.Models.User>
+@inject UserManager<User> UserManager
 
 @section Style {
     <link rel="stylesheet" href="~/admin/global/vendor/datatables.net-bs4/dataTables.bootstrap4.css">
@@ -28,7 +30,6 @@
         </div>
     </div>
     <!-- End Page Header -->
-
     <!-- Page Content -->
     <div class="page-content">
 
@@ -42,10 +43,16 @@
                     <thead>
                         <tr>
                             <th>
+                                @Html.DisplayNameFor(model => model.Id)
+                            </th>
+                            <th>
                                 @Html.DisplayNameFor(model => model.FirstName)
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.LastName)
+                            </th>
+                            <th>
+                                Role
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Province)
@@ -69,10 +76,19 @@
                         {
                             <tr>
                                 <td>
+                                    @Html.DisplayFor(modelItem => item.Id)
+                                </td>
+                                <td>
                                     @Html.DisplayFor(modelItem => item.FirstName)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.LastName)
+                                </td>
+                                <td>
+                                    @{
+                                        var roles = await UserManager.GetRolesAsync(item);
+                                    }
+                                    @string.Join(",", roles.ToList())
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Province)
@@ -89,7 +105,7 @@
                                 <td style="width: 75px !important;">
                                     <a style="text-decoration: none;" asp-action="Edit" asp-route-id="@item.Id">
                                         <i class="icon fa-pencil" data-toggle="tooltip" title="Edit"></i>
-                                        </a> |
+                                    </a> |
                                     <a style="text-decoration: none;" asp-action="Details" asp-route-id="@item.Id">
                                         <i class="icon fa-info" data-toggle="tooltip" title="Details"></i>
                                     </a> |
