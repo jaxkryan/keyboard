@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using KeyboardVN.Models;
 using Microsoft.Extensions.Options;
 using KeyboardVN.Areas.Seller.Controllers;
 using KeyboardVN.Util.EmailSender;
+using KeyboardVN.Areas.Identity.Pages.Account;
 using KeyboardVN.Areas.Guest.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
