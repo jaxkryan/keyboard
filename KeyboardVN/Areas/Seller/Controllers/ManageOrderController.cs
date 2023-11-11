@@ -125,17 +125,21 @@ namespace KeyboardVN.Areas.Seller.Controllers
             {
                 try
                 {
+                    Order oldOrder = _keyboardVN.Orders.Where(o => o.Id == order.Id).FirstOrDefault();                   
                     Console.WriteLine("Update success");
+                    if (oldOrder.Status != order.Status)
+                    {
+                        MailContent content = new MailContent
+                        {
+                            To = order.ShipEmail, // Mail received address
+                            Subject = "Order Infomation", // Subject
+                            Body = $"Your Order Status is {order.Status} now" // content
+                        };
+                        _sendMailService.SendMailWithoutImage(content);
+                    }
                     _keyboardVN.Update(order);
                     await _keyboardVN.SaveChangesAsync();
-                    MailContent content = new MailContent
-                    {
-                        To = order.ShipEmail, // Mail received address
-                        Subject = "Order Infomation", // Subject
-                        Body = $"Your Order Status {order.Status}" // content
-                    };
-                    await _sendMailService.SendMail(content);
-
+                    
                 }
                 catch
                 {
