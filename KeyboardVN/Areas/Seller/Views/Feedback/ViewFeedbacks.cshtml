@@ -50,7 +50,7 @@
                                 @Html.DisplayNameFor(model => model.Product)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.FeedbackDate)
+                                Feedback Date
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.ReplyDate)
@@ -76,7 +76,7 @@
                                     @Html.DisplayFor(modelItem => item.Product.Name)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.FeedbackDate)
+                                    @Convert.ToDateTime(item.FeedbackDate).ToString("dd/MM/yyyy hh:mm:ss")
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.ReplyDate)

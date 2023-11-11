@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -15,7 +16,9 @@ namespace KeyboardVN.Models
         public int? SellerId { get; set; }
         public string? Content { get; set; }
         public string? Reply { get; set; }
+        [DataType(DataType.DateTime)]
         public DateTime? FeedbackDate { get; set; }
+        [DataType(DataType.DateTime)]
         public DateTime? ReplyDate { get; set; }
         public bool? Checked { get; set; }
 

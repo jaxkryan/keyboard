@@ -234,8 +234,8 @@ CREATE TABLE [Feedback] (
   sellerId int,
   content nvarchar(1000),
   reply nvarchar(1000),
-  feedbackDate date,
-  replyDate date,
+  feedbackDate datetime,
+  replyDate datetime,
   checked bit 
 )
 GO
@@ -428,8 +428,8 @@ INSERT INTO [dbo].[Feedback]
            ,[replyDate]
            ,[checked])
      VALUES
-           (1, 1, 1, null , 'good job', null, '2023-11-09', null, 1),
-		   (7, 7, 1, null , 'very ok', null, '2023-11-09', null, 1)
+           (1, 1, 1, null , 'good job', null, '09-11-2023 9:42:15', null, 1),
+		   (7, 7, 1, null , 'very ok', null, '10-10-1998 9:44:55', null, 1)
 
 INSERT INTO [dbo].[Cart] ([id],[userId])
 VALUES (4, 4),

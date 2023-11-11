@@ -76,26 +76,17 @@ namespace KeyboardVN.Areas.Seller.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ReplyFeedback(int Id, string Reply)
         {
-            //Console.WriteLine("******************************************************************THIS IS THE ID********************" + Id);
-            Feedback fb1 = _keyboardVN.Feedbacks.Find(Id);
-            Feedback fb = new Feedback
-            {
-                Id = Id,
-                OrderId = fb1.OrderId,
-                CustomerId = fb1.CustomerId,
-                ProductId = fb1.ProductId,
-                SellerId = HttpContext.Session.GetInt32("userId"),
-                Content = fb1.Content,
-                Reply = Reply,
-                FeedbackDate = fb1.FeedbackDate,
-                ReplyDate = DateTime.Now,
-                Checked = fb1.Checked,
-            };
+            Feedback feedbackInDb = _keyboardVN.Feedbacks.Find(Id);
+            Console.WriteLine("*********************************************");
+            Console.WriteLine(feedbackInDb.FeedbackDate.ToString());
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _keyboardVN.Update(fb);
+                    feedbackInDb.ReplyDate = DateTime.Now;
+                    feedbackInDb.SellerId = HttpContext.Session.GetInt32("userId");
+                    feedbackInDb.Reply = Reply; 
+                    _keyboardVN.Update(feedbackInDb);
                     _keyboardVN.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
