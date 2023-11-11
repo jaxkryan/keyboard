@@ -272,11 +272,11 @@ namespace KeyboardVN.Models
                     .HasColumnName("reply");
 
                 entity.Property(e => e.FeedbackDate)
-                    .HasColumnType("date")
+                    .HasColumnType("datetime2")
                     .HasColumnName("feedbackDate");
 
                 entity.Property(e => e.ReplyDate)
-                    .HasColumnType("date")
+                    .HasColumnType("datetime2")
                     .HasColumnName("replyDate");
 
                 entity.Property(e => e.Checked).HasColumnName("checked");
