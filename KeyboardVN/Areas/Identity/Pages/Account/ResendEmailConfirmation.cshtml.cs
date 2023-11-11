@@ -83,7 +83,9 @@ namespace KeyboardVN.Areas.Identity.Pages.Account
                 "Confirm your email",
                 $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-            ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
+            TempData["notification"] = "Verification email sent. Please check your email.";
+            TempData["notiType"] = "GREEN";
+            return RedirectToPage("./Login");
             return Page();
         }
     }
