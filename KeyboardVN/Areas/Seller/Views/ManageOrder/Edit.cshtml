@@ -99,6 +99,7 @@
                                             <option value="Processing">Processing</option>
                                             <option value="Accepted">Accepted</option>
                                             <option value="Shipping">Shipping</option>
+                                            <option value="Received">Canceled</option>
                                             <option value="Canceled">Canceled</option>
                                             </select>
                                         <span asp-validation-for="Status" class="text-danger"></span>
@@ -106,7 +107,7 @@
                                     
                                     <div class="form-group">
                                         <button type="submit" value="Save" class="btn btn-primary">Update</button>
-                                        <a type="button" asp-controller="ManageOrder" asp-action="ViewOrder" class="btn-default btn">Cancel</a>
+                                        <a type="button" asp-controller="ManageOrder" asp-action="Index" class="btn-default btn">Cancel</a>
                                     </div>
                                 </form>
                             </div>
