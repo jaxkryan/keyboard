@@ -123,7 +123,18 @@ namespace KeyboardVN.Util.EmailSender
 
 
         }
-        public async Task SendEmailAsync(string email, string subject, string htmlMessage, string ImagePath)
+
+        public async Task SendEmailAsync(string email, string subject, string htmlMessage)
+        {
+            await SendMailWithoutImage(new MailContent()
+            {
+                To = email,
+                Subject = subject,
+                Body = htmlMessage
+            });
+        }
+
+        public async Task SendEmailAsyncWithImage(string email, string subject, string htmlMessage, string ImagePath)
         {
             await SendMail(new MailContent()
             {
