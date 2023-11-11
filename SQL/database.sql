@@ -432,7 +432,8 @@ INSERT INTO [dbo].[Feedback]
 		   (7, 7, 1, null , 'very ok', null, '10-10-1998 9:44:55', null, 1)
 
 INSERT INTO [dbo].[Cart] ([id],[userId])
-VALUES (4, 4),
+VALUES (3, 3),
+	(4, 4),
 	(5, 5),
 	(6, 6),
 	(7, 7),

@@ -138,7 +138,9 @@ namespace KeyboardVN.Areas.Identity.Pages.Account
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        TempData["notification"] = "Please check your email to confirm your account.";
+                        TempData["notiType"] = "GREEN";
+                        return RedirectToPage("./Login");
                     }
                     else
                     {
