@@ -31,7 +31,25 @@
 <div class="wrapper">
     <form id="account" method="post" class="login">
         <p class="title">Log in</p>
-        <!--notification-->
+        <!-- Notification Start -->
+        @{
+            if (TempData["notification"] != null)
+            {
+                string notiType = "";
+                if (TempData["notiType"].Equals("RED"))
+                {
+                    notiType = "alert-danger";
+                }
+                else
+                {
+                    notiType = "alert-success";
+                }
+                <div class="alert @notiType">
+                    <strong>@TempData["notification"]</strong>
+                </div>
+            }
+        }
+
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input asp-for="Input.Email" type="text" placeholder="Email" autofocus />
         <i class="fa fa-user"></i>

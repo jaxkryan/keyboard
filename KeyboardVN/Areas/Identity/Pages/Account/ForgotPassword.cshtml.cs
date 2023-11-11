@@ -77,7 +77,9 @@ namespace KeyboardVN.Areas.Identity.Pages.Account
                     "Reset Password",
                     $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                return RedirectToPage("./ForgotPasswordConfirmation");
+                TempData["notification"] = "Please check your email to reset your password.";
+                TempData["notiType"] = "GREEN";
+                return RedirectToPage("./Login");
             }
 
             return Page();
