@@ -1,6 +1,4 @@
 ﻿@model IEnumerable<KeyboardVN.Models.Order>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-
 @{
     ViewData["Title"] = "History";
 }
@@ -83,9 +81,9 @@
                                     }
                                     else if (item.Status.Equals("Shipping"))
                                     {
-                                 
+                                       
                                         <a style="padding-left: 5px" asp-action="EditStatus" asp-route-id="@item.Id" asp-route-status="Received">
-                                            <i class="fas fa-square-check fa-1.5x" style="color: #007bff;"></i>
+                                            <i class="fas fa-check-square" style="color: #007bff;"></i>
                                         </a>
                                     }
                                 </td>
