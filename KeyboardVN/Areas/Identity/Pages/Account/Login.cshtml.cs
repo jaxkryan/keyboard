@@ -122,7 +122,7 @@ namespace KeyboardVN.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    User user = _keyboardVNContext.Users.FirstOrDefault(x => x.Email == Input.Email);
+                    User user = _keyboardVNContext.Users.FirstOrDefault(x => x.UserName == Input.Email);
                     _httpContext.HttpContext.Session.SetInt32("userId", user.Id);
                     if (await _userManager.IsInRoleAsync(user, "Admin"))
                     {

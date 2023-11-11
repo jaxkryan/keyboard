@@ -33,7 +33,7 @@ namespace KeyboardVN.Models
         public override DbSet<UserLogin> UserLogins { get; set; } = null!;
         public override DbSet<UserRole> UserRoles { get; set; } = null!;
         public override DbSet<UserToken> UserTokens { get; set; } = null!;
-
+        public virtual DbSet<Feedback> Feedbacks { get; set; } = null!;
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -247,6 +247,63 @@ namespace KeyboardVN.Models
                 entity.Property(e => e.Name).HasMaxLength(256);
 
                 entity.Property(e => e.NormalizedName).HasMaxLength(256);
+            });
+
+            modelBuilder.Entity<Feedback>(entity =>
+            {
+                entity.ToTable("Feedback");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.OrderId).HasColumnName("orderId");
+
+                entity.Property(e => e.CustomerId).HasColumnName("customerId");
+
+                entity.Property(e => e.ProductId).HasColumnName("productId");
+
+                entity.Property(e => e.SellerId).HasColumnName("sellerId");
+
+                entity.Property(e => e.Content)
+                    .HasMaxLength(1000)
+                    .HasColumnName("content");
+
+                entity.Property(e => e.Reply)
+                    .HasMaxLength(1000)
+                    .HasColumnName("reply");
+
+                entity.Property(e => e.FeedbackDate)
+                    .HasColumnType("date")
+                    .HasColumnName("feedbackDate");
+
+                entity.Property(e => e.ReplyDate)
+                    .HasColumnType("date")
+                    .HasColumnName("replyDate");
+
+                entity.Property(e => e.Checked).HasColumnName("checked");
+                entity.HasOne(d => d.Order)
+                    .WithMany(p => p.Feedbacks)
+                    .HasForeignKey(d => d.OrderId)
+                    .HasConstraintName("FK_Feedback_Order")
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(d => d.Customer)
+       .WithMany(p => p.CustomerFeedbacks)
+       .HasForeignKey(d => d.CustomerId)
+       .HasConstraintName("FK_Feedback_Customer")
+       .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(d => d.Seller)
+                      .WithMany(p => p.SellerFeedbacks)
+                      .HasForeignKey(d => d.SellerId)
+                      .HasConstraintName("FK_Feedback_Seller")
+                      .OnDelete(DeleteBehavior.NoAction);
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.Feedbacks)
+                    .HasForeignKey(d => d.ProductId)
+                    .HasConstraintName("FK_Feedback_Product")
+                    .OnDelete(DeleteBehavior.Cascade);
+
             });
 
             modelBuilder.Entity<RoleClaim>(entity =>

@@ -417,6 +417,20 @@ INSERT INTO [dbo].[OrderDetail] ([orderId], [productId], [price], [quantity])
 VALUES (14, 9, 199, ABS(CHECKSUM(NEWID()) % 3 + 1)),
        (14, 6, 340, ABS(CHECKSUM(NEWID()) % 3 + 1));
 
+INSERT INTO [dbo].[Feedback]
+           ([orderId]
+           ,[customerId]
+           ,[productId]
+           ,[sellerId]
+           ,[content]
+           ,[reply]
+           ,[feedbackDate]
+           ,[replyDate]
+           ,[checked])
+     VALUES
+           (1, 1, 1, null , 'good job', null, '2023-11-09', null, 1),
+		   (7, 7, 1, null , 'very ok', null, '2023-11-09', null, 1)
+
 INSERT INTO [dbo].[Cart] ([id],[userId])
 VALUES (4, 4),
 	(5, 5),

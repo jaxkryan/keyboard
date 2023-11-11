@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<KeyboardVN.Models.Order>
-
 @{
     ViewData["Title"] = "History";
 }
@@ -72,7 +71,7 @@
                                 </td>
                                 <td class="text-center">
                                     <a asp-action="OrderDetail" asp-route-id="@item.Id">
-                                        <i class="fas fa-info-circle fa-1.56x" style="color: #28a745;"></i>
+                                        <i class="fas fa-info-circle fa-1.5x" style="color: #28a745;"></i>
                                     </a>
                                     @if (item.Status.Equals("Processing"))
                                     {
@@ -82,8 +81,9 @@
                                     }
                                     else if (item.Status.Equals("Shipping"))
                                     {
+                                       
                                         <a style="padding-left: 5px" asp-action="EditStatus" asp-route-id="@item.Id" asp-route-status="Received">
-                                            <i class="fa-regular fa-square-check fa-1.5x" style="color: #007bff;"></i>
+                                            <i class="fas fa-check-square" style="color: #007bff;"></i>
                                         </a>
                                     }
                                 </td>

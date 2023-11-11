@@ -24,6 +24,7 @@ namespace KeyboardVN.Models
         public virtual Brand? Brand { get; set; } = null!;
         public virtual Category? Category { get; set; } = null!;
         public virtual ICollection<CartItem> CartItems { get; set; }
+        public virtual ICollection<Feedback>? Feedbacks { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

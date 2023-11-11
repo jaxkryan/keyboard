@@ -90,16 +90,13 @@ namespace KeyboardVN.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditAsync(int id, [Bind("Id, Name")] Role role)
         {
-            Console.WriteLine("editing");
             if (id != role.Id)
             {
                 Console.WriteLine($"not found, id={id}, role.id={role.Id}");
                 return NotFound();
             }
-
             if (ModelState.IsValid)
             {
-                Console.WriteLine("modelState is valid");
                 var result = await _roleManager.UpdateAsync(role);
 
                 if (result.Succeeded)

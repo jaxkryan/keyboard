@@ -59,10 +59,14 @@ namespace KeyboardVN.Models
 
         [PersonalData]
         public override bool TwoFactorEnabled { get; set; }
-        public override DateTimeOffset? LockoutEnd { get; set; }
-        public override bool LockoutEnabled { get; set; }
+        //public override DateTimeOffset? LockoutEnd { get; set; }
+        //public override bool LockoutEnabled { get; set; }
         public override int AccessFailedCount { get; set; }
 
+        public virtual ICollection<Feedback>? CustomerFeedbacks { get; set; }
+
+        // Navigation property for seller feedbacks
+        public virtual ICollection<Feedback>? SellerFeedbacks { get; set; }
         public virtual ICollection<Cart>? Carts { get; set; }
         public virtual ICollection<Order>? Orders { get; set; }
         public virtual ICollection<UserClaim>? UserClaims { get; set; }
