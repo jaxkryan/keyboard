@@ -37,12 +37,16 @@ namespace KeyboardVN.Util.EmailSender
 
             var builder = new BodyBuilder();
             builder.HtmlBody = $@"
-            <html>
-                <body>
-                    {mailContent.Body}
-                    <img src='cid:image1' alt='Embedded Image'>
-                </body>
-            </html>";
+        <html>
+            <body>
+                {mailContent.Body}
+                <img src='cid:image1' style='  display: block;
+                                                margin-left: auto;
+                                                margin-right: auto;
+                                                width: 50%;'
+                alt='Embedded Image'>
+            </body>
+        </html>";
 
             if (!string.IsNullOrEmpty(mailContent.ImagePath))
             {

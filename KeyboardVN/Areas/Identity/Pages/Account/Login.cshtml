@@ -39,18 +39,20 @@
         <input asp-for="Input.Password" type="password" placeholder="Password" />
         <i class="fa fa-key"></i>
         <span asp-validation-for="Input.Password" class="text-danger"></span>
-        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register</a>
-        <span style="font-size: 0.8em;">or</span>
-        <a id="forgot-password" asp-page="./ForgotPassword">Forgot password?</a>
+
         <!--Remember account  checkbox-->
-        @* <div >
+        <div>
             <div class="checkbox">
                 <label asp-for="Input.RememberMe" class="form-label">
-                    <input class="form-check-input" asp-for="Input.RememberMe" />
+                    <input class="form-check-input" style="display: inline-block; width: auto;" asp-for="Input.RememberMe" />
                     @Html.DisplayNameFor(m => m.Input.RememberMe)
                 </label>
             </div>
-        </div> *@
+        </div>
+
+        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register</a>
+        <span style="font-size: 0.8em;">or</span>
+        <a id="forgot-password" asp-page="./ForgotPassword">Forgot password?</a>
         <div class="row text-center">
             <input id="login-submit" class="registerSubmit" type="submit" value="Login"></input>
         </div>

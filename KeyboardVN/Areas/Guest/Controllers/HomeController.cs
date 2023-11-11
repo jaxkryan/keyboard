@@ -1,10 +1,16 @@
-﻿using KeyboardVN.Models;
+﻿using iText.IO.Image;
+using iText.Kernel.Pdf;
+using iText.Layout.Borders;
+using iText.Layout.Element;
+using iText.Layout.Properties;
+using KeyboardVN.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Drawing;
 using System.Text.Encodings.Web;
 
 namespace KeyboardVN.Areas.Guest.Controllers
@@ -44,8 +50,43 @@ namespace KeyboardVN.Areas.Guest.Controllers
                 productInCart = context.CartItems.Where(ci => ci.CartId == context.Carts.FirstOrDefault(c => c.UserId == httpContextAccessor.HttpContext.Session.GetInt32("userId")).Id).Count();
             }
             ViewBag.productInCart = productInCart;
+            List<Feedback> feedbacks = context.Feedbacks.Where(f => f.ProductId == id).Include(c => c.Customer).ToList();
+            ViewBag.feedback = feedbacks;
             var product = context.Products.Include(c=>c.Category).Include(c=>c.Brand).FirstOrDefault(product => product.Id == id);
             return View(product);
+        }
+        [Area("Guest")]
+        [HttpPost]
+        public ActionResult WriteFeedback(int id, string feedback, int orderId)
+        {
+            Feedback fb2 = new Feedback
+            {
+                OrderId = orderId,
+                CustomerId = HttpContext.Session.GetInt32("userId"),
+                ProductId = id,
+                SellerId = null,
+                Content = feedback,
+                Reply = null,
+                FeedbackDate = DateTime.Now,
+                ReplyDate = null,
+                Checked = false
+            };
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    context.Update(fb2);
+                    context.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    return NotFound();
+                }
+                return RedirectToAction("OrderDetail", "Home", new { id = orderId });
+            }
+
+            return RedirectToAction("OrderDetail", "Home", new { id = orderId });
         }
         [Area("Guest")]
         public IActionResult ProductFilter(String? searchName,
@@ -184,6 +225,10 @@ namespace KeyboardVN.Areas.Guest.Controllers
         [Area("Guest")]
         public ActionResult OrderDetail(int id)
         {
+            List<Feedback> fbList = context.Feedbacks.Where(fb =>fb.OrderId==id).ToList();
+                ViewBag.feedback = fbList;
+
+            //Console.WriteLine("*******************************************************This is feedback******************************" + fbList.Count);
             Order userOrder = (from Order in context.Orders where id == Order.Id select Order).SingleOrDefault();
             ViewBag.userOrder = userOrder;
             List<OrderDetail> detail = context.OrderDetails

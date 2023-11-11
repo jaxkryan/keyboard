@@ -40,6 +40,7 @@ namespace KeyboardVN.Models
         [Display(Name = "Created Time")]
         public DateTime? CreatedTime { get; set; }
 
+        public virtual ICollection<Feedback>? Feedbacks { get; set; }
         public virtual User? User { get; set; } = null!;
         public virtual ICollection<OrderDetail>? OrderDetails { get; set; }
     }
