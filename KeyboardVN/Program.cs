@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using KeyboardVN.Models;
 using Microsoft.Extensions.Options;
 using KeyboardVN.Areas.Seller.Controllers;
 using KeyboardVN.Util.EmailSender;
 using KeyboardVN.Areas.Identity.Pages.Account;
+using KeyboardVN.Areas.Guest.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,6 +50,8 @@ builder.Services.AddControllersWithViews();
 // Add services to send mail 
 builder.Services.AddScoped<ISendMailService, SendMailService>();
 builder.Services.AddScoped<ManageOrderController>(); // Add services to controller ManageOrderController
+builder.Services.AddScoped<CheckoutController>(); // Add services to controller ManageOrderController
+
 
 var app = builder.Build();
 

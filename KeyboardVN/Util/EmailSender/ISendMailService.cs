@@ -6,6 +6,9 @@ namespace KeyboardVN.Util.EmailSender
     {
         Task SendMail(MailContent mailContent);
 
-        Task SendEmailAsync(string email, string subject, string htmlMessage);
+        Task SendMailWithoutImage(MailContent mailContent);
+
+
+        Task SendEmailAsync(string email, string subject, string htmlMessage, string ImagePath);
     }
 }

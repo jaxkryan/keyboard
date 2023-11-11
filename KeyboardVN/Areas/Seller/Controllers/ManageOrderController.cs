@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Net;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using KeyboardVN.Util.EmailSender;
+using static System.Net.WebRequestMethods;
 
 namespace KeyboardVN.Areas.Seller.Controllers
 {
@@ -32,11 +33,14 @@ namespace KeyboardVN.Areas.Seller.Controllers
             MailContent content = new MailContent
             {
                 To = "hungnthe176686@fpt.edu.vn", // Mail received address
-                Subject = "Test", // Subject
-                Body = "<p><strong>Hello sent from controller</strong></p>" // content
+                Subject = "Thu gui a Nam", // Subject
+                Body = "<p><strong>Hello sent from controller</strong></p> " +
+                        "<a href='https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lh52ju4vvcj6cc'> giff </a>",
+                ImagePath = @"wwwroot/armored-core-vi-fires-of-rubicon-reveal-trailer-e.webp"
+
             };
 
-            await _sendMailService.SendMail(content);//send mail
+            await _sendMailService.SendMail(content);// Send mail
             return View();
 
         }
@@ -109,8 +113,6 @@ namespace KeyboardVN.Areas.Seller.Controllers
         {
             Console.WriteLine("run update");
 
-            List<string> status = new List<string> { "Processing", "Accepted", "Received", "Canceled" };
-            ViewBag.status = status;
             if (id != order.Id)
             {
                 //return View("Index");
@@ -123,17 +125,21 @@ namespace KeyboardVN.Areas.Seller.Controllers
             {
                 try
                 {
+                    Order oldOrder = _keyboardVN.Orders.Where(o => o.Id == order.Id).FirstOrDefault();                   
                     Console.WriteLine("Update success");
+                    if (oldOrder.Status != order.Status)
+                    {
+                        MailContent content = new MailContent
+                        {
+                            To = order.ShipEmail, // Mail received address
+                            Subject = "Order Infomation", // Subject
+                            Body = $"Your Order Status is {order.Status} now" // content
+                        };
+                        _sendMailService.SendMailWithoutImage(content);
+                    }
                     _keyboardVN.Update(order);
                     await _keyboardVN.SaveChangesAsync();
-                    MailContent content = new MailContent
-                    {
-                        To = order.ShipEmail, // Mail received address
-                        Subject = "Order Infomation", // Subject
-                        Body = $"Your Order Status {order.Status}" // content
-                    };
-                    await _sendMailService.SendMail(content);
-
+                    
                 }
                 catch
                 {
