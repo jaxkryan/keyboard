@@ -4,6 +4,7 @@ using KeyboardVN.Models;
 using Microsoft.Extensions.Options;
 using KeyboardVN.Areas.Seller.Controllers;
 using KeyboardVN.Util.EmailSender;
+using KeyboardVN.Areas.Identity.Pages.Account;
 
 var builder = WebApplication.CreateBuilder(args);
 
