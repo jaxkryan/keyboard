@@ -20,15 +20,18 @@ namespace KeyboardVN.Areas.Identity.Pages.Account
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly ILogger<LoginWith2faModel> _logger;
+        private readonly IHttpContextAccessor _httpContext;
 
         public LoginWith2faModel(
             SignInManager<User> signInManager,
             UserManager<User> userManager,
-            ILogger<LoginWith2faModel> logger)
+            ILogger<LoginWith2faModel> logger,
+            IHttpContextAccessor httpContext)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _logger = logger;
+            _httpContext = httpContext;
         }
 
         /// <summary>
@@ -114,6 +117,16 @@ namespace KeyboardVN.Areas.Identity.Pages.Account
             if (result.Succeeded)
             {
                 _logger.LogInformation("User with ID '{UserId}' logged in with 2fa.", user.Id);
+                _httpContext.HttpContext.Session.SetInt32("userId", user.Id);
+                if (await _userManager.IsInRoleAsync(user, "Admin"))
+                {
+                    returnUrl = "/Admin/Home/Index";
+                }
+                else if (await _userManager.IsInRoleAsync(user, "Seller"))
+                {
+                    returnUrl = "/Seller/Home/Index";
+                }
+                _logger.LogInformation($"returnUrl: {returnUrl}");
                 return LocalRedirect(returnUrl);
             }
             else if (result.IsLockedOut)
